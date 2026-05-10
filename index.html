@@ -1,0 +1,2146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#00ff88">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="H-Bomb">
+<link rel="manifest" href="manifest.json">
+<title>⚾ H-Bomb — Daily Picks May 09, 2026</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: #0a0a12;
+        color: #d0d0e0;
+        min-height: 100vh;
+    }
+    a { color: #66aaff; }
+
+    /* ── Header ── */
+    .header {
+        background: linear-gradient(135deg, #0d1f3c 0%, #0a1628 50%, #0d0d1a 100%);
+        border-bottom: 1px solid #1a2a4a;
+        padding: 28px 32px 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .header-left h1 {
+        font-size: 28px;
+        font-weight: 800;
+        color: #fff;
+        letter-spacing: -0.5px;
+    }
+    .header-left h1 span { color: #00ff88; }
+    .header-left .subtitle {
+        font-size: 13px;
+        color: #6677aa;
+        margin-top: 4px;
+    }
+    .header-right {
+        text-align: right;
+        font-size: 12px;
+        color: #445566;
+    }
+    .header-right .gen-time { color: #667788; }
+
+    /* ── Layout ── */
+    .container { max-width: 1300px; margin: 0 auto; padding: 28px 24px; }
+    .section-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: #445577;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin: 32px 0 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .section-title::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: #1a2233;
+    }
+
+    /* ── Score info strip ── */
+    .score-info {
+        background: #0d1220;
+        border: 1px solid #1a2540;
+        border-radius: 10px;
+        padding: 16px 20px;
+        margin-bottom: 10px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+    }
+    .score-info-item { font-size: 12px; color: #6677aa; line-height: 1.7; }
+    .score-info-item strong { color: #aabbcc; display: block; font-size: 11px;
+        text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+
+    /* ── Tonight's games strip ── */
+    .games-strip {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 12px;
+        margin-bottom: 8px;
+    }
+    .game-chip {
+        background: #0d1525;
+        border: 1px solid #1a2a40;
+        border-radius: 10px;
+        padding: 14px 16px;
+    }
+    .game-chip .matchup {
+        font-size: 15px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 5px;
+    }
+    .game-chip .game-meta {
+        font-size: 11px;
+        color: #556688;
+        line-height: 1.8;
+    }
+    .game-chip .park-pill {
+        display: inline-block;
+        font-size: 10px;
+        padding: 2px 8px;
+        border-radius: 20px;
+        margin-top: 6px;
+        font-weight: 600;
+    }
+    .lineup-pill {
+        display: inline-block;
+        font-size: 10px;
+        padding: 2px 9px;
+        border-radius: 20px;
+        margin-top: 4px;
+        font-weight: 600;
+    }
+    .confirmed { background: #003322; color: #00ff88; }
+    .pending   { background: #221100; color: #ffaa33; }
+
+    /* ── score bar (shared) ── */
+    .score-bar-wrap {
+        height: 5px;
+        background: #111828;
+        border-radius: 3px;
+        margin: 5px 0 2px;
+        overflow: hidden;
+        width: 64px;
+    }
+    .score-bar { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+
+    /* ── badge (shared) ── */
+    .badge {
+        display: inline-block;
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+
+    /* ── Factor bars (shared) ── */
+    .factor-row {
+        display: grid;
+        grid-template-columns: 130px 1fr 45px 1fr;
+        gap: 6px;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+    .factor-label    { font-size: 11px; color: #667788; }
+    .factor-bar-wrap { height: 5px; background: #111828; border-radius: 3px; overflow: hidden; }
+    .factor-bar      { height: 100%; border-radius: 3px; }
+    .factor-val      { font-size: 11px; color: #aabbcc; text-align: right; }
+    .factor-note     { font-size: 10px; color: #445566; }
+
+    /* ── Unified Top 10 full cards ── */
+    .top10-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 14px;
+    }
+    .fc-card {
+        background: #0d1525;
+        border: 1px solid #1a2a40;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .fc-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(0,0,0,0.4);
+    }
+    .fc-header {
+        padding: 14px 16px 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        border-bottom: 1px solid #111828;
+        gap: 8px;
+    }
+    .fc-rank     { font-size: 22px; font-weight: 900; line-height: 1; flex-shrink: 0; }
+    .fc-name     { font-size: 16px; font-weight: 700; color: #fff; }
+    .fc-sub      { font-size: 11px; color: #445566; margin-top: 2px; }
+    .fc-badges   { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
+    .fc-score-block { text-align: right; flex-shrink: 0; }
+    .fc-score-num   { font-size: 26px; font-weight: 800; line-height: 1; }
+    .fc-score-lbl   { font-size: 9px; color: #445566; text-transform: uppercase;
+                      letter-spacing: 0.06em; margin-top: 1px; }
+    .fc-body { padding: 13px 16px; }
+    .fc-stat-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 7px;
+        margin-bottom: 12px;
+    }
+    .fc-stat { background: #0a1020; border-radius: 7px; padding: 7px 5px; text-align: center; }
+    .fc-sv   { font-size: 14px; font-weight: 700; color: #ddeeff; }
+    .fc-sl   { font-size: 9px; color: #445566; text-transform: uppercase;
+               letter-spacing: 0.04em; margin-top: 2px; }
+    .fc-section-lbl {
+        font-size: 9px; color: #334455; text-transform: uppercase;
+        letter-spacing: 0.07em; margin-bottom: 5px; margin-top: 10px;
+    }
+    .fc-info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 10px;
+    }
+    .fc-info-box { background: #0a1020; border-radius: 7px; padding: 9px 11px; }
+    .fc-ib-label { font-size: 9px; color: #445566; text-transform: uppercase;
+                   letter-spacing: 0.06em; margin-bottom: 3px; }
+    .fc-ib-val   { font-size: 12px; color: #ccd; font-weight: 600; }
+    .fc-ib-sub   { font-size: 10px; color: #445566; margin-top: 2px; }
+    .fc-dk-rec {
+        background: #060e1a;
+        border: 1px solid #1a3355;
+        border-radius: 7px;
+        padding: 9px 13px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .fc-dk-label { font-size: 9px; color: #445566; text-transform: uppercase; letter-spacing: 0.06em; }
+    .fc-dk-val   { font-size: 14px; font-weight: 700; color: #00ff88; }
+    .fc-dk-range { font-size: 12px; color: #66aaff; }
+
+    /* ── Time slates ── */
+    .slate-section {
+        background: #0d1525;
+        border: 1px solid #1a2a40;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 14px;
+    }
+    .slate-header {
+        background: #080f1c;
+        padding: 10px 16px;
+        font-size: 13px;
+        font-weight: 700;
+        color: #66aaff;
+        border-bottom: 1px solid #1a2a40;
+    }
+    .slate-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+    }
+    .slate-table th {
+        padding: 7px 14px;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #334455;
+        text-align: left;
+        background: #060d18;
+    }
+    .slate-table td {
+        padding: 9px 14px;
+        border-top: 1px solid #0e1828;
+        color: #aabbcc;
+    }
+    .slate-table tr:hover td { background: #0d1828; }
+
+    /* ── Filter bar ── */
+    .filter-bar {
+        background: #080f1c;
+        border: 1px solid #1a2a40;
+        border-radius: 12px;
+        padding: 14px 18px;
+        margin-bottom: 18px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: flex-end;
+    }
+    .filter-group { display: flex; flex-direction: column; gap: 5px; }
+    .filter-label {
+        font-size: 10px;
+        color: #445566;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+    }
+    .filter-select, .filter-range {
+        background: #0d1525;
+        border: 1px solid #1a2a40;
+        border-radius: 7px;
+        color: #ddeeff;
+        padding: 6px 10px;
+        font-size: 13px;
+        font-family: inherit;
+        outline: none;
+        cursor: pointer;
+        min-width: 130px;
+    }
+    .filter-select:focus { border-color: #00ff88; }
+    .filter-range { padding: 4px 8px; accent-color: #00ff88; }
+    .filter-btn {
+        background: #00ff88;
+        color: #001a0d;
+        border: none;
+        border-radius: 7px;
+        padding: 7px 18px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: inherit;
+        align-self: flex-end;
+    }
+    .filter-btn:hover { background: #00cc66; }
+    .count-label {
+        font-size: 12px;
+        color: #445566;
+        align-self: flex-end;
+        padding-bottom: 7px;
+    }
+    .hidden { display: none !important; }
+
+    /* ── Footer ── */
+    .footer {
+        text-align: center;
+        padding: 28px;
+        font-size: 11px;
+        color: #334455;
+        border-top: 1px solid #111820;
+        margin-top: 40px;
+    }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-left">
+        <h1>⚾ Baseball <span>Guru</span></h1>
+        <div class="subtitle">
+            DraftKings H+R+RBI Daily Report &nbsp;·&nbsp;
+            Saturday, May 09, 2026
+        </div>
+    </div>
+    <div class="header-right">
+        <div class="gen-time">Generated 08:20 PM ET</div>
+        <div style="margin-top:4px;color:#223344">
+            Data: MLB Stats API · Free · No key required
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- How scores work -->
+    <div class="section-title">📖 How Scores Work</div>
+    <div class="score-info">
+        <div class="score-info-item">
+            <strong>DK Scoring</strong>
+            +1 Hit · +1 Run · +1 RBI · HR = all three (+3 min)
+        </div>
+        <div class="score-info-item">
+            <strong>Guru Score</strong>
+            Predictive ranking. Higher = better pick tonight.
+            Not raw DK pts.
+        </div>
+        <div class="score-info-item">
+            <strong>7 Factors</strong>
+            Season vol · Momentum ×3 · Pitcher split ·
+            H2H history · Batting order · Home/Away · Park
+        </div>
+        <div class="score-info-item">
+            <strong>Confidence Grade</strong>
+            A+ = Elite · A = Strong · B+ = Good upside ·
+            B = Solid · C+ = Risky · C = Low confidence
+        </div>
+        <div class="score-info-item">
+            <strong>DK Line Guide</strong>
+            Over 0.5 = safe floor · Over 1.5 = solid ·
+            Over 2.5 = elite matchups only
+        </div>
+        <div class="score-info-item">
+            <strong>Lineup Status</strong>
+            ★ Confirmed = batting order factored in.<br>
+            ⚠ Pending = re-run after 3:30 PM ET.
+        </div>
+    </div>
+
+    <!-- Tonight's games -->
+    <div class="section-title">📅 Tonight's Games</div>
+    <div class="games-strip">
+        <div class="game-chip">
+            <div class="matchup">Athletics @ Baltimore Orioles</div>
+            <div class="game-meta">
+                🕒 04:05 PM ET &nbsp;|&nbsp; Oriole Park at Camden Yards<br>
+                ⚾ Aaron Civale vs Shane Baz<br>
+                O/U line — check your book
+            </div>
+            <span class="park-pill" style="background:#ffaa3322;color:#ffaa33">
+                Park Factor 101
+            </span>
+            <span class="lineup-pill confirmed">★ Lineup Confirmed</span>
+        </div>
+        <div class="game-chip">
+            <div class="matchup">Houston Astros @ Cincinnati Reds</div>
+            <div class="game-meta">
+                🕒 04:10 PM ET &nbsp;|&nbsp; Great American Ball Park<br>
+                ⚾ Spencer Arrighetti vs Chase Burns<br>
+                O/U line — check your book
+            </div>
+            <span class="park-pill" style="background:#00cc6622;color:#00cc66">
+                Park Factor 106
+            </span>
+            <span class="lineup-pill confirmed">★ Lineup Confirmed</span>
+        </div>
+        <div class="game-chip">
+            <div class="matchup">Washington Nationals @ Miami Marlins</div>
+            <div class="game-meta">
+                🕒 04:10 PM ET &nbsp;|&nbsp; loanDepot park<br>
+                ⚾ Richard Lovelady vs Janson Junk<br>
+                O/U line — check your book
+            </div>
+            <span class="park-pill" style="background:#ff664422;color:#ff6644">
+                Park Factor 99
+            </span>
+            <span class="lineup-pill confirmed">★ Lineup Confirmed</span>
+        </div>
+        <div class="game-chip">
+            <div class="matchup">Colorado Rockies @ Philadelphia Phillies</div>
+            <div class="game-meta">
+                🕒 06:05 PM ET &nbsp;|&nbsp; Citizens Bank Park<br>
+                ⚾ Kyle Freeland vs Aaron Nola<br>
+                O/U line — check your book
+            </div>
+            <span class="park-pill" style="background:#00cc6622;color:#00cc66">
+                Park Factor 108
+            </span>
+            <span class="lineup-pill confirmed">★ Lineup Confirmed</span>
+        </div>
+        <div class="game-chip">
+            <div class="matchup">Minnesota Twins @ Cleveland Guardians</div>
+            <div class="game-meta">
+                🕒 06:10 PM ET &nbsp;|&nbsp; Progressive Field<br>
+                ⚾ Joe Ryan vs Tanner Bibee<br>
+                O/U line — check your book
+            </div>
+            <span class="park-pill" style="background:#ff664422;color:#ff6644">
+                Park Factor 98
+            </span>
+            <span class="lineup-pill confirmed">★ Lineup Confirmed</span>
+        </div>
+        <div class="game-chip">
+            <div class="matchup">Chicago Cubs @ Texas Rangers</div>
+            <div class="game-meta">
+                🕒 07:05 PM ET &nbsp;|&nbsp; Globe Life Field<br>
+                ⚾ Edward Cabrera vs Jack Leiter<br>
+                O/U line — check your book
+            </div>
+            <span class="park-pill" style="background:#ffaa3322;color:#ffaa33">
+                Park Factor 103
+            </span>
+            <span class="lineup-pill confirmed">★ Lineup Confirmed</span>
+        </div>
+        <div class="game-chip">
+            <div class="matchup">Detroit Tigers @ Kansas City Royals</div>
+            <div class="game-meta">
+                🕒 07:10 PM ET &nbsp;|&nbsp; Kauffman Stadium<br>
+                ⚾ Burch Smith vs Michael Wacha<br>
+                O/U line — check your book
+            </div>
+            <span class="park-pill" style="background:#ffaa3322;color:#ffaa33">
+                Park Factor 101
+            </span>
+            <span class="lineup-pill confirmed">★ Lineup Confirmed</span>
+        </div>
+        <div class="game-chip">
+            <div class="matchup">Seattle Mariners @ Chicago White Sox</div>
+            <div class="game-meta">
+                🕒 07:10 PM ET &nbsp;|&nbsp; Rate Field<br>
+                ⚾ Luis Castillo vs Anthony Kay<br>
+                O/U line — check your book
+            </div>
+            <span class="park-pill" style="background:#ff664422;color:#ff6644">
+                Park Factor 100
+            </span>
+            <span class="lineup-pill confirmed">★ Lineup Confirmed</span>
+        </div>
+        <div class="game-chip">
+            <div class="matchup">New York Yankees @ Milwaukee Brewers</div>
+            <div class="game-meta">
+                🕒 07:10 PM ET &nbsp;|&nbsp; American Family Field<br>
+                ⚾ Cam Schlittler vs Kyle Harrison<br>
+                O/U line — check your book
+            </div>
+            <span class="park-pill" style="background:#ff664422;color:#ff6644">
+                Park Factor 99
+            </span>
+            <span class="lineup-pill confirmed">★ Lineup Confirmed</span>
+        </div>
+        <div class="game-chip">
+            <div class="matchup">New York Mets @ Arizona Diamondbacks</div>
+            <div class="game-meta">
+                🕒 07:15 PM ET &nbsp;|&nbsp; Chase Field<br>
+                ⚾ Clay Holmes vs Merrill Kelly<br>
+                O/U line — check your book
+            </div>
+            <span class="park-pill" style="background:#ffaa3322;color:#ffaa33">
+                Park Factor 103
+            </span>
+            <span class="lineup-pill confirmed">★ Lineup Confirmed</span>
+        </div>
+        <div class="game-chip">
+            <div class="matchup">St. Louis Cardinals @ San Diego Padres</div>
+            <div class="game-meta">
+                🕒 07:15 PM ET &nbsp;|&nbsp; Petco Park<br>
+                ⚾ Dustin May vs Randy Vásquez<br>
+                O/U line — check your book
+            </div>
+            <span class="park-pill" style="background:#ff664422;color:#ff6644">
+                Park Factor 99
+            </span>
+            <span class="lineup-pill confirmed">★ Lineup Confirmed</span>
+        </div>
+        <div class="game-chip">
+            <div class="matchup">Pittsburgh Pirates @ San Francisco Giants</div>
+            <div class="game-meta">
+                🕒 09:05 PM ET &nbsp;|&nbsp; Oracle Park<br>
+                ⚾ Braxton Ashcraft vs Landen Roupp<br>
+                O/U line — check your book
+            </div>
+            <span class="park-pill" style="background:#ff664422;color:#ff6644">
+                Park Factor 96
+            </span>
+            <span class="lineup-pill confirmed">★ Lineup Confirmed</span>
+        </div>
+        <div class="game-chip">
+            <div class="matchup">Atlanta Braves @ Los Angeles Dodgers</div>
+            <div class="game-meta">
+                🕒 09:10 PM ET &nbsp;|&nbsp; UNIQLO Field at Dodger Stadium<br>
+                ⚾ Spencer Strider vs Blake Snell<br>
+                O/U line — check your book
+            </div>
+            <span class="park-pill" style="background:#ffaa3322;color:#ffaa33">
+                Park Factor 101
+            </span>
+            <span class="lineup-pill confirmed">★ Lineup Confirmed</span>
+        </div>
+        <div class="game-chip">
+            <div class="matchup">Tampa Bay Rays @ Boston Red Sox</div>
+            <div class="game-meta">
+                🕒 04:10 PM ET &nbsp;|&nbsp; Fenway Park<br>
+                ⚾ Nick Martinez vs Payton Tolle<br>
+                O/U line — check your book
+            </div>
+            <span class="park-pill" style="background:#ffaa3322;color:#ffaa33">
+                Park Factor 104
+            </span>
+            <span class="lineup-pill pending">⚠ Lineup Pending</span>
+        </div></div>
+
+    <!-- Filter bar -->
+    <div class="filter-bar">
+        <div class="filter-group">
+            <label class="filter-label">Start Time</label>
+            <select class="filter-select" id="f-time" onchange="applyFilters()">
+                <option value="all">All Games</option>
+                <option value="04:05 PM ET">04:05 PM ET</option><option value="04:10 PM ET">04:10 PM ET</option><option value="06:05 PM ET">06:05 PM ET</option><option value="06:10 PM ET">06:10 PM ET</option><option value="07:05 PM ET">07:05 PM ET</option><option value="07:10 PM ET">07:10 PM ET</option><option value="07:15 PM ET">07:15 PM ET</option><option value="09:05 PM ET">09:05 PM ET</option><option value="09:10 PM ET">09:10 PM ET</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label class="filter-label">Results</label>
+            <input class="filter-range" type="range" id="f-count"
+                   min="3" max="10" value="10"
+                   oninput="applyFilters()">
+        </div>
+        <div class="filter-group">
+            <label class="filter-label">Streak</label>
+            <select class="filter-select" id="f-streak" onchange="applyFilters()">
+                <option value="all">All</option>
+                <option value="On Fire">🔥 On Fire</option>
+                <option value="Hot">🔥 Hot</option>
+                <option value="Warm">✅ Warm</option>
+                <option value="Neutral">→ Neutral</option>
+                <option value="Cold">❄️ Cold</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label class="filter-label">Min Grade</label>
+            <select class="filter-select" id="f-grade" onchange="applyFilters()">
+                <option value="all">All Grades</option>
+                <option value="A+">A+ Only</option>
+                <option value="A">A+ and A</option>
+                <option value="B">B+ and above</option>
+            </select>
+        </div>
+        <div class="count-label" id="count-display">Showing top 10</div>
+    </div>
+
+    <!-- Top 10 unified cards -->
+    <div class="section-title">🏆 Top 10 Picks</div>
+    <div class="top10-grid">
+        <div class="fc-card" data-rank="1" data-time="04:05 PM ET" data-streak="On Fire" data-grade="A">
+            <div style="height:4px;background:#1D9E75"></div>
+            <div class="fc-header">
+                <div style="display:flex;align-items:flex-start;gap:10px">
+                    <div class="fc-rank" style="color:#00ff88">#1</div>
+                    <div>
+                        <div class="fc-name">Shea Langeliers</div>
+                        <div class="fc-sub">Athletics · C · RHH · Away · 04:05 PM ET</div>
+                        <div class="fc-badges">
+                            <span class="badge" style="background:#00cc66;color:#002211">A</span>
+                            <span class="badge" style="background:#66aaff22;color:#66aaff">B</span>
+                            <span class="badge" style="background:#111828;color:#66aaff">2nd</span>
+                            <span class="badge" style="background:#1a2e00;color:#7fff00">🔥 On Fire</span>
+                            <span class="badge" style="background:#0a1020;color:#778899">→ Steady</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="fc-score-block">
+                    <div class="fc-score-num" style="color:#00ff88">265.5</div>
+                    <div class="fc-score-lbl">Guru Score</div>
+                    
+        <div class="score-bar-wrap">
+            <div class="score-bar" style="width:66%;background:#00ff88;"></div>
+        </div>
+                </div>
+            </div>
+            <div class="fc-body">
+                <div class="fc-stat-row">
+                    <div class="fc-stat"><div class="fc-sv">.340</div><div class="fc-sl">AVG</div></div>
+                    <div class="fc-stat"><div class="fc-sv">11</div><div class="fc-sl">HR</div></div>
+                    <div class="fc-stat"><div class="fc-sv">22</div><div class="fc-sl">RBI</div></div>
+                    <div class="fc-stat"><div class="fc-sv">31.4%</div><div class="fc-sl">HR/G</div></div>
+                </div>
+
+                <div class="fc-section-lbl">Recent 5 Games — DK pts per game</div>
+                <svg width="110" height="68" style="display:block;margin:4px 0"><rect x="0" y="37" width="18" height="11" rx="3" fill="#66aaff"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="22" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">8</text><rect x="44" y="15" width="18" height="33" rx="3" fill="#00ff88"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">6</text><rect x="66" y="43" width="18" height="5" rx="3" fill="#555566"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="88" y="15" width="18" height="33" rx="3" fill="#00ff88"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">6</text></svg>
+
+                <div class="fc-section-lbl">Score Factors</div>
+                
+        <div class="factor-row">
+            <span class="factor-label">Season Volume</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:40%;background:#66aaff"></div>
+            </div>
+            <span class="factor-val">100</span>
+            <span class="factor-note">100 H+R+RBI</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Recent Momentum</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:23%;background:#00ff88"></div>
+            </div>
+            <span class="factor-val">69</span>
+            <span class="factor-note">last 5 × 3</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Park Factor</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:87%;background:#ffaa33"></div>
+            </div>
+            <span class="factor-val">101</span>
+            <span class="factor-note">×1.01</span>
+        </div>
+
+                <div class="fc-info-grid">
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Facing</div>
+                        <div class="fc-ib-val">Shane Baz</div>
+                        <div class="fc-ib-sub">ERA 5.48 · WHIP 1.56</div>
+                    </div>
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Head-to-Head</div>
+                        <div class="fc-ib-val" style="color:#00cc66">🔥 .400 / 10PA</div>
+                        <div class="fc-ib-sub">4-for-10 (.400) | 1 HR | 1 RBI | 🔥 OWNS | ✓ Trusted</div>
+                    </div>
+                </div>
+
+                <div class="fc-dk-rec">
+                    <div>
+                        <div class="fc-dk-label">Recommended Bet</div>
+                        <div class="fc-dk-val">Over 2.5 ★★★</div>
+                    </div>
+                    <div style="text-align:right">
+                        <div class="fc-dk-label">Projected DK pts</div>
+                        <div class="fc-dk-range">4–8 DK pts</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fc-card" data-rank="2" data-time="04:10 PM ET" data-streak="Hot" data-grade="A">
+            <div style="height:4px;background:#185FA5"></div>
+            <div class="fc-header">
+                <div style="display:flex;align-items:flex-start;gap:10px">
+                    <div class="fc-rank" style="color:#66aaff">#2</div>
+                    <div>
+                        <div class="fc-name">CJ Abrams</div>
+                        <div class="fc-sub">Washington Nationals · SS · LHH · Away · 04:10 PM ET</div>
+                        <div class="fc-badges">
+                            <span class="badge" style="background:#00cc66;color:#002211">A</span>
+                            <span class="badge" style="background:#66aaff22;color:#66aaff">B</span>
+                            <span class="badge" style="background:#111828;color:#66aaff">Cleanup</span>
+                            <span class="badge" style="background:#1a2e00;color:#00cc66">🔥 Hot</span>
+                            <span class="badge" style="background:#0a1020;color:#ff6644">↓ -2.8 pts/game</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="fc-score-block">
+                    <div class="fc-score-num" style="color:#66aaff">231.7</div>
+                    <div class="fc-score-lbl">Guru Score</div>
+                    
+        <div class="score-bar-wrap">
+            <div class="score-bar" style="width:57%;background:#ffaa33;"></div>
+        </div>
+                </div>
+            </div>
+            <div class="fc-body">
+                <div class="fc-stat-row">
+                    <div class="fc-stat"><div class="fc-sv">.295</div><div class="fc-sl">AVG</div></div>
+                    <div class="fc-stat"><div class="fc-sv">9</div><div class="fc-sl">HR</div></div>
+                    <div class="fc-stat"><div class="fc-sv">36</div><div class="fc-sl">RBI</div></div>
+                    <div class="fc-stat"><div class="fc-sv">23.1%</div><div class="fc-sl">HR/G</div></div>
+                </div>
+
+                <div class="fc-section-lbl">Recent 5 Games — DK pts per game</div>
+                <svg width="110" height="68" style="display:block;margin:4px 0"><rect x="0" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="22" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">10</text><rect x="44" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="66" y="35" width="18" height="13" rx="3" fill="#66aaff"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="88" y="26" width="18" height="22" rx="3" fill="#00ff88"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">5</text></svg>
+
+                <div class="fc-section-lbl">Score Factors</div>
+                
+        <div class="factor-row">
+            <span class="factor-label">Season Volume</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:40%;background:#66aaff"></div>
+            </div>
+            <span class="factor-val">100</span>
+            <span class="factor-note">100 H+R+RBI</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Recent Momentum</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:19%;background:#00ff88"></div>
+            </div>
+            <span class="factor-val">57</span>
+            <span class="factor-note">last 5 × 3</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Park Factor</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:85%;background:#ffaa33"></div>
+            </div>
+            <span class="factor-val">99</span>
+            <span class="factor-note">×0.99</span>
+        </div>
+
+                <div class="fc-info-grid">
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Facing</div>
+                        <div class="fc-ib-val">Janson Junk</div>
+                        <div class="fc-ib-sub">ERA 3.25 · WHIP 1.11</div>
+                    </div>
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Head-to-Head</div>
+                        <div class="fc-ib-val" style="color:#00cc66">🔥 .500 / 8PA</div>
+                        <div class="fc-ib-sub">4-for-8 (.500) | 0 HR | 2 RBI | 🔥 OWNS | ✓ Trusted</div>
+                    </div>
+                </div>
+
+                <div class="fc-dk-rec">
+                    <div>
+                        <div class="fc-dk-label">Recommended Bet</div>
+                        <div class="fc-dk-val">Over 2.5 ★★★</div>
+                    </div>
+                    <div style="text-align:right">
+                        <div class="fc-dk-label">Projected DK pts</div>
+                        <div class="fc-dk-range">3–10 DK pts</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fc-card" data-rank="3" data-time="06:05 PM ET" data-streak="Warm" data-grade="B+">
+            <div style="height:4px;background:#6644AA"></div>
+            <div class="fc-header">
+                <div style="display:flex;align-items:flex-start;gap:10px">
+                    <div class="fc-rank" style="color:#aa88ff">#3</div>
+                    <div>
+                        <div class="fc-name">Kyle Schwarber</div>
+                        <div class="fc-sub">Philadelphia Phillies · LF · LHH · Home · 06:05 PM ET</div>
+                        <div class="fc-badges">
+                            <span class="badge" style="background:#66aaff;color:#001133">B+</span>
+                            <span class="badge" style="background:#00cc6622;color:#00cc66">A</span>
+                            <span class="badge" style="background:#111828;color:#66aaff">2nd</span>
+                            <span class="badge" style="background:#001a22;color:#66aaff">✅ Warm</span>
+                            <span class="badge" style="background:#0a1020;color:#00cc66">↑ +3.0 pts/game</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="fc-score-block">
+                    <div class="fc-score-num" style="color:#aa88ff">218.7</div>
+                    <div class="fc-score-lbl">Guru Score</div>
+                    
+        <div class="score-bar-wrap">
+            <div class="score-bar" style="width:54%;background:#ffaa33;"></div>
+        </div>
+                </div>
+            </div>
+            <div class="fc-body">
+                <div class="fc-stat-row">
+                    <div class="fc-stat"><div class="fc-sv">.216</div><div class="fc-sl">AVG</div></div>
+                    <div class="fc-stat"><div class="fc-sv">14</div><div class="fc-sl">HR</div></div>
+                    <div class="fc-stat"><div class="fc-sv">25</div><div class="fc-sl">RBI</div></div>
+                    <div class="fc-stat"><div class="fc-sv">35.0%</div><div class="fc-sl">HR/G</div></div>
+                </div>
+
+                <div class="fc-section-lbl">Recent 5 Games — DK pts per game</div>
+                <svg width="110" height="68" style="display:block;margin:4px 0"><rect x="0" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="22" y="31" width="18" height="17" rx="3" fill="#66aaff"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="44" y="13" width="18" height="35" rx="3" fill="#00ff88"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text><rect x="66" y="22" width="18" height="26" rx="3" fill="#66aaff"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="88" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">5</text></svg>
+
+                <div class="fc-section-lbl">Score Factors</div>
+                
+        <div class="factor-row">
+            <span class="factor-label">Season Volume</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:33%;background:#66aaff"></div>
+            </div>
+            <span class="factor-val">83</span>
+            <span class="factor-note">83 H+R+RBI</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Recent Momentum</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:14%;background:#00ff88"></div>
+            </div>
+            <span class="factor-val">42</span>
+            <span class="factor-note">last 5 × 3</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Park Factor</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:93%;background:#ffaa33"></div>
+            </div>
+            <span class="factor-val">108</span>
+            <span class="factor-note">×1.08</span>
+        </div>
+
+                <div class="fc-info-grid">
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Facing</div>
+                        <div class="fc-ib-val">Kyle Freeland</div>
+                        <div class="fc-ib-sub">ERA 6.00 · WHIP 1.47</div>
+                    </div>
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Head-to-Head</div>
+                        <div class="fc-ib-val" style="color:#ff4444">❌ .--- / 1PA</div>
+                        <div class="fc-ib-sub">0-for-1 (.---) | 0 HR | 0 RBI | ❌ Struggles | ⚠ Small s</div>
+                    </div>
+                </div>
+
+                <div class="fc-dk-rec">
+                    <div>
+                        <div class="fc-dk-label">Recommended Bet</div>
+                        <div class="fc-dk-val">Over 1.5 ★★</div>
+                    </div>
+                    <div style="text-align:right">
+                        <div class="fc-dk-label">Projected DK pts</div>
+                        <div class="fc-dk-range">2–5 DK pts</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fc-card" data-rank="4" data-time="06:05 PM ET" data-streak="Warm" data-grade="B+">
+            <div style="height:4px;background:#1D9E75"></div>
+            <div class="fc-header">
+                <div style="display:flex;align-items:flex-start;gap:10px">
+                    <div class="fc-rank" style="color:#00cc66">#4</div>
+                    <div>
+                        <div class="fc-name">Bryce Harper</div>
+                        <div class="fc-sub">Philadelphia Phillies · 1B · LHH · Home · 06:05 PM ET</div>
+                        <div class="fc-badges">
+                            <span class="badge" style="background:#66aaff;color:#001133">B+</span>
+                            <span class="badge" style="background:#00cc6622;color:#00cc66">A</span>
+                            <span class="badge" style="background:#111828;color:#66aaff">3rd</span>
+                            <span class="badge" style="background:#001a22;color:#66aaff">✅ Warm</span>
+                            <span class="badge" style="background:#0a1020;color:#ff6644">↓ -4.0 pts/game</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="fc-score-block">
+                    <div class="fc-score-num" style="color:#00cc66">216.8</div>
+                    <div class="fc-score-lbl">Guru Score</div>
+                    
+        <div class="score-bar-wrap">
+            <div class="score-bar" style="width:54%;background:#ffaa33;"></div>
+        </div>
+                </div>
+            </div>
+            <div class="fc-body">
+                <div class="fc-stat-row">
+                    <div class="fc-stat"><div class="fc-sv">.282</div><div class="fc-sl">AVG</div></div>
+                    <div class="fc-stat"><div class="fc-sv">9</div><div class="fc-sl">HR</div></div>
+                    <div class="fc-stat"><div class="fc-sv">23</div><div class="fc-sl">RBI</div></div>
+                    <div class="fc-stat"><div class="fc-sv">22.5%</div><div class="fc-sl">HR/G</div></div>
+                </div>
+
+                <div class="fc-section-lbl">Recent 5 Games — DK pts per game</div>
+                <svg width="110" height="68" style="display:block;margin:4px 0"><rect x="0" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">9</text><rect x="22" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="44" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="66" y="34" width="18" height="14" rx="3" fill="#66aaff"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="88" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text></svg>
+
+                <div class="fc-section-lbl">Score Factors</div>
+                
+        <div class="factor-row">
+            <span class="factor-label">Season Volume</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:34%;background:#66aaff"></div>
+            </div>
+            <span class="factor-val">87</span>
+            <span class="factor-note">87 H+R+RBI</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Recent Momentum</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:13%;background:#00ff88"></div>
+            </div>
+            <span class="factor-val">39</span>
+            <span class="factor-note">last 5 × 3</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Park Factor</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:93%;background:#ffaa33"></div>
+            </div>
+            <span class="factor-val">108</span>
+            <span class="factor-note">×1.08</span>
+        </div>
+
+                <div class="fc-info-grid">
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Facing</div>
+                        <div class="fc-ib-val">Kyle Freeland</div>
+                        <div class="fc-ib-sub">ERA 6.00 · WHIP 1.47</div>
+                    </div>
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Head-to-Head</div>
+                        <div class="fc-ib-val" style="color:#ff4444">❌ .--- / 3PA</div>
+                        <div class="fc-ib-sub">0-for-3 (.---) | 0 HR | 0 RBI | ❌ Struggles | ⚠ Small s</div>
+                    </div>
+                </div>
+
+                <div class="fc-dk-rec">
+                    <div>
+                        <div class="fc-dk-label">Recommended Bet</div>
+                        <div class="fc-dk-val">Over 1.5 ★★</div>
+                    </div>
+                    <div style="text-align:right">
+                        <div class="fc-dk-label">Projected DK pts</div>
+                        <div class="fc-dk-range">2–9 DK pts</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fc-card" data-rank="5" data-time="09:10 PM ET" data-streak="Warm" data-grade="B+">
+            <div style="height:4px;background:#185FA5"></div>
+            <div class="fc-header">
+                <div style="display:flex;align-items:flex-start;gap:10px">
+                    <div class="fc-rank" style="color:#4488dd">#5</div>
+                    <div>
+                        <div class="fc-name">Matt Olson</div>
+                        <div class="fc-sub">Atlanta Braves · 1B · LHH · Away · 09:10 PM ET</div>
+                        <div class="fc-badges">
+                            <span class="badge" style="background:#66aaff;color:#001133">B+</span>
+                            <span class="badge" style="background:#66aaff22;color:#66aaff">B</span>
+                            <span class="badge" style="background:#111828;color:#66aaff">Cleanup</span>
+                            <span class="badge" style="background:#001a22;color:#66aaff">✅ Warm</span>
+                            <span class="badge" style="background:#0a1020;color:#ff6644">↓ -2.3 pts/game</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="fc-score-block">
+                    <div class="fc-score-num" style="color:#4488dd">189.4</div>
+                    <div class="fc-score-lbl">Guru Score</div>
+                    
+        <div class="score-bar-wrap">
+            <div class="score-bar" style="width:47%;background:#ffaa33;"></div>
+        </div>
+                </div>
+            </div>
+            <div class="fc-body">
+                <div class="fc-stat-row">
+                    <div class="fc-stat"><div class="fc-sv">.293</div><div class="fc-sl">AVG</div></div>
+                    <div class="fc-stat"><div class="fc-sv">13</div><div class="fc-sl">HR</div></div>
+                    <div class="fc-stat"><div class="fc-sv">33</div><div class="fc-sl">RBI</div></div>
+                    <div class="fc-stat"><div class="fc-sv">33.3%</div><div class="fc-sl">HR/G</div></div>
+                </div>
+
+                <div class="fc-section-lbl">Recent 5 Games — DK pts per game</div>
+                <svg width="110" height="68" style="display:block;margin:4px 0"><rect x="0" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">5</text><rect x="22" y="22" width="18" height="26" rx="3" fill="#66aaff"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="44" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">5</text><rect x="66" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="88" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text></svg>
+
+                <div class="fc-section-lbl">Score Factors</div>
+                
+        <div class="factor-row">
+            <span class="factor-label">Season Volume</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:44%;background:#66aaff"></div>
+            </div>
+            <span class="factor-val">112</span>
+            <span class="factor-note">112 H+R+RBI</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Recent Momentum</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:13%;background:#00ff88"></div>
+            </div>
+            <span class="factor-val">39</span>
+            <span class="factor-note">last 5 × 3</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Park Factor</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:87%;background:#ffaa33"></div>
+            </div>
+            <span class="factor-val">101</span>
+            <span class="factor-note">×1.01</span>
+        </div>
+
+                <div class="fc-info-grid">
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Facing</div>
+                        <div class="fc-ib-val">Blake Snell</div>
+                        <div class="fc-ib-sub">ERA N/A · WHIP N/A</div>
+                    </div>
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Head-to-Head</div>
+                        <div class="fc-ib-val" style="color:#ff4444">❌ .--- / 2PA</div>
+                        <div class="fc-ib-sub">0-for-2 (.---) | 0 HR | 0 RBI | ❌ Struggles | ⚠ Small s</div>
+                    </div>
+                </div>
+
+                <div class="fc-dk-rec">
+                    <div>
+                        <div class="fc-dk-label">Recommended Bet</div>
+                        <div class="fc-dk-val">Over 1.5 ★★</div>
+                    </div>
+                    <div style="text-align:right">
+                        <div class="fc-dk-label">Projected DK pts</div>
+                        <div class="fc-dk-range">2–5 DK pts</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fc-card" data-rank="6" data-time="06:05 PM ET" data-streak="Warm" data-grade="B">
+            <div style="height:4px;background:#854F0B"></div>
+            <div class="fc-header">
+                <div style="display:flex;align-items:flex-start;gap:10px">
+                    <div class="fc-rank" style="color:#ffaa33">#6</div>
+                    <div>
+                        <div class="fc-name">Brandon Marsh</div>
+                        <div class="fc-sub">Philadelphia Phillies · LF · LHH · Home · 06:05 PM ET</div>
+                        <div class="fc-badges">
+                            <span class="badge" style="background:#4488dd;color:#000e22">B</span>
+                            <span class="badge" style="background:#00cc6622;color:#00cc66">A</span>
+                            <span class="badge" style="background:#111828;color:#66aaff">6th</span>
+                            <span class="badge" style="background:#001a22;color:#66aaff">✅ Warm</span>
+                            <span class="badge" style="background:#0a1020;color:#ff6644">↓ -2.5 pts/game</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="fc-score-block">
+                    <div class="fc-score-num" style="color:#ffaa33">186.6</div>
+                    <div class="fc-score-lbl">Guru Score</div>
+                    
+        <div class="score-bar-wrap">
+            <div class="score-bar" style="width:46%;background:#ffaa33;"></div>
+        </div>
+                </div>
+            </div>
+            <div class="fc-body">
+                <div class="fc-stat-row">
+                    <div class="fc-stat"><div class="fc-sv">.328</div><div class="fc-sl">AVG</div></div>
+                    <div class="fc-stat"><div class="fc-sv">4</div><div class="fc-sl">HR</div></div>
+                    <div class="fc-stat"><div class="fc-sv">21</div><div class="fc-sl">RBI</div></div>
+                    <div class="fc-stat"><div class="fc-sv">11.1%</div><div class="fc-sl">HR/G</div></div>
+                </div>
+
+                <div class="fc-section-lbl">Recent 5 Games — DK pts per game</div>
+                <svg width="110" height="68" style="display:block;margin:4px 0"><rect x="0" y="13" width="18" height="35" rx="3" fill="#00ff88"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text><rect x="22" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">5</text><rect x="44" y="40" width="18" height="8" rx="3" fill="#555566"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="66" y="13" width="18" height="35" rx="3" fill="#00ff88"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text><rect x="88" y="40" width="18" height="8" rx="3" fill="#555566"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text></svg>
+
+                <div class="fc-section-lbl">Score Factors</div>
+                
+        <div class="factor-row">
+            <span class="factor-label">Season Volume</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:33%;background:#66aaff"></div>
+            </div>
+            <span class="factor-val">83</span>
+            <span class="factor-note">83 H+R+RBI</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Recent Momentum</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:15%;background:#00ff88"></div>
+            </div>
+            <span class="factor-val">45</span>
+            <span class="factor-note">last 5 × 3</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Park Factor</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:93%;background:#ffaa33"></div>
+            </div>
+            <span class="factor-val">108</span>
+            <span class="factor-note">×1.08</span>
+        </div>
+
+                <div class="fc-info-grid">
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Facing</div>
+                        <div class="fc-ib-val">Kyle Freeland</div>
+                        <div class="fc-ib-sub">ERA 6.00 · WHIP 1.47</div>
+                    </div>
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Head-to-Head</div>
+                        <div class="fc-ib-val" style="color:#ff4444">❌ .--- / 4PA</div>
+                        <div class="fc-ib-sub">0-for-4 (.---) | 0 HR | 0 RBI | ❌ Struggles | ⚠ Small s</div>
+                    </div>
+                </div>
+
+                <div class="fc-dk-rec">
+                    <div>
+                        <div class="fc-dk-label">Recommended Bet</div>
+                        <div class="fc-dk-val">Over 1.5 ★★</div>
+                    </div>
+                    <div style="text-align:right">
+                        <div class="fc-dk-label">Projected DK pts</div>
+                        <div class="fc-dk-range">2–5 DK pts</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fc-card" data-rank="7" data-time="04:05 PM ET" data-streak="Warm" data-grade="B">
+            <div style="height:4px;background:#5F5E5A"></div>
+            <div class="fc-header">
+                <div style="display:flex;align-items:flex-start;gap:10px">
+                    <div class="fc-rank" style="color:#888780">#7</div>
+                    <div>
+                        <div class="fc-name">Nick Kurtz</div>
+                        <div class="fc-sub">Athletics · 1B · LHH · Away · 04:05 PM ET</div>
+                        <div class="fc-badges">
+                            <span class="badge" style="background:#4488dd;color:#000e22">B</span>
+                            <span class="badge" style="background:#00ff8822;color:#00ff88">A+</span>
+                            <span class="badge" style="background:#111828;color:#66aaff">Leadoff</span>
+                            <span class="badge" style="background:#001a22;color:#66aaff">✅ Warm</span>
+                            <span class="badge" style="background:#0a1020;color:#00cc66">↑ +2.0 pts/game</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="fc-score-block">
+                    <div class="fc-score-num" style="color:#888780">185.4</div>
+                    <div class="fc-score-lbl">Guru Score</div>
+                    
+        <div class="score-bar-wrap">
+            <div class="score-bar" style="width:46%;background:#ffaa33;"></div>
+        </div>
+                </div>
+            </div>
+            <div class="fc-body">
+                <div class="fc-stat-row">
+                    <div class="fc-stat"><div class="fc-sv">.264</div><div class="fc-sl">AVG</div></div>
+                    <div class="fc-stat"><div class="fc-sv">5</div><div class="fc-sl">HR</div></div>
+                    <div class="fc-stat"><div class="fc-sv">20</div><div class="fc-sl">RBI</div></div>
+                    <div class="fc-stat"><div class="fc-sv">13.2%</div><div class="fc-sl">HR/G</div></div>
+                </div>
+
+                <div class="fc-section-lbl">Recent 5 Games — DK pts per game</div>
+                <svg width="110" height="68" style="display:block;margin:4px 0"><rect x="0" y="40" width="18" height="8" rx="3" fill="#555566"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="22" y="22" width="18" height="26" rx="3" fill="#66aaff"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="44" y="22" width="18" height="26" rx="3" fill="#66aaff"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="66" y="13" width="18" height="35" rx="3" fill="#00ff88"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text><rect x="88" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">5</text></svg>
+
+                <div class="fc-section-lbl">Score Factors</div>
+                
+        <div class="factor-row">
+            <span class="factor-label">Season Volume</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:32%;background:#66aaff"></div>
+            </div>
+            <span class="factor-val">80</span>
+            <span class="factor-note">80 H+R+RBI</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Recent Momentum</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:16%;background:#00ff88"></div>
+            </div>
+            <span class="factor-val">48</span>
+            <span class="factor-note">last 5 × 3</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Park Factor</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:87%;background:#ffaa33"></div>
+            </div>
+            <span class="factor-val">101</span>
+            <span class="factor-note">×1.01</span>
+        </div>
+
+                <div class="fc-info-grid">
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Facing</div>
+                        <div class="fc-ib-val">Shane Baz</div>
+                        <div class="fc-ib-sub">ERA 5.48 · WHIP 1.56</div>
+                    </div>
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Head-to-Head</div>
+                        <div class="fc-ib-val" style="color:#ff4444">❌ .--- / 7PA</div>
+                        <div class="fc-ib-sub">0-for-7 (.---) | 0 HR | 0 RBI | ❌ Struggles | ✓ Trusted</div>
+                    </div>
+                </div>
+
+                <div class="fc-dk-rec">
+                    <div>
+                        <div class="fc-dk-label">Recommended Bet</div>
+                        <div class="fc-dk-val">Over 1.5 ★★</div>
+                    </div>
+                    <div style="text-align:right">
+                        <div class="fc-dk-label">Projected DK pts</div>
+                        <div class="fc-dk-range">2–5 DK pts</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fc-card" data-rank="8" data-time="04:10 PM ET" data-streak="Neutral" data-grade="B+">
+            <div style="height:4px;background:#185FA5"></div>
+            <div class="fc-header">
+                <div style="display:flex;align-items:flex-start;gap:10px">
+                    <div class="fc-rank" style="color:#4488dd">#8</div>
+                    <div>
+                        <div class="fc-name">Yordan Alvarez</div>
+                        <div class="fc-sub">Houston Astros · LF · LHH · Away · 04:10 PM ET</div>
+                        <div class="fc-badges">
+                            <span class="badge" style="background:#66aaff;color:#001133">B+</span>
+                            <span class="badge" style="background:#66aaff22;color:#66aaff">B</span>
+                            <span class="badge" style="background:#111828;color:#66aaff">2nd</span>
+                            <span class="badge" style="background:#111828;color:#778899">→ Neutral</span>
+                            <span class="badge" style="background:#0a1020;color:#778899">→ Steady</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="fc-score-block">
+                    <div class="fc-score-num" style="color:#4488dd">180.0</div>
+                    <div class="fc-score-lbl">Guru Score</div>
+                    
+        <div class="score-bar-wrap">
+            <div class="score-bar" style="width:45%;background:#ffaa33;"></div>
+        </div>
+                </div>
+            </div>
+            <div class="fc-body">
+                <div class="fc-stat-row">
+                    <div class="fc-stat"><div class="fc-sv">.327</div><div class="fc-sl">AVG</div></div>
+                    <div class="fc-stat"><div class="fc-sv">13</div><div class="fc-sl">HR</div></div>
+                    <div class="fc-stat"><div class="fc-sv">29</div><div class="fc-sl">RBI</div></div>
+                    <div class="fc-stat"><div class="fc-sv">32.5%</div><div class="fc-sl">HR/G</div></div>
+                </div>
+
+                <div class="fc-section-lbl">Recent 5 Games — DK pts per game</div>
+                <svg width="110" height="68" style="display:block;margin:4px 0"><rect x="0" y="22" width="18" height="26" rx="3" fill="#66aaff"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="22" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="44" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="66" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">5</text><rect x="88" y="40" width="18" height="8" rx="3" fill="#555566"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text></svg>
+
+                <div class="fc-section-lbl">Score Factors</div>
+                
+        <div class="factor-row">
+            <span class="factor-label">Season Volume</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:41%;background:#66aaff"></div>
+            </div>
+            <span class="factor-val">104</span>
+            <span class="factor-note">104 H+R+RBI</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Recent Momentum</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:9%;background:#00ff88"></div>
+            </div>
+            <span class="factor-val">27</span>
+            <span class="factor-note">last 5 × 3</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Park Factor</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:91%;background:#ffaa33"></div>
+            </div>
+            <span class="factor-val">106</span>
+            <span class="factor-note">×1.06</span>
+        </div>
+
+                <div class="fc-info-grid">
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Facing</div>
+                        <div class="fc-ib-val">Chase Burns</div>
+                        <div class="fc-ib-sub">ERA 2.11 · WHIP 1.04</div>
+                    </div>
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Head-to-Head</div>
+                        <div class="fc-ib-val" style="color:#555566">—</div>
+                        <div class="fc-ib-sub">No career history vs Chase Burns</div>
+                    </div>
+                </div>
+
+                <div class="fc-dk-rec">
+                    <div>
+                        <div class="fc-dk-label">Recommended Bet</div>
+                        <div class="fc-dk-val">Over 1.5 ★</div>
+                    </div>
+                    <div style="text-align:right">
+                        <div class="fc-dk-label">Projected DK pts</div>
+                        <div class="fc-dk-range">1–5 DK pts</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fc-card" data-rank="9" data-time="04:10 PM ET" data-streak="Warm" data-grade="B">
+            <div style="height:4px;background:#791F1F"></div>
+            <div class="fc-header">
+                <div style="display:flex;align-items:flex-start;gap:10px">
+                    <div class="fc-rank" style="color:#ff6644">#9</div>
+                    <div>
+                        <div class="fc-name">Otto Lopez</div>
+                        <div class="fc-sub">Miami Marlins · SS · RHH · Home · 04:10 PM ET</div>
+                        <div class="fc-badges">
+                            <span class="badge" style="background:#4488dd;color:#000e22">B</span>
+                            <span class="badge" style="background:#88889922;color:#888899">C</span>
+                            <span class="badge" style="background:#111828;color:#66aaff">2nd</span>
+                            <span class="badge" style="background:#001a22;color:#66aaff">✅ Warm</span>
+                            <span class="badge" style="background:#0a1020;color:#778899">→ Steady</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="fc-score-block">
+                    <div class="fc-score-num" style="color:#ff6644">179.6</div>
+                    <div class="fc-score-lbl">Guru Score</div>
+                    
+        <div class="score-bar-wrap">
+            <div class="score-bar" style="width:44%;background:#ffaa33;"></div>
+        </div>
+                </div>
+            </div>
+            <div class="fc-body">
+                <div class="fc-stat-row">
+                    <div class="fc-stat"><div class="fc-sv">.353</div><div class="fc-sl">AVG</div></div>
+                    <div class="fc-stat"><div class="fc-sv">4</div><div class="fc-sl">HR</div></div>
+                    <div class="fc-stat"><div class="fc-sv">16</div><div class="fc-sl">RBI</div></div>
+                    <div class="fc-stat"><div class="fc-sv">10.3%</div><div class="fc-sl">HR/G</div></div>
+                </div>
+
+                <div class="fc-section-lbl">Recent 5 Games — DK pts per game</div>
+                <svg width="110" height="68" style="display:block;margin:4px 0"><rect x="0" y="15" width="18" height="33" rx="3" fill="#66aaff"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="22" y="26" width="18" height="22" rx="3" fill="#66aaff"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="44" y="26" width="18" height="22" rx="3" fill="#66aaff"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="66" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text><rect x="88" y="15" width="18" height="33" rx="3" fill="#66aaff"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text></svg>
+
+                <div class="fc-section-lbl">Score Factors</div>
+                
+        <div class="factor-row">
+            <span class="factor-label">Season Volume</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:39%;background:#66aaff"></div>
+            </div>
+            <span class="factor-val">98</span>
+            <span class="factor-note">98 H+R+RBI</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Recent Momentum</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:14%;background:#00ff88"></div>
+            </div>
+            <span class="factor-val">42</span>
+            <span class="factor-note">last 5 × 3</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Park Factor</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:85%;background:#ffaa33"></div>
+            </div>
+            <span class="factor-val">99</span>
+            <span class="factor-note">×0.99</span>
+        </div>
+
+                <div class="fc-info-grid">
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Facing</div>
+                        <div class="fc-ib-val">Richard Lovelady</div>
+                        <div class="fc-ib-sub">ERA 2.12 · WHIP 1.65</div>
+                    </div>
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Head-to-Head</div>
+                        <div class="fc-ib-val" style="color:#ff4444">❌ .--- / 1PA</div>
+                        <div class="fc-ib-sub">0-for-1 (.---) | 0 HR | 0 RBI | ❌ Struggles | ⚠ Small s</div>
+                    </div>
+                </div>
+
+                <div class="fc-dk-rec">
+                    <div>
+                        <div class="fc-dk-label">Recommended Bet</div>
+                        <div class="fc-dk-val">Over 1.5 ★★</div>
+                    </div>
+                    <div style="text-align:right">
+                        <div class="fc-dk-label">Projected DK pts</div>
+                        <div class="fc-dk-range">2–4 DK pts</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fc-card" data-rank="10" data-time="04:10 PM ET" data-streak="Warm" data-grade="B">
+            <div style="height:4px;background:#5F5E5A"></div>
+            <div class="fc-header">
+                <div style="display:flex;align-items:flex-start;gap:10px">
+                    <div class="fc-rank" style="color:#888780">#10</div>
+                    <div>
+                        <div class="fc-name">James Wood</div>
+                        <div class="fc-sub">Washington Nationals · RF · LHH · Away · 04:10 PM ET</div>
+                        <div class="fc-badges">
+                            <span class="badge" style="background:#4488dd;color:#000e22">B</span>
+                            <span class="badge" style="background:#66aaff22;color:#66aaff">B</span>
+                            <span class="badge" style="background:#111828;color:#66aaff">Leadoff</span>
+                            <span class="badge" style="background:#001a22;color:#66aaff">✅ Warm</span>
+                            <span class="badge" style="background:#0a1020;color:#ff6644">↓ -1.7 pts/game</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="fc-score-block">
+                    <div class="fc-score-num" style="color:#888780">179.4</div>
+                    <div class="fc-score-lbl">Guru Score</div>
+                    
+        <div class="score-bar-wrap">
+            <div class="score-bar" style="width:44%;background:#ffaa33;"></div>
+        </div>
+                </div>
+            </div>
+            <div class="fc-body">
+                <div class="fc-stat-row">
+                    <div class="fc-stat"><div class="fc-sv">.243</div><div class="fc-sl">AVG</div></div>
+                    <div class="fc-stat"><div class="fc-sv">11</div><div class="fc-sl">HR</div></div>
+                    <div class="fc-stat"><div class="fc-sv">28</div><div class="fc-sl">RBI</div></div>
+                    <div class="fc-stat"><div class="fc-sv">27.5%</div><div class="fc-sl">HR/G</div></div>
+                </div>
+
+                <div class="fc-section-lbl">Recent 5 Games — DK pts per game</div>
+                <svg width="110" height="68" style="display:block;margin:4px 0"><rect x="0" y="34" width="18" height="14" rx="3" fill="#66aaff"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="22" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">6</text><rect x="44" y="34" width="18" height="14" rx="3" fill="#66aaff"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="66" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="88" y="12" width="18" height="36" rx="3" fill="#00ff88"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">5</text></svg>
+
+                <div class="fc-section-lbl">Score Factors</div>
+                
+        <div class="factor-row">
+            <span class="factor-label">Season Volume</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:40%;background:#66aaff"></div>
+            </div>
+            <span class="factor-val">100</span>
+            <span class="factor-note">100 H+R+RBI</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Recent Momentum</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:15%;background:#00ff88"></div>
+            </div>
+            <span class="factor-val">45</span>
+            <span class="factor-note">last 5 × 3</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Park Factor</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:85%;background:#ffaa33"></div>
+            </div>
+            <span class="factor-val">99</span>
+            <span class="factor-note">×0.99</span>
+        </div>
+
+                <div class="fc-info-grid">
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Facing</div>
+                        <div class="fc-ib-val">Janson Junk</div>
+                        <div class="fc-ib-sub">ERA 3.25 · WHIP 1.11</div>
+                    </div>
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Head-to-Head</div>
+                        <div class="fc-ib-val" style="color:#66aaff">→ .250 / 5PA</div>
+                        <div class="fc-ib-sub">1-for-5 (.250) | 0 HR | 0 RBI | → Neutral | ⚠ Small sam</div>
+                    </div>
+                </div>
+
+                <div class="fc-dk-rec">
+                    <div>
+                        <div class="fc-dk-label">Recommended Bet</div>
+                        <div class="fc-dk-val">Over 1.5 ★★</div>
+                    </div>
+                    <div style="text-align:right">
+                        <div class="fc-dk-label">Projected DK pts</div>
+                        <div class="fc-dk-range">2–6 DK pts</div>
+                    </div>
+                </div>
+            </div>
+        </div></div>
+
+    <!-- By time slot -->
+    <div class="section-title">⏰ Top 5 by Start Time</div>
+    
+        <div class="slate-section">
+            <div class="slate-header">🕒 04:05 PM ET</div>
+            <table class="slate-table">
+                <thead><tr>
+                    <th>#</th><th>Player</th><th>Team</th><th>Order</th>
+                    <th>Score</th><th>Proj DK</th><th>Conf</th><th>Match</th><th>H2H</th>
+                </tr></thead>
+                <tbody>
+            <tr>
+                <td style="color:#445566;font-weight:700">1</td>
+                <td style="color:#ddeeff;font-weight:600">Shea Langeliers</td>
+                <td style="color:#556677">Athletics</td>
+                <td style="color:#aabbcc">2nd</td>
+                <td style="color:#fff;font-weight:700">265.5</td>
+                <td style="color:#66aaff">4–8 DK pts</td>
+                <td><span class="badge" style="background:#00cc66;color:#002211;font-weight:700">A</span></td>
+                <td><span class="badge" style="background:#66aaff;color:#000;font-weight:700">B</span></td>
+                <td style="color:#00cc66">🔥 .400 / 10PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">2</td>
+                <td style="color:#ddeeff;font-weight:600">Nick Kurtz</td>
+                <td style="color:#556677">Athletics</td>
+                <td style="color:#aabbcc">Leadoff</td>
+                <td style="color:#fff;font-weight:700">185.4</td>
+                <td style="color:#66aaff">2–5 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#00ff88;color:#000;font-weight:700">A+</span></td>
+                <td style="color:#ff4444">❌ .--- / 7PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">3</td>
+                <td style="color:#ddeeff;font-weight:600">Gunnar Henderson</td>
+                <td style="color:#556677">Baltimore Orioles</td>
+                <td style="color:#aabbcc">Leadoff</td>
+                <td style="color:#fff;font-weight:700">139.4</td>
+                <td style="color:#66aaff">0–2 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#66aaff;color:#000;font-weight:700">B</span></td>
+                <td style="color:#00cc66">🔥 .429 / 8PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">4</td>
+                <td style="color:#ddeeff;font-weight:600">Pete Alonso</td>
+                <td style="color:#556677">Baltimore Orioles</td>
+                <td style="color:#aabbcc">Cleanup</td>
+                <td style="color:#fff;font-weight:700">134.3</td>
+                <td style="color:#66aaff">3–8 DK pts</td>
+                <td><span class="badge" style="background:#ffaa33;color:#221100;font-weight:700">C+</span></td>
+                <td><span class="badge" style="background:#888899;color:#000;font-weight:700">C</span></td>
+                <td style="color:#ff4444">❌ .--- / 6PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">5</td>
+                <td style="color:#ddeeff;font-weight:600">Adley Rutschman</td>
+                <td style="color:#556677">Baltimore Orioles</td>
+                <td style="color:#aabbcc">3rd</td>
+                <td style="color:#fff;font-weight:700">132.6</td>
+                <td style="color:#66aaff">2–5 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#66aaff;color:#000;font-weight:700">B</span></td>
+                <td style="color:#66aaff">→ .167 / 12PA</td>
+            </tr></tbody>
+            </table>
+        </div>
+        <div class="slate-section">
+            <div class="slate-header">🕒 04:10 PM ET</div>
+            <table class="slate-table">
+                <thead><tr>
+                    <th>#</th><th>Player</th><th>Team</th><th>Order</th>
+                    <th>Score</th><th>Proj DK</th><th>Conf</th><th>Match</th><th>H2H</th>
+                </tr></thead>
+                <tbody>
+            <tr>
+                <td style="color:#445566;font-weight:700">1</td>
+                <td style="color:#ddeeff;font-weight:600">CJ Abrams</td>
+                <td style="color:#556677">Washington Nationals</td>
+                <td style="color:#aabbcc">Cleanup</td>
+                <td style="color:#fff;font-weight:700">231.7</td>
+                <td style="color:#66aaff">3–10 DK pts</td>
+                <td><span class="badge" style="background:#00cc66;color:#002211;font-weight:700">A</span></td>
+                <td><span class="badge" style="background:#66aaff;color:#000;font-weight:700">B</span></td>
+                <td style="color:#00cc66">🔥 .500 / 8PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">2</td>
+                <td style="color:#ddeeff;font-weight:600">Yordan Alvarez</td>
+                <td style="color:#556677">Houston Astros</td>
+                <td style="color:#aabbcc">2nd</td>
+                <td style="color:#fff;font-weight:700">180.0</td>
+                <td style="color:#66aaff">1–5 DK pts</td>
+                <td><span class="badge" style="background:#66aaff;color:#001133;font-weight:700">B+</span></td>
+                <td><span class="badge" style="background:#66aaff;color:#000;font-weight:700">B</span></td>
+                <td style="color:#555566">—</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">3</td>
+                <td style="color:#ddeeff;font-weight:600">Otto Lopez</td>
+                <td style="color:#556677">Miami Marlins</td>
+                <td style="color:#aabbcc">2nd</td>
+                <td style="color:#fff;font-weight:700">179.6</td>
+                <td style="color:#66aaff">2–4 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#888899;color:#000;font-weight:700">C</span></td>
+                <td style="color:#ff4444">❌ .--- / 1PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">4</td>
+                <td style="color:#ddeeff;font-weight:600">James Wood</td>
+                <td style="color:#556677">Washington Nationals</td>
+                <td style="color:#aabbcc">Leadoff</td>
+                <td style="color:#fff;font-weight:700">179.4</td>
+                <td style="color:#66aaff">2–6 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#66aaff;color:#000;font-weight:700">B</span></td>
+                <td style="color:#66aaff">→ .250 / 5PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">5</td>
+                <td style="color:#ddeeff;font-weight:600">Elly De La Cruz</td>
+                <td style="color:#556677">Cincinnati Reds</td>
+                <td style="color:#aabbcc">3rd</td>
+                <td style="color:#fff;font-weight:700">171.6</td>
+                <td style="color:#66aaff">1–3 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#66aaff;color:#000;font-weight:700">B</span></td>
+                <td style="color:#00cc66">🔥 .1000 / 2PA</td>
+            </tr></tbody>
+            </table>
+        </div>
+        <div class="slate-section">
+            <div class="slate-header">🕒 06:05 PM ET</div>
+            <table class="slate-table">
+                <thead><tr>
+                    <th>#</th><th>Player</th><th>Team</th><th>Order</th>
+                    <th>Score</th><th>Proj DK</th><th>Conf</th><th>Match</th><th>H2H</th>
+                </tr></thead>
+                <tbody>
+            <tr>
+                <td style="color:#445566;font-weight:700">1</td>
+                <td style="color:#ddeeff;font-weight:600">Kyle Schwarber</td>
+                <td style="color:#556677">Philadelphia Phillies</td>
+                <td style="color:#aabbcc">2nd</td>
+                <td style="color:#fff;font-weight:700">218.7</td>
+                <td style="color:#66aaff">2–5 DK pts</td>
+                <td><span class="badge" style="background:#66aaff;color:#001133;font-weight:700">B+</span></td>
+                <td><span class="badge" style="background:#00cc66;color:#000;font-weight:700">A</span></td>
+                <td style="color:#ff4444">❌ .--- / 1PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">2</td>
+                <td style="color:#ddeeff;font-weight:600">Bryce Harper</td>
+                <td style="color:#556677">Philadelphia Phillies</td>
+                <td style="color:#aabbcc">3rd</td>
+                <td style="color:#fff;font-weight:700">216.8</td>
+                <td style="color:#66aaff">2–9 DK pts</td>
+                <td><span class="badge" style="background:#66aaff;color:#001133;font-weight:700">B+</span></td>
+                <td><span class="badge" style="background:#00cc66;color:#000;font-weight:700">A</span></td>
+                <td style="color:#ff4444">❌ .--- / 3PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">3</td>
+                <td style="color:#ddeeff;font-weight:600">Brandon Marsh</td>
+                <td style="color:#556677">Philadelphia Phillies</td>
+                <td style="color:#aabbcc">6th</td>
+                <td style="color:#fff;font-weight:700">186.6</td>
+                <td style="color:#66aaff">2–5 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#00cc66;color:#000;font-weight:700">A</span></td>
+                <td style="color:#ff4444">❌ .--- / 4PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">4</td>
+                <td style="color:#ddeeff;font-weight:600">TJ Rumfield</td>
+                <td style="color:#556677">Colorado Rockies</td>
+                <td style="color:#aabbcc">Cleanup</td>
+                <td style="color:#fff;font-weight:700">155.7</td>
+                <td style="color:#66aaff">1–5 DK pts</td>
+                <td><span class="badge" style="background:#66aaff;color:#001133;font-weight:700">B+</span></td>
+                <td><span class="badge" style="background:#00ff88;color:#000;font-weight:700">A+</span></td>
+                <td style="color:#ff4444">❌ .--- / 3PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">5</td>
+                <td style="color:#ddeeff;font-weight:600">Jake McCarthy</td>
+                <td style="color:#556677">Colorado Rockies</td>
+                <td style="color:#aabbcc">7th</td>
+                <td style="color:#fff;font-weight:700">149.2</td>
+                <td style="color:#66aaff">3–8 DK pts</td>
+                <td><span class="badge" style="background:#66aaff;color:#001133;font-weight:700">B+</span></td>
+                <td><span class="badge" style="background:#00ff88;color:#000;font-weight:700">A+</span></td>
+                <td style="color:#00cc66">🔥 .438 / 17PA</td>
+            </tr></tbody>
+            </table>
+        </div>
+        <div class="slate-section">
+            <div class="slate-header">🕒 06:10 PM ET</div>
+            <table class="slate-table">
+                <thead><tr>
+                    <th>#</th><th>Player</th><th>Team</th><th>Order</th>
+                    <th>Score</th><th>Proj DK</th><th>Conf</th><th>Match</th><th>H2H</th>
+                </tr></thead>
+                <tbody>
+            <tr>
+                <td style="color:#445566;font-weight:700">1</td>
+                <td style="color:#ddeeff;font-weight:600">Byron Buxton</td>
+                <td style="color:#556677">Minnesota Twins</td>
+                <td style="color:#aabbcc">Leadoff</td>
+                <td style="color:#fff;font-weight:700">154.4</td>
+                <td style="color:#66aaff">2–7 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#888899;color:#000;font-weight:700">C</span></td>
+                <td style="color:#ff4444">❌ .--- / 2PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">2</td>
+                <td style="color:#ddeeff;font-weight:600">Chase DeLauter</td>
+                <td style="color:#556677">Cleveland Guardians</td>
+                <td style="color:#aabbcc">2nd</td>
+                <td style="color:#fff;font-weight:700">135.2</td>
+                <td style="color:#66aaff">2–4 DK pts</td>
+                <td><span class="badge" style="background:#ffaa33;color:#221100;font-weight:700">C+</span></td>
+                <td><span class="badge" style="background:#888899;color:#000;font-weight:700">C</span></td>
+                <td style="color:#555566">—</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">3</td>
+                <td style="color:#ddeeff;font-weight:600">Brooks Lee</td>
+                <td style="color:#556677">Minnesota Twins</td>
+                <td style="color:#aabbcc">2nd</td>
+                <td style="color:#fff;font-weight:700">129.5</td>
+                <td style="color:#66aaff">2–8 DK pts</td>
+                <td><span class="badge" style="background:#ffaa33;color:#221100;font-weight:700">C+</span></td>
+                <td><span class="badge" style="background:#66aaff;color:#000;font-weight:700">B</span></td>
+                <td style="color:#ff4444">❌ .125 / 8PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">4</td>
+                <td style="color:#ddeeff;font-weight:600">José Ramírez</td>
+                <td style="color:#556677">Cleveland Guardians</td>
+                <td style="color:#aabbcc">3rd</td>
+                <td style="color:#fff;font-weight:700">122.4</td>
+                <td style="color:#66aaff">1–4 DK pts</td>
+                <td><span class="badge" style="background:#ffaa33;color:#221100;font-weight:700">C+</span></td>
+                <td><span class="badge" style="background:#66aaff;color:#000;font-weight:700">B</span></td>
+                <td style="color:#66aaff">→ .219 / 33PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">5</td>
+                <td style="color:#ddeeff;font-weight:600">Steven Kwan</td>
+                <td style="color:#556677">Cleveland Guardians</td>
+                <td style="color:#aabbcc">Leadoff</td>
+                <td style="color:#fff;font-weight:700">93.1</td>
+                <td style="color:#66aaff">0–4 DK pts</td>
+                <td><span class="badge" style="background:#ff6644;color:#220800;font-weight:700">C</span></td>
+                <td><span class="badge" style="background:#888899;color:#000;font-weight:700">C</span></td>
+                <td style="color:#66aaff">→ .250 / 25PA</td>
+            </tr></tbody>
+            </table>
+        </div>
+        <div class="slate-section">
+            <div class="slate-header">🕒 07:05 PM ET</div>
+            <table class="slate-table">
+                <thead><tr>
+                    <th>#</th><th>Player</th><th>Team</th><th>Order</th>
+                    <th>Score</th><th>Proj DK</th><th>Conf</th><th>Match</th><th>H2H</th>
+                </tr></thead>
+                <tbody>
+            <tr>
+                <td style="color:#445566;font-weight:700">1</td>
+                <td style="color:#ddeeff;font-weight:600">Nico Hoerner</td>
+                <td style="color:#556677">Chicago Cubs</td>
+                <td style="color:#aabbcc">Leadoff</td>
+                <td style="color:#fff;font-weight:700">136.5</td>
+                <td style="color:#66aaff">0–3 DK pts</td>
+                <td><span class="badge" style="background:#ffaa33;color:#221100;font-weight:700">C+</span></td>
+                <td><span class="badge" style="background:#888899;color:#000;font-weight:700">C</span></td>
+                <td style="color:#555566">—</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">2</td>
+                <td style="color:#ddeeff;font-weight:600">Ian Happ</td>
+                <td style="color:#556677">Chicago Cubs</td>
+                <td style="color:#aabbcc">Cleanup</td>
+                <td style="color:#fff;font-weight:700">129.7</td>
+                <td style="color:#66aaff">1–7 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#66aaff;color:#000;font-weight:700">B</span></td>
+                <td style="color:#555566">—</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">3</td>
+                <td style="color:#ddeeff;font-weight:600">Josh Jung</td>
+                <td style="color:#556677">Texas Rangers</td>
+                <td style="color:#aabbcc">Cleanup</td>
+                <td style="color:#fff;font-weight:700">127.9</td>
+                <td style="color:#66aaff">1–4 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#888899;color:#000;font-weight:700">C</span></td>
+                <td style="color:#555566">—</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">4</td>
+                <td style="color:#ddeeff;font-weight:600">Seiya Suzuki</td>
+                <td style="color:#556677">Chicago Cubs</td>
+                <td style="color:#aabbcc">5th</td>
+                <td style="color:#fff;font-weight:700">126.1</td>
+                <td style="color:#66aaff">2–6 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#888899;color:#000;font-weight:700">C</span></td>
+                <td style="color:#555566">—</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">5</td>
+                <td style="color:#ddeeff;font-weight:600">Ezequiel Duran</td>
+                <td style="color:#556677">Texas Rangers</td>
+                <td style="color:#aabbcc">2nd</td>
+                <td style="color:#fff;font-weight:700">114.9</td>
+                <td style="color:#66aaff">2–5 DK pts</td>
+                <td><span class="badge" style="background:#ffaa33;color:#221100;font-weight:700">C+</span></td>
+                <td><span class="badge" style="background:#888899;color:#000;font-weight:700">C</span></td>
+                <td style="color:#555566">—</td>
+            </tr></tbody>
+            </table>
+        </div>
+        <div class="slate-section">
+            <div class="slate-header">🕒 07:10 PM ET</div>
+            <table class="slate-table">
+                <thead><tr>
+                    <th>#</th><th>Player</th><th>Team</th><th>Order</th>
+                    <th>Score</th><th>Proj DK</th><th>Conf</th><th>Match</th><th>H2H</th>
+                </tr></thead>
+                <tbody>
+            <tr>
+                <td style="color:#445566;font-weight:700">1</td>
+                <td style="color:#ddeeff;font-weight:600">Ben Rice</td>
+                <td style="color:#556677">New York Yankees</td>
+                <td style="color:#aabbcc">2nd</td>
+                <td style="color:#fff;font-weight:700">170.6</td>
+                <td style="color:#66aaff">2–6 DK pts</td>
+                <td><span class="badge" style="background:#66aaff;color:#001133;font-weight:700">B+</span></td>
+                <td><span class="badge" style="background:#66aaff;color:#000;font-weight:700">B</span></td>
+                <td style="color:#ff4444">❌ .--- / 2PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">2</td>
+                <td style="color:#ddeeff;font-weight:600">Julio Rodríguez</td>
+                <td style="color:#556677">Seattle Mariners</td>
+                <td style="color:#aabbcc">3rd</td>
+                <td style="color:#fff;font-weight:700">168.1</td>
+                <td style="color:#66aaff">1–5 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#00ff88;color:#000;font-weight:700">A+</span></td>
+                <td style="color:#00cc66">🔥 .1000 / 1PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">3</td>
+                <td style="color:#ddeeff;font-weight:600">Miguel Vargas</td>
+                <td style="color:#556677">Chicago White Sox</td>
+                <td style="color:#aabbcc">3rd</td>
+                <td style="color:#fff;font-weight:700">166.7</td>
+                <td style="color:#66aaff">1–4 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#00cc66;color:#000;font-weight:700">A</span></td>
+                <td style="color:#ff4444">❌ .--- / 3PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">4</td>
+                <td style="color:#ddeeff;font-weight:600">Munetaka Murakami</td>
+                <td style="color:#556677">Chicago White Sox</td>
+                <td style="color:#aabbcc">2nd</td>
+                <td style="color:#fff;font-weight:700">153.6</td>
+                <td style="color:#66aaff">2–8 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#66aaff;color:#000;font-weight:700">B</span></td>
+                <td style="color:#555566">—</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">5</td>
+                <td style="color:#ddeeff;font-weight:600">Randy Arozarena</td>
+                <td style="color:#556677">Seattle Mariners</td>
+                <td style="color:#aabbcc">5th</td>
+                <td style="color:#fff;font-weight:700">153.1</td>
+                <td style="color:#66aaff">1–5 DK pts</td>
+                <td><span class="badge" style="background:#ffaa33;color:#221100;font-weight:700">C+</span></td>
+                <td><span class="badge" style="background:#00ff88;color:#000;font-weight:700">A+</span></td>
+                <td style="color:#ff4444">❌ .--- / 3PA</td>
+            </tr></tbody>
+            </table>
+        </div>
+        <div class="slate-section">
+            <div class="slate-header">🕒 07:15 PM ET</div>
+            <table class="slate-table">
+                <thead><tr>
+                    <th>#</th><th>Player</th><th>Team</th><th>Order</th>
+                    <th>Score</th><th>Proj DK</th><th>Conf</th><th>Match</th><th>H2H</th>
+                </tr></thead>
+                <tbody>
+            <tr>
+                <td style="color:#445566;font-weight:700">1</td>
+                <td style="color:#ddeeff;font-weight:600">Jackson Merrill</td>
+                <td style="color:#556677">San Diego Padres</td>
+                <td style="color:#aabbcc">Leadoff</td>
+                <td style="color:#fff;font-weight:700">154.7</td>
+                <td style="color:#66aaff">1–7 DK pts</td>
+                <td><span class="badge" style="background:#ffaa33;color:#221100;font-weight:700">C+</span></td>
+                <td><span class="badge" style="background:#00ff88;color:#000;font-weight:700">A+</span></td>
+                <td style="color:#ff4444">❌ .--- / 3PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">2</td>
+                <td style="color:#ddeeff;font-weight:600">Jordan Walker</td>
+                <td style="color:#556677">St. Louis Cardinals</td>
+                <td style="color:#aabbcc">Cleanup</td>
+                <td style="color:#fff;font-weight:700">148.8</td>
+                <td style="color:#66aaff">0–3 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#888899;color:#000;font-weight:700">C</span></td>
+                <td style="color:#00cc66">🔥 .500 / 2PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">3</td>
+                <td style="color:#ddeeff;font-weight:600">Iván Herrera</td>
+                <td style="color:#556677">St. Louis Cardinals</td>
+                <td style="color:#aabbcc">2nd</td>
+                <td style="color:#fff;font-weight:700">143.7</td>
+                <td style="color:#66aaff">1–5 DK pts</td>
+                <td><span class="badge" style="background:#ffaa33;color:#221100;font-weight:700">C+</span></td>
+                <td><span class="badge" style="background:#888899;color:#000;font-weight:700">C</span></td>
+                <td style="color:#ff4444">❌ .--- / 3PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">4</td>
+                <td style="color:#ddeeff;font-weight:600">Ildemaro Vargas</td>
+                <td style="color:#556677">Arizona Diamondbacks</td>
+                <td style="color:#aabbcc">5th</td>
+                <td style="color:#fff;font-weight:700">128.5</td>
+                <td style="color:#66aaff">0–3 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#66aaff;color:#000;font-weight:700">B</span></td>
+                <td style="color:#555566">—</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">5</td>
+                <td style="color:#ddeeff;font-weight:600">Alec Burleson</td>
+                <td style="color:#556677">St. Louis Cardinals</td>
+                <td style="color:#aabbcc">3rd</td>
+                <td style="color:#fff;font-weight:700">115.1</td>
+                <td style="color:#66aaff">1–3 DK pts</td>
+                <td><span class="badge" style="background:#ffaa33;color:#221100;font-weight:700">C+</span></td>
+                <td><span class="badge" style="background:#ff4444;color:#000;font-weight:700">D</span></td>
+                <td style="color:#66aaff">→ .333 / 3PA</td>
+            </tr></tbody>
+            </table>
+        </div>
+        <div class="slate-section">
+            <div class="slate-header">🕒 09:05 PM ET</div>
+            <table class="slate-table">
+                <thead><tr>
+                    <th>#</th><th>Player</th><th>Team</th><th>Order</th>
+                    <th>Score</th><th>Proj DK</th><th>Conf</th><th>Match</th><th>H2H</th>
+                </tr></thead>
+                <tbody>
+            <tr>
+                <td style="color:#445566;font-weight:700">1</td>
+                <td style="color:#ddeeff;font-weight:600">Brandon Lowe</td>
+                <td style="color:#556677">Pittsburgh Pirates</td>
+                <td style="color:#aabbcc">2nd</td>
+                <td style="color:#fff;font-weight:700">122.4</td>
+                <td style="color:#66aaff">2–6 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#ff4444;color:#000;font-weight:700">D</span></td>
+                <td style="color:#ff4444">❌ .--- / 2PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">2</td>
+                <td style="color:#ddeeff;font-weight:600">Luis Arraez</td>
+                <td style="color:#556677">San Francisco Giants</td>
+                <td style="color:#aabbcc">2nd</td>
+                <td style="color:#fff;font-weight:700">122.1</td>
+                <td style="color:#66aaff">1–4 DK pts</td>
+                <td><span class="badge" style="background:#ffaa33;color:#221100;font-weight:700">C+</span></td>
+                <td><span class="badge" style="background:#888899;color:#000;font-weight:700">C</span></td>
+                <td style="color:#555566">—</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">3</td>
+                <td style="color:#ddeeff;font-weight:600">Rafael Devers</td>
+                <td style="color:#556677">San Francisco Giants</td>
+                <td style="color:#aabbcc">Cleanup</td>
+                <td style="color:#fff;font-weight:700">113.7</td>
+                <td style="color:#66aaff">2–5 DK pts</td>
+                <td><span class="badge" style="background:#ffaa33;color:#221100;font-weight:700">C+</span></td>
+                <td><span class="badge" style="background:#888899;color:#000;font-weight:700">C</span></td>
+                <td style="color:#ff4444">❌ .--- / 2PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">4</td>
+                <td style="color:#ddeeff;font-weight:600">Bryan Reynolds</td>
+                <td style="color:#556677">Pittsburgh Pirates</td>
+                <td style="color:#aabbcc">3rd</td>
+                <td style="color:#fff;font-weight:700">104.2</td>
+                <td style="color:#66aaff">0–2 DK pts</td>
+                <td><span class="badge" style="background:#ffaa33;color:#221100;font-weight:700">C+</span></td>
+                <td><span class="badge" style="background:#66aaff;color:#000;font-weight:700">B</span></td>
+                <td style="color:#555566">—</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">5</td>
+                <td style="color:#ddeeff;font-weight:600">Oneil Cruz</td>
+                <td style="color:#556677">Pittsburgh Pirates</td>
+                <td style="color:#aabbcc">Leadoff</td>
+                <td style="color:#fff;font-weight:700">102.7</td>
+                <td style="color:#66aaff">0–3 DK pts</td>
+                <td><span class="badge" style="background:#ff6644;color:#220800;font-weight:700">C</span></td>
+                <td><span class="badge" style="background:#ff4444;color:#000;font-weight:700">D</span></td>
+                <td style="color:#555566">—</td>
+            </tr></tbody>
+            </table>
+        </div>
+        <div class="slate-section">
+            <div class="slate-header">🕒 09:10 PM ET</div>
+            <table class="slate-table">
+                <thead><tr>
+                    <th>#</th><th>Player</th><th>Team</th><th>Order</th>
+                    <th>Score</th><th>Proj DK</th><th>Conf</th><th>Match</th><th>H2H</th>
+                </tr></thead>
+                <tbody>
+            <tr>
+                <td style="color:#445566;font-weight:700">1</td>
+                <td style="color:#ddeeff;font-weight:600">Matt Olson</td>
+                <td style="color:#556677">Atlanta Braves</td>
+                <td style="color:#aabbcc">Cleanup</td>
+                <td style="color:#fff;font-weight:700">189.4</td>
+                <td style="color:#66aaff">2–5 DK pts</td>
+                <td><span class="badge" style="background:#66aaff;color:#001133;font-weight:700">B+</span></td>
+                <td><span class="badge" style="background:#66aaff;color:#000;font-weight:700">B</span></td>
+                <td style="color:#ff4444">❌ .--- / 2PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">2</td>
+                <td style="color:#ddeeff;font-weight:600">Shohei Ohtani</td>
+                <td style="color:#556677">Los Angeles Dodgers</td>
+                <td style="color:#aabbcc">Leadoff</td>
+                <td style="color:#fff;font-weight:700">177.3</td>
+                <td style="color:#66aaff">1–5 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#00ff88;color:#000;font-weight:700">A+</span></td>
+                <td style="color:#66aaff">→ .333 / 3PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">3</td>
+                <td style="color:#ddeeff;font-weight:600">Drake Baldwin</td>
+                <td style="color:#556677">Atlanta Braves</td>
+                <td style="color:#aabbcc">2nd</td>
+                <td style="color:#fff;font-weight:700">171.5</td>
+                <td style="color:#66aaff">0–3 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#66aaff;color:#000;font-weight:700">B</span></td>
+                <td style="color:#555566">—</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">4</td>
+                <td style="color:#ddeeff;font-weight:600">Kyle Tucker</td>
+                <td style="color:#556677">Los Angeles Dodgers</td>
+                <td style="color:#aabbcc">Cleanup</td>
+                <td style="color:#fff;font-weight:700">169.6</td>
+                <td style="color:#66aaff">2–5 DK pts</td>
+                <td><span class="badge" style="background:#66aaff;color:#001133;font-weight:700">B+</span></td>
+                <td><span class="badge" style="background:#00ff88;color:#000;font-weight:700">A+</span></td>
+                <td style="color:#66aaff">→ .333 / 3PA</td>
+            </tr>
+            <tr>
+                <td style="color:#445566;font-weight:700">5</td>
+                <td style="color:#ddeeff;font-weight:600">Freddie Freeman</td>
+                <td style="color:#556677">Los Angeles Dodgers</td>
+                <td style="color:#aabbcc">2nd</td>
+                <td style="color:#fff;font-weight:700">161.7</td>
+                <td style="color:#66aaff">2–4 DK pts</td>
+                <td><span class="badge" style="background:#4488dd;color:#000e22;font-weight:700">B</span></td>
+                <td><span class="badge" style="background:#00ff88;color:#000;font-weight:700">A+</span></td>
+                <td style="color:#66aaff">→ .333 / 3PA</td>
+            </tr></tbody>
+            </table>
+        </div>
+
+    <div class="footer">
+        ⚠️ For entertainment and informational purposes only. Always verify lines
+        in the DraftKings app before placing bets. Scores are predictive rankings,
+        not guaranteed outcomes. Bet responsibly.
+        &nbsp;·&nbsp; Data: MLB Stats API (free)
+    </div>
+
+</div>
+<script>
+    // Service worker registration
+    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js'); }
+    // ── Filter logic ──────────────────────────────────────
+    function applyFilters() {
+        const timeVal  = document.getElementById('f-time').value;
+        const countVal = parseInt(document.getElementById('f-count').value);
+        const streakVal= document.getElementById('f-streak').value;
+        const gradeVal = document.getElementById('f-grade').value;
+
+        document.getElementById('count-display').textContent =
+            'Showing top ' + countVal;
+
+        const cards = document.querySelectorAll('.fc-card');
+        let visible = 0;
+
+        cards.forEach(card => {
+            const cardTime   = card.dataset.time   || '';
+            const cardStreak = card.dataset.streak || '';
+            const cardGrade  = card.dataset.grade  || '';
+            const cardRank   = parseInt(card.dataset.rank || '99');
+
+            const timeOk   = timeVal   === 'all' || cardTime === timeVal;
+            const streakOk = streakVal === 'all' || cardStreak === streakVal;
+            const gradeOk  = gradeVal  === 'all' || cardGrade.startsWith(gradeVal);
+            const countOk  = visible < countVal;
+
+            if (timeOk && streakOk && gradeOk && countOk) {
+                card.classList.remove('hidden');
+                visible++;
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('count-display').textContent =
+            'Showing ' + visible + ' picks';
+    }
+
+    // Range slider live label
+    document.addEventListener('DOMContentLoaded', () => {
+        const slider = document.getElementById('f-count');
+        if (slider) {
+            slider.addEventListener('input', () => {
+                document.getElementById('count-display').textContent =
+                    'Showing top ' + slider.value;
+            });
+        }
+    });
+    </script>
+</body>
+</html>
