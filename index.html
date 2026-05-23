@@ -692,6 +692,34 @@
     .lb-stats { text-align: right; font-size: 12px; color: #667788; }
     .lb-rate  { font-size: 18px; font-weight: 800; }
 
+    /* ── Picks tracker callout ── */
+    .picks-callout {
+        background: #060e1a;
+        border: 1px solid #00ff8822;
+        border-left: 3px solid #00ff88;
+        border-radius: 10px;
+        padding: 13px 16px;
+        margin-bottom: 10px;
+    }
+    .picks-callout-text {
+        font-size: 13px;
+        color: #8899bb;
+        line-height: 1.7;
+    }
+    .picks-callout-text b { color: #ddeeff; }
+    .picks-callout-btn {
+        display: inline-block;
+        background: #003322;
+        border: 1px solid #00ff8844;
+        border-radius: 6px;
+        color: #00ff88;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 2px 10px;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
     /* ── Footer ── */
     .footer {
         text-align: center;
@@ -832,7 +860,7 @@
         </div>
     </div>
     <div class="header-right">
-        <div class="gen-time">Generated 10:23 AM ET</div>
+        <div class="gen-time">Generated 10:36 AM ET</div>
         <div style="margin-top:4px;color:#223344">
             Data: MLB Stats API · Free · No key required
         </div>
@@ -940,6 +968,17 @@ If Total > DK line → lean Over.</div>
         </div>
     </div>
 
+    <!-- Picks tracker callout -->
+    <div class="picks-callout">
+        <div class="picks-callout-text">
+            🏆 <b>H-Bomb now tracks your picks!</b> Open any game or the Top 10, find your player, and tap
+            <span class="picks-callout-btn">⚾ HRR Pick</span>
+            to log it. Check the
+            <span class="picks-callout-btn" style="background:#002211;border-color:#00ff8866">📊 My Picks</span>
+            button anytime to see today's picks, hit rate, and the leaderboard.
+        </div>
+    </div>
+
     <!-- Tonight's games + Top 10 button -->
     <div class="section-title">📅 Tonight's Games — tap any game for top picks</div>
     <div class="games-strip">
@@ -954,24 +993,11 @@ If Total > DK line → lean Over.</div>
         </div>
         
         <div class="game-chip" onclick="openModal('modal-game-0')">
-            <div class="matchup">Athletics @ San Diego Padres</div>
-            <div class="game-meta">
-                🕒 09:40 PM ET &nbsp;|&nbsp; Petco Park<br>
-                ⚾ J.T. Ginn vs Lucas Giolito<br>
-                <span style="color:#445566;font-weight:600">4 mph NW · Partly cloudy ⛅ · 63°F</span>
-            </div>
-            <span class="park-pill" style="background:#ff664422;color:#ff6644">
-                Park Factor 99
-            </span>
-            <span class="lineup-pill pending">⚠ Lineup Pending</span>
-            <div class="chip-click-hint">▶ TAP FOR TOP 5 PICKS</div>
-        </div>
-        <div class="game-chip" onclick="openModal('modal-game-1')">
             <div class="matchup">Texas Rangers @ Los Angeles Angels</div>
             <div class="game-meta">
                 🕒 10:05 PM ET &nbsp;|&nbsp; Angel Stadium<br>
                 ⚾ Nathan Eovaldi vs Walbert Ureña<br>
-                <span style="color:#445566;font-weight:600">2 mph SW · Partly cloudy ⛅ · 62°F</span>
+                <span style="color:#445566;font-weight:600">3 mph S · Partly cloudy ⛅ · 62°F</span>
             </div>
             <span class="park-pill" style="background:#ff664422;color:#ff6644">
                 Park Factor 100
@@ -979,7 +1005,7 @@ If Total > DK line → lean Over.</div>
             <span class="lineup-pill pending">⚠ Lineup Pending</span>
             <div class="chip-click-hint">▶ TAP FOR TOP 5 PICKS</div>
         </div>
-        <div class="game-chip" onclick="openModal('modal-game-2')">
+        <div class="game-chip" onclick="openModal('modal-game-1')">
             <div class="matchup">Colorado Rockies @ Arizona Diamondbacks</div>
             <div class="game-meta">
                 🕒 10:10 PM ET &nbsp;|&nbsp; Chase Field<br>
@@ -1156,7 +1182,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                 </div>
                 <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
-                    2 mph SW · Partly cloudy ⛅ · 62°F
+                    3 mph S · Partly cloudy ⛅ · 62°F
                 </div>
 
                 <div class="fc-dk-rec">
@@ -1315,7 +1341,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                     <div class="fc-info-box">
                         <div class="fc-ib-label">Head-to-Head</div>
-                        <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">2-for-9 .250</span><span class="h2h-stat">2HR 3RBI</span><span class="h2h-trend" style="color:#66aaff">Neutral (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#66aaff">2-for-9 .250</span><span class="h2h-stat">2HR 3RBI</span><span class="h2h-trend" style="color:#66aaff">Avg</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
+                        <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">2-for-9 .250</span><span class="h2h-stat">2HR 3RBI</span><span class="h2h-trend" style="color:#66aaff">Neutral (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#66aaff">1-for-3 .333</span><span class="h2h-stat">1HR 1RBI</span><span class="h2h-trend" style="color:#66aaff">Avg</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
                     </div>
                 </div>
                 <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
@@ -1478,7 +1504,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                     <div class="fc-info-box">
                         <div class="fc-ib-label">Head-to-Head</div>
-                        <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">0-for-5 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Struggles (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#ff4444">1-for-9 .125</span><span class="h2h-stat">0HR 1RBI</span><span class="h2h-trend" style="color:#ff4444">Cold</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
+                        <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">0-for-5 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Struggles (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#ff4444">0-for-5 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Cold</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
                     </div>
                 </div>
                 <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
@@ -1645,7 +1671,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                 </div>
                 <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
-                    2 mph SW · Partly cloudy ⛅ · 62°F
+                    3 mph S · Partly cloudy ⛅ · 62°F
                 </div>
 
                 <div class="fc-dk-rec">
@@ -1716,171 +1742,8 @@ If Total > DK line → lean Over.</div>
                 </div>
             </div>
         </div>
-        <div class="fc-card" data-rank="5" data-time="09:40 PM ET" data-streak="On Fire" data-grade="C">
+        <div class="fc-card" data-rank="5" data-time="10:05 PM ET" data-streak="Warm" data-grade="C">
             <div style="height:4px;background:#185FA5"></div>
-            <div class="fc-header">
-                <div style="display:flex;align-items:flex-start;gap:10px">
-                    <div class="fc-headshot-wrap">
-                        <img class="fc-headshot"
-                             src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/701762/headshot/67/current"
-                             onerror="this.onerror=null;this.style.opacity='0.15'"
-                             alt="Nick Kurtz">
-                        <div class="fc-rank-badge" style="color:#4488dd">#5</div>
-                    </div>
-                    <div>
-                        <div class="fc-name">Nick Kurtz</div>
-                        <div class="fc-sub">Athletics · 1B · LHH · Away · 09:40 PM ET</div>
-                        <div class="fc-badges">
-                            <span class="badge-labeled">
-                                <span class="badge" style="background:#ff6644;color:#220800">C</span>
-                                <span class="badge-lbl">CONF</span>
-                            </span>
-                            <span class="badge-labeled">
-                                <span class="badge" style="background:#ff444422;color:#ff4444">D</span>
-                                <span class="badge-lbl">MATCHUP</span>
-                            </span>
-                            <span class="badge" style="background:#111828;color:#66aaff">Pending</span>
-                            <span class="badge" style="background:#1a2e00;color:#7fff00">🔥 On Fire</span>
-                            <span class="badge" style="background:#0a1020;color:#778899">→ Steady</span>
-                            
-                        </div>
-                        <div class="fc-remark">✅ Consistently producing — 3.9 DK pts/game recently. ⚠ lucas giolito dominates lhh — tough matchup.</div>
-                    </div>
-                </div>
-                <div class="fc-score-block">
-                    <div class="fc-score-num" style="color:#4488dd">204.4</div>
-                    <div class="fc-score-lbl">Guru Score</div>
-                    
-        <div class="score-bar-wrap">
-            <div class="score-bar" style="width:51%;background:#ffaa33;"></div>
-        </div>
-                </div>
-            </div>
-            <div class="fc-body">
-                <div class="fc-stat-row">
-                    <div class="fc-stat"><div class="fc-sv">.281</div><div class="fc-sl">AVG</div></div>
-                    <div class="fc-stat"><div class="fc-sv">8</div><div class="fc-sl">HR</div></div>
-                    <div class="fc-stat"><div class="fc-sv">37</div><div class="fc-sl">RBI</div></div>
-                    <div class="fc-stat"><div class="fc-sv">16.0%</div><div class="fc-sl">HR/G</div></div>
-                </div>
-
-                <div class="fc-section-lbl">Recent 10 Games — DK pts per game</div>
-                <svg width="220" height="68" style="display:block;margin:4px 0"><rect x="0" y="13" width="18" height="35" rx="3" fill="#00ff88"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">8</text><rect x="22" y="31" width="18" height="17" rx="3" fill="#00ff88"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text><rect x="44" y="26" width="18" height="22" rx="3" fill="#00ff88"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">5</text><rect x="66" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="88" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="110" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="119" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="132" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="141" y="62" text-anchor="middle" fill="#aaa" font-size="9">10</text><rect x="154" y="31" width="18" height="17" rx="3" fill="#00ff88"/><text x="163" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text><rect x="176" y="35" width="18" height="13" rx="3" fill="#66aaff"/><text x="185" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="198" y="35" width="18" height="13" rx="3" fill="#66aaff"/><text x="207" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text></svg>
-
-                <div class="fc-section-lbl">Score Factors</div>
-                
-        <div class="factor-row">
-            <span class="factor-label">Season Volume</span>
-            <div class="factor-bar-wrap">
-                <div class="factor-bar" style="width:48%;background:#66aaff"></div>
-            </div>
-            <span class="factor-val">122</span>
-            <span class="factor-note">122 H+R+RBI</span>
-        </div>
-        <div class="factor-row">
-            <span class="factor-label">Recent Momentum</span>
-            <div class="factor-bar-wrap">
-                <div class="factor-bar" style="width:39%;background:#00ff88"></div>
-            </div>
-            <span class="factor-val">117</span>
-            <span class="factor-note">last 10 × 3</span>
-        </div>
-        <div class="factor-row">
-            <span class="factor-label">Park Factor</span>
-            <div class="factor-bar-wrap">
-                <div class="factor-bar" style="width:85%;background:#ffaa33"></div>
-            </div>
-            <span class="factor-val">99</span>
-            <span class="factor-note">×0.99</span>
-        </div>
-
-                <div class="fc-info-grid">
-                    <div class="fc-info-box">
-                        <div class="fc-ib-label">Facing</div>
-                        <div class="fc-ib-val">Lucas Giolito</div>
-                        <div class="fc-ib-sub">ERA 5.40 · WHIP 0.80</div>
-                        <div class="fc-ib-sub" style="color:#445566;margin-top:4px">Last start: 3ER / 5.0IP vs ? (2026-05-17)</div>
-                        <div class="fc-ib-sub" style="color:#445566;margin-top:3px">Consistent — 5.40 ERA last 5 starts</div>
-                    </div>
-                    <div class="fc-info-box">
-                        <div class="fc-ib-label">Head-to-Head</div>
-                        <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">1-for-3 .333</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#66aaff">Neutral (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#66aaff">1-for-3 .333</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#66aaff">Avg</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.0%</span><span class="h2h-stat" style="color:#ff6644">BB% 15.0%</span><span class="h2h-trend" style="color:#00cc66">HR/9 0.0</span></div>
-                    </div>
-                </div>
-                <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
-                    4 mph NW · Partly cloudy ⛅ · 63°F
-                </div>
-
-                <div class="fc-dk-rec">
-                    <div>
-                        <div class="fc-dk-label">Recommended Bet</div>
-                        <div class="fc-dk-val">Over 1.5 ★</div>
-                    </div>
-                    <div style="text-align:right">
-                        <div class="fc-dk-label">Projected DK pts</div>
-                        <div class="fc-dk-range">2–10 DK pts</div>
-                    </div>
-                </div>
-                <div style="font-size:10px;color:#334455;padding:5px 0 2px;line-height:1.7">
-                    📱 <b style="color:#445566">How to bet:</b>
-                    DraftKings app → More → Props → Player Props →
-                    search <b style="color:#667788">Kurtz</b> →
-                    Hits+Runs+RBIs → tap <b style="color:#667788">Over 1.5</b>
-                </div>
-                <div class="pick-box">
-                    <div class="pick-box-title">✅ Log your pick</div>
-                    <div class="pick-box-row">
-                        <input class="pick-name-input" type="text" placeholder="Your name"
-                               id="pn-701762-t" list="names-datalist" autocomplete="off">
-                        <select class="pick-line-select" id="pl-701762-t">
-                            <option>Over 0.5</option>
-                            <option selected>Over 1.5</option>
-                            <option>Over 2.5</option>
-                            <option>Over 3.5</option>
-                        </select>
-                        <button class="pick-submit-btn"
-                                data-pid="701762" data-pname="Nick Kurtz"
-                                data-conf="C" data-match="D"
-                                data-score="204.4" data-suffix="t"
-                                onclick="logPickBtn(this)">
-                            ⚾ HRR Pick
-                        </button>
-                    </div>
-                    <div class="pick-submitted" id="ps-701762-t"></div>
-                </div>
-                <div class="fc-math-breakdown">
-                    <div class="fc-math-title">📐 Math Projection (v4)</div>
-                    <div class="fc-math-grid">
-                        <div class="fc-math-item">
-                            <span class="fc-math-lbl">Proj PA</span>
-                            <span class="fc-math-val">4.1</span>
-                        </div>
-                        <div class="fc-math-item">
-                            <span class="fc-math-lbl">Adj AVG</span>
-                            <span class="fc-math-val">.197</span>
-                        </div>
-                        <div class="fc-math-item">
-                            <span class="fc-math-lbl">Proj H</span>
-                            <span class="fc-math-val">1.08</span>
-                        </div>
-                        <div class="fc-math-item">
-                            <span class="fc-math-lbl">Proj R</span>
-                            <span class="fc-math-val">0.73</span>
-                        </div>
-                        <div class="fc-math-item">
-                            <span class="fc-math-lbl">Proj RBI</span>
-                            <span class="fc-math-val">0.63</span>
-                        </div>
-                        <div class="fc-math-item">
-                            <span class="fc-math-lbl">Total</span>
-                            <span class="fc-math-val" style="color:#00ff88;font-weight:700">2.44</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="fc-card" data-rank="6" data-time="10:05 PM ET" data-streak="Warm" data-grade="C">
-            <div style="height:4px;background:#854F0B"></div>
             <div class="fc-header">
                 <div style="display:flex;align-items:flex-start;gap:10px">
                     <div class="fc-headshot-wrap">
@@ -1888,7 +1751,7 @@ If Total > DK line → lean Over.</div>
                              src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/677649/headshot/67/current"
                              onerror="this.onerror=null;this.style.opacity='0.15'"
                              alt="Ezequiel Duran">
-                        <div class="fc-rank-badge" style="color:#ffaa33">#6</div>
+                        <div class="fc-rank-badge" style="color:#4488dd">#5</div>
                     </div>
                     <div>
                         <div class="fc-name">Ezequiel Duran</div>
@@ -1911,7 +1774,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                 </div>
                 <div class="fc-score-block">
-                    <div class="fc-score-num" style="color:#ffaa33">202.6</div>
+                    <div class="fc-score-num" style="color:#4488dd">202.6</div>
                     <div class="fc-score-lbl">Guru Score</div>
                     
         <div class="score-bar-wrap">
@@ -1971,7 +1834,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                 </div>
                 <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
-                    2 mph SW · Partly cloudy ⛅ · 62°F
+                    3 mph S · Partly cloudy ⛅ · 62°F
                 </div>
 
                 <div class="fc-dk-rec">
@@ -2042,334 +1905,8 @@ If Total > DK line → lean Over.</div>
                 </div>
             </div>
         </div>
-        <div class="fc-card" data-rank="7" data-time="10:10 PM ET" data-streak="Warm" data-grade="C">
-            <div style="height:4px;background:#5F5E5A"></div>
-            <div class="fc-header">
-                <div style="display:flex;align-items:flex-start;gap:10px">
-                    <div class="fc-headshot-wrap">
-                        <img class="fc-headshot"
-                             src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/606466/headshot/67/current"
-                             onerror="this.onerror=null;this.style.opacity='0.15'"
-                             alt="Ketel Marte">
-                        <div class="fc-rank-badge" style="color:#888780">#7</div>
-                    </div>
-                    <div>
-                        <div class="fc-name">Ketel Marte</div>
-                        <div class="fc-sub">Arizona Diamondbacks · 2B · SHH · Home · 10:10 PM ET</div>
-                        <div class="fc-badges">
-                            <span class="badge-labeled">
-                                <span class="badge" style="background:#ff6644;color:#220800">C</span>
-                                <span class="badge-lbl">CONF</span>
-                            </span>
-                            <span class="badge-labeled">
-                                <span class="badge" style="background:#66aaff22;color:#66aaff">B</span>
-                                <span class="badge-lbl">MATCHUP</span>
-                            </span>
-                            <span class="badge" style="background:#111828;color:#66aaff">Pending</span>
-                            <span class="badge" style="background:#001a22;color:#66aaff">✅ Warm</span>
-                            <span class="badge" style="background:#0a1020;color:#00cc66">↑ +3.0 pts/game</span>
-                            
-                        </div>
-                        <div class="fc-remark">✅ Consistently producing — 2.9 DK pts/game recently. Michael lorenzen gave up 6 er last outing — may be vulnerable tonight.</div>
-                    </div>
-                </div>
-                <div class="fc-score-block">
-                    <div class="fc-score-num" style="color:#888780">192.6</div>
-                    <div class="fc-score-lbl">Guru Score</div>
-                    
-        <div class="score-bar-wrap">
-            <div class="score-bar" style="width:48%;background:#ffaa33;"></div>
-        </div>
-                </div>
-            </div>
-            <div class="fc-body">
-                <div class="fc-stat-row">
-                    <div class="fc-stat"><div class="fc-sv">.241</div><div class="fc-sl">AVG</div></div>
-                    <div class="fc-stat"><div class="fc-sv">7</div><div class="fc-sl">HR</div></div>
-                    <div class="fc-stat"><div class="fc-sv">22</div><div class="fc-sl">RBI</div></div>
-                    <div class="fc-stat"><div class="fc-sv">14.9%</div><div class="fc-sl">HR/G</div></div>
-                </div>
-
-                <div class="fc-section-lbl">Recent 10 Games — DK pts per game</div>
-                <svg width="220" height="68" style="display:block;margin:4px 0"><rect x="0" y="43" width="18" height="5" rx="3" fill="#555566"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="22" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="44" y="32" width="18" height="16" rx="3" fill="#66aaff"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="66" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="88" y="32" width="18" height="16" rx="3" fill="#66aaff"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="110" y="15" width="18" height="33" rx="3" fill="#00ff88"/><text x="119" y="62" text-anchor="middle" fill="#aaa" font-size="9">6</text><rect x="132" y="21" width="18" height="27" rx="3" fill="#00ff88"/><text x="141" y="62" text-anchor="middle" fill="#aaa" font-size="9">5</text><rect x="154" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="163" y="62" text-anchor="middle" fill="#aaa" font-size="9">8</text><rect x="176" y="37" width="18" height="11" rx="3" fill="#66aaff"/><text x="185" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="198" y="43" width="18" height="5" rx="3" fill="#555566"/><text x="207" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text></svg>
-
-                <div class="fc-section-lbl">Score Factors</div>
-                
-        <div class="factor-row">
-            <span class="factor-label">Season Volume</span>
-            <div class="factor-bar-wrap">
-                <div class="factor-bar" style="width:37%;background:#66aaff"></div>
-            </div>
-            <span class="factor-val">94</span>
-            <span class="factor-note">94 H+R+RBI</span>
-        </div>
-        <div class="factor-row">
-            <span class="factor-label">Recent Momentum</span>
-            <div class="factor-bar-wrap">
-                <div class="factor-bar" style="width:28%;background:#00ff88"></div>
-            </div>
-            <span class="factor-val">87</span>
-            <span class="factor-note">last 10 × 3</span>
-        </div>
-        <div class="factor-row">
-            <span class="factor-label">Park Factor</span>
-            <div class="factor-bar-wrap">
-                <div class="factor-bar" style="width:88%;background:#ffaa33"></div>
-            </div>
-            <span class="factor-val">103</span>
-            <span class="factor-note">×1.03</span>
-        </div>
-
-                <div class="fc-info-grid">
-                    <div class="fc-info-box">
-                        <div class="fc-ib-label">Facing</div>
-                        <div class="fc-ib-val">Michael Lorenzen</div>
-                        <div class="fc-ib-sub">ERA 7.03 · WHIP 1.91</div>
-                        <div class="fc-ib-sub" style="color:#ff6644;margin-top:4px">⚠ Last start rough: 6ER / 4.2IP — target tonight</div>
-                        <div class="fc-ib-sub" style="color:#445566;margin-top:3px">Consistent — 6.84 ERA last 5 starts</div>
-                    </div>
-                    <div class="fc-info-box">
-                        <div class="fc-ib-label">Head-to-Head</div>
-                        <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">0-for-9 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Struggles (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#ff4444">0-for-9 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Cold</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
-                    </div>
-                </div>
-                <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
-                    🏟 Dome — weather irrelevant
-                </div>
-
-                <div class="fc-dk-rec">
-                    <div>
-                        <div class="fc-dk-label">Recommended Bet</div>
-                        <div class="fc-dk-val">Over 1.5 ★</div>
-                    </div>
-                    <div style="text-align:right">
-                        <div class="fc-dk-label">Projected DK pts</div>
-                        <div class="fc-dk-range">2–8 DK pts</div>
-                    </div>
-                </div>
-                <div style="font-size:10px;color:#334455;padding:5px 0 2px;line-height:1.7">
-                    📱 <b style="color:#445566">How to bet:</b>
-                    DraftKings app → More → Props → Player Props →
-                    search <b style="color:#667788">Marte</b> →
-                    Hits+Runs+RBIs → tap <b style="color:#667788">Over 1.5</b>
-                </div>
-                <div class="pick-box">
-                    <div class="pick-box-title">✅ Log your pick</div>
-                    <div class="pick-box-row">
-                        <input class="pick-name-input" type="text" placeholder="Your name"
-                               id="pn-606466-t" list="names-datalist" autocomplete="off">
-                        <select class="pick-line-select" id="pl-606466-t">
-                            <option>Over 0.5</option>
-                            <option selected>Over 1.5</option>
-                            <option>Over 2.5</option>
-                            <option>Over 3.5</option>
-                        </select>
-                        <button class="pick-submit-btn"
-                                data-pid="606466" data-pname="Ketel Marte"
-                                data-conf="C" data-match="B"
-                                data-score="192.6" data-suffix="t"
-                                onclick="logPickBtn(this)">
-                            ⚾ HRR Pick
-                        </button>
-                    </div>
-                    <div class="pick-submitted" id="ps-606466-t"></div>
-                </div>
-                <div class="fc-math-breakdown">
-                    <div class="fc-math-title">📐 Math Projection (v4)</div>
-                    <div class="fc-math-grid">
-                        <div class="fc-math-item">
-                            <span class="fc-math-lbl">Proj PA</span>
-                            <span class="fc-math-val">4.1</span>
-                        </div>
-                        <div class="fc-math-item">
-                            <span class="fc-math-lbl">Adj AVG</span>
-                            <span class="fc-math-val">.241</span>
-                        </div>
-                        <div class="fc-math-item">
-                            <span class="fc-math-lbl">Proj H</span>
-                            <span class="fc-math-val">1.07</span>
-                        </div>
-                        <div class="fc-math-item">
-                            <span class="fc-math-lbl">Proj R</span>
-                            <span class="fc-math-val">0.57</span>
-                        </div>
-                        <div class="fc-math-item">
-                            <span class="fc-math-lbl">Proj RBI</span>
-                            <span class="fc-math-val">0.52</span>
-                        </div>
-                        <div class="fc-math-item">
-                            <span class="fc-math-lbl">Total</span>
-                            <span class="fc-math-val" style="color:#00ff88;font-weight:700">2.16</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="fc-card" data-rank="8" data-time="10:10 PM ET" data-streak="Warm" data-grade="C">
-            <div style="height:4px;background:#185FA5"></div>
-            <div class="fc-header">
-                <div style="display:flex;align-items:flex-start;gap:10px">
-                    <div class="fc-headshot-wrap">
-                        <img class="fc-headshot"
-                             src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/571448/headshot/67/current"
-                             onerror="this.onerror=null;this.style.opacity='0.15'"
-                             alt="Nolan Arenado">
-                        <div class="fc-rank-badge" style="color:#4488dd">#8</div>
-                    </div>
-                    <div>
-                        <div class="fc-name">Nolan Arenado</div>
-                        <div class="fc-sub">Arizona Diamondbacks · 3B · RHH · Home · 10:10 PM ET</div>
-                        <div class="fc-badges">
-                            <span class="badge-labeled">
-                                <span class="badge" style="background:#ff6644;color:#220800">C</span>
-                                <span class="badge-lbl">CONF</span>
-                            </span>
-                            <span class="badge-labeled">
-                                <span class="badge" style="background:#88889922;color:#888899">C</span>
-                                <span class="badge-lbl">MATCHUP</span>
-                            </span>
-                            <span class="badge" style="background:#111828;color:#66aaff">Pending</span>
-                            <span class="badge" style="background:#001a22;color:#66aaff">✅ Warm</span>
-                            <span class="badge" style="background:#0a1020;color:#778899">→ Steady</span>
-                            
-                        </div>
-                        <div class="fc-remark">Michael Lorenzen gave up 6 ER last outing — may be vulnerable tonight.</div>
-                    </div>
-                </div>
-                <div class="fc-score-block">
-                    <div class="fc-score-num" style="color:#4488dd">191.3</div>
-                    <div class="fc-score-lbl">Guru Score</div>
-                    
-        <div class="score-bar-wrap">
-            <div class="score-bar" style="width:47%;background:#ffaa33;"></div>
-        </div>
-                </div>
-            </div>
-            <div class="fc-body">
-                <div class="fc-stat-row">
-                    <div class="fc-stat"><div class="fc-sv">.274</div><div class="fc-sl">AVG</div></div>
-                    <div class="fc-stat"><div class="fc-sv">7</div><div class="fc-sl">HR</div></div>
-                    <div class="fc-stat"><div class="fc-sv">25</div><div class="fc-sl">RBI</div></div>
-                    <div class="fc-stat"><div class="fc-sv">14.9%</div><div class="fc-sl">HR/G</div></div>
-                </div>
-
-                <div class="fc-section-lbl">Recent 10 Games — DK pts per game</div>
-                <svg width="220" height="68" style="display:block;margin:4px 0"><rect x="0" y="34" width="18" height="14" rx="3" fill="#66aaff"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="22" y="41" width="18" height="7" rx="3" fill="#555566"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="44" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">6</text><rect x="66" y="26" width="18" height="22" rx="3" fill="#66aaff"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="88" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="110" y="34" width="18" height="14" rx="3" fill="#66aaff"/><text x="119" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="132" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="141" y="62" text-anchor="middle" fill="#aaa" font-size="9">6</text><rect x="154" y="34" width="18" height="14" rx="3" fill="#66aaff"/><text x="163" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="176" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="185" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="198" y="34" width="18" height="14" rx="3" fill="#66aaff"/><text x="207" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text></svg>
-
-                <div class="fc-section-lbl">Score Factors</div>
-                
-        <div class="factor-row">
-            <span class="factor-label">Season Volume</span>
-            <div class="factor-bar-wrap">
-                <div class="factor-bar" style="width:37%;background:#66aaff"></div>
-            </div>
-            <span class="factor-val">94</span>
-            <span class="factor-note">94 H+R+RBI</span>
-        </div>
-        <div class="factor-row">
-            <span class="factor-label">Recent Momentum</span>
-            <div class="factor-bar-wrap">
-                <div class="factor-bar" style="width:24%;background:#00ff88"></div>
-            </div>
-            <span class="factor-val">72</span>
-            <span class="factor-note">last 10 × 3</span>
-        </div>
-        <div class="factor-row">
-            <span class="factor-label">Park Factor</span>
-            <div class="factor-bar-wrap">
-                <div class="factor-bar" style="width:88%;background:#ffaa33"></div>
-            </div>
-            <span class="factor-val">103</span>
-            <span class="factor-note">×1.03</span>
-        </div>
-
-                <div class="fc-info-grid">
-                    <div class="fc-info-box">
-                        <div class="fc-ib-label">Facing</div>
-                        <div class="fc-ib-val">Michael Lorenzen</div>
-                        <div class="fc-ib-sub">ERA 7.03 · WHIP 1.91</div>
-                        <div class="fc-ib-sub" style="color:#ff6644;margin-top:4px">⚠ Last start rough: 6ER / 4.2IP — target tonight</div>
-                        <div class="fc-ib-sub" style="color:#445566;margin-top:3px">Consistent — 6.84 ERA last 5 starts</div>
-                    </div>
-                    <div class="fc-info-box">
-                        <div class="fc-ib-label">Head-to-Head</div>
-                        <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">1-for-5 .250</span><span class="h2h-stat">1HR 2RBI</span><span class="h2h-trend" style="color:#66aaff">Neutral (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#66aaff">3-for-18 .176</span><span class="h2h-stat">1HR 4RBI</span><span class="h2h-trend" style="color:#66aaff">Avg</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
-                    </div>
-                </div>
-                <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
-                    🏟 Dome — weather irrelevant
-                </div>
-
-                <div class="fc-dk-rec">
-                    <div>
-                        <div class="fc-dk-label">Recommended Bet</div>
-                        <div class="fc-dk-val">Over 1.5 ★</div>
-                    </div>
-                    <div style="text-align:right">
-                        <div class="fc-dk-label">Projected DK pts</div>
-                        <div class="fc-dk-range">2–6 DK pts</div>
-                    </div>
-                </div>
-                <div style="font-size:10px;color:#334455;padding:5px 0 2px;line-height:1.7">
-                    📱 <b style="color:#445566">How to bet:</b>
-                    DraftKings app → More → Props → Player Props →
-                    search <b style="color:#667788">Arenado</b> →
-                    Hits+Runs+RBIs → tap <b style="color:#667788">Over 1.5</b>
-                </div>
-                <div class="pick-box">
-                    <div class="pick-box-title">✅ Log your pick</div>
-                    <div class="pick-box-row">
-                        <input class="pick-name-input" type="text" placeholder="Your name"
-                               id="pn-571448-t" list="names-datalist" autocomplete="off">
-                        <select class="pick-line-select" id="pl-571448-t">
-                            <option>Over 0.5</option>
-                            <option selected>Over 1.5</option>
-                            <option>Over 2.5</option>
-                            <option>Over 3.5</option>
-                        </select>
-                        <button class="pick-submit-btn"
-                                data-pid="571448" data-pname="Nolan Arenado"
-                                data-conf="C" data-match="C"
-                                data-score="191.3" data-suffix="t"
-                                onclick="logPickBtn(this)">
-                            ⚾ HRR Pick
-                        </button>
-                    </div>
-                    <div class="pick-submitted" id="ps-571448-t"></div>
-                </div>
-                <div class="fc-math-breakdown">
-                    <div class="fc-math-title">📐 Math Projection (v4)</div>
-                    <div class="fc-math-grid">
-                        <div class="fc-math-item">
-                            <span class="fc-math-lbl">Proj PA</span>
-                            <span class="fc-math-val">4.1</span>
-                        </div>
-                        <div class="fc-math-item">
-                            <span class="fc-math-lbl">Adj AVG</span>
-                            <span class="fc-math-val">.285</span>
-                        </div>
-                        <div class="fc-math-item">
-                            <span class="fc-math-lbl">Proj H</span>
-                            <span class="fc-math-val">1.07</span>
-                        </div>
-                        <div class="fc-math-item">
-                            <span class="fc-math-lbl">Proj R</span>
-                            <span class="fc-math-val">0.55</span>
-                        </div>
-                        <div class="fc-math-item">
-                            <span class="fc-math-lbl">Proj RBI</span>
-                            <span class="fc-math-val">0.47</span>
-                        </div>
-                        <div class="fc-math-item">
-                            <span class="fc-math-lbl">Total</span>
-                            <span class="fc-math-val" style="color:#00ff88;font-weight:700">2.09</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="fc-card" data-rank="9" data-time="10:10 PM ET" data-streak="Warm" data-grade="C">
-            <div style="height:4px;background:#791F1F"></div>
+        <div class="fc-card" data-rank="6" data-time="10:10 PM ET" data-streak="Warm" data-grade="C">
+            <div style="height:4px;background:#854F0B"></div>
             <div class="fc-header">
                 <div style="display:flex;align-items:flex-start;gap:10px">
                     <div class="fc-headshot-wrap">
@@ -2377,7 +1914,7 @@ If Total > DK line → lean Over.</div>
                              src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/681198/headshot/67/current"
                              onerror="this.onerror=null;this.style.opacity='0.15'"
                              alt="TJ Rumfield">
-                        <div class="fc-rank-badge" style="color:#ff6644">#9</div>
+                        <div class="fc-rank-badge" style="color:#ffaa33">#6</div>
                     </div>
                     <div>
                         <div class="fc-name">TJ Rumfield</div>
@@ -2400,7 +1937,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                 </div>
                 <div class="fc-score-block">
-                    <div class="fc-score-num" style="color:#ff6644">187.3</div>
+                    <div class="fc-score-num" style="color:#ffaa33">187.3</div>
                     <div class="fc-score-lbl">Guru Score</div>
                     
         <div class="score-bar-wrap">
@@ -2531,20 +2068,20 @@ If Total > DK line → lean Over.</div>
                 </div>
             </div>
         </div>
-        <div class="fc-card" data-rank="10" data-time="10:05 PM ET" data-streak="Warm" data-grade="C">
+        <div class="fc-card" data-rank="7" data-time="10:10 PM ET" data-streak="Neutral" data-grade="C">
             <div style="height:4px;background:#5F5E5A"></div>
             <div class="fc-header">
                 <div style="display:flex;align-items:flex-start;gap:10px">
                     <div class="fc-headshot-wrap">
                         <img class="fc-headshot"
-                             src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/679822/headshot/67/current"
+                             src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/687859/headshot/67/current"
                              onerror="this.onerror=null;this.style.opacity='0.15'"
-                             alt="Justin Foscue">
-                        <div class="fc-rank-badge" style="color:#888780">#10</div>
+                             alt="Troy Johnston">
+                        <div class="fc-rank-badge" style="color:#888780">#7</div>
                     </div>
                     <div>
-                        <div class="fc-name">Justin Foscue</div>
-                        <div class="fc-sub">Texas Rangers · 2B · RHH · Away · 10:05 PM ET</div>
+                        <div class="fc-name">Troy Johnston</div>
+                        <div class="fc-sub">Colorado Rockies · RF · LHH · Away · 10:10 PM ET</div>
                         <div class="fc-badges">
                             <span class="badge-labeled">
                                 <span class="badge" style="background:#ff6644;color:#220800">C</span>
@@ -2555,49 +2092,212 @@ If Total > DK line → lean Over.</div>
                                 <span class="badge-lbl">MATCHUP</span>
                             </span>
                             <span class="badge" style="background:#111828;color:#66aaff">Pending</span>
-                            <span class="badge" style="background:#001a22;color:#66aaff">✅ Warm</span>
-                            <span class="badge" style="background:#0a1020;color:#00cc66">↑ +2.6 pts/game</span>
+                            <span class="badge" style="background:#111828;color:#778899">→ Neutral</span>
+                            <span class="badge" style="background:#0a1020;color:#00cc66">↑ +1.2 pts/game</span>
                             
                         </div>
-                        <div class="fc-remark">limited upside tonight — Low confidence — skip or avoid.</div>
+                        <div class="fc-remark">🎯 Struggling recently — 6.43 ERA last 5 starts vs 4.78 season.</div>
                     </div>
                 </div>
                 <div class="fc-score-block">
-                    <div class="fc-score-num" style="color:#888780">178.4</div>
+                    <div class="fc-score-num" style="color:#888780">174.9</div>
                     <div class="fc-score-lbl">Guru Score</div>
                     
         <div class="score-bar-wrap">
-            <div class="score-bar" style="width:44%;background:#ffaa33;"></div>
+            <div class="score-bar" style="width:43%;background:#ffaa33;"></div>
         </div>
                 </div>
             </div>
             <div class="fc-body">
                 <div class="fc-stat-row">
-                    <div class="fc-stat"><div class="fc-sv">.351</div><div class="fc-sl">AVG</div></div>
+                    <div class="fc-stat"><div class="fc-sv">.316</div><div class="fc-sl">AVG</div></div>
                     <div class="fc-stat"><div class="fc-sv">2</div><div class="fc-sl">HR</div></div>
-                    <div class="fc-stat"><div class="fc-sv">7</div><div class="fc-sl">RBI</div></div>
-                    <div class="fc-stat"><div class="fc-sv">15.4%</div><div class="fc-sl">HR/G</div></div>
+                    <div class="fc-stat"><div class="fc-sv">22</div><div class="fc-sl">RBI</div></div>
+                    <div class="fc-stat"><div class="fc-sv">4.3%</div><div class="fc-sl">HR/G</div></div>
                 </div>
 
                 <div class="fc-section-lbl">Recent 10 Games — DK pts per game</div>
-                <svg width="220" height="68" style="display:block;margin:4px 0"><rect x="0" y="30" width="18" height="18" rx="3" fill="#66aaff"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="22" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="44" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="66" y="42" width="18" height="6" rx="3" fill="#555566"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="88" y="42" width="18" height="6" rx="3" fill="#555566"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="110" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="119" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="132" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="141" y="62" text-anchor="middle" fill="#aaa" font-size="9">7</text><rect x="154" y="30" width="18" height="18" rx="3" fill="#66aaff"/><text x="163" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="176" y="23" width="18" height="25" rx="3" fill="#00ff88"/><text x="185" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text><rect x="198" y="23" width="18" height="25" rx="3" fill="#00ff88"/><text x="207" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text></svg>
+                <svg width="220" height="68" style="display:block;margin:4px 0"><rect x="0" y="40" width="18" height="8" rx="3" fill="#555566"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="22" y="31" width="18" height="17" rx="3" fill="#66aaff"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="44" y="22" width="18" height="26" rx="3" fill="#66aaff"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="66" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="88" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="110" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="119" y="62" text-anchor="middle" fill="#aaa" font-size="9">5</text><rect x="132" y="31" width="18" height="17" rx="3" fill="#66aaff"/><text x="141" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="154" y="22" width="18" height="26" rx="3" fill="#66aaff"/><text x="163" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="176" y="31" width="18" height="17" rx="3" fill="#66aaff"/><text x="185" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="198" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="207" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text></svg>
 
                 <div class="fc-section-lbl">Score Factors</div>
                 
         <div class="factor-row">
             <span class="factor-label">Season Volume</span>
             <div class="factor-bar-wrap">
-                <div class="factor-bar" style="width:10%;background:#66aaff"></div>
+                <div class="factor-bar" style="width:35%;background:#66aaff"></div>
             </div>
-            <span class="factor-val">25</span>
-            <span class="factor-note">25 H+R+RBI</span>
+            <span class="factor-val">88</span>
+            <span class="factor-note">88 H+R+RBI</span>
         </div>
         <div class="factor-row">
             <span class="factor-label">Recent Momentum</span>
             <div class="factor-bar-wrap">
-                <div class="factor-bar" style="width:23%;background:#00ff88"></div>
+                <div class="factor-bar" style="width:18%;background:#00ff88"></div>
             </div>
-            <span class="factor-val">69</span>
+            <span class="factor-val">54</span>
+            <span class="factor-note">last 10 × 3</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Park Factor</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:88%;background:#ffaa33"></div>
+            </div>
+            <span class="factor-val">103</span>
+            <span class="factor-note">×1.03</span>
+        </div>
+
+                <div class="fc-info-grid">
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Facing</div>
+                        <div class="fc-ib-val">Zac Gallen</div>
+                        <div class="fc-ib-sub">ERA 4.78 · WHIP 1.43</div>
+                        <div class="fc-ib-sub" style="color:#445566;margin-top:4px">Last start: 2ER / 6.0IP vs ? (2026-05-18)</div>
+                        <div class="fc-ib-sub" style="color:#00cc66;margin-top:3px">🎯 Struggling recently — 6.43 ERA last 5 starts vs 4.78 season</div>
+                    </div>
+                    <div class="fc-info-box">
+                        <div class="fc-ib-label">Head-to-Head</div>
+                        <div class="h2h-empty">No H2H data vs Zac Gallen</div>
+                    </div>
+                </div>
+                <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
+                    🏟 Dome — weather irrelevant
+                </div>
+
+                <div class="fc-dk-rec">
+                    <div>
+                        <div class="fc-dk-label">Recommended Bet</div>
+                        <div class="fc-dk-val">Over 1.5 ★</div>
+                    </div>
+                    <div style="text-align:right">
+                        <div class="fc-dk-label">Projected DK pts</div>
+                        <div class="fc-dk-range">1–5 DK pts</div>
+                    </div>
+                </div>
+                <div style="font-size:10px;color:#334455;padding:5px 0 2px;line-height:1.7">
+                    📱 <b style="color:#445566">How to bet:</b>
+                    DraftKings app → More → Props → Player Props →
+                    search <b style="color:#667788">Johnston</b> →
+                    Hits+Runs+RBIs → tap <b style="color:#667788">Over 1.5</b>
+                </div>
+                <div class="pick-box">
+                    <div class="pick-box-title">✅ Log your pick</div>
+                    <div class="pick-box-row">
+                        <input class="pick-name-input" type="text" placeholder="Your name"
+                               id="pn-687859-t" list="names-datalist" autocomplete="off">
+                        <select class="pick-line-select" id="pl-687859-t">
+                            <option>Over 0.5</option>
+                            <option selected>Over 1.5</option>
+                            <option>Over 2.5</option>
+                            <option>Over 3.5</option>
+                        </select>
+                        <button class="pick-submit-btn"
+                                data-pid="687859" data-pname="Troy Johnston"
+                                data-conf="C" data-match="C"
+                                data-score="174.9" data-suffix="t"
+                                onclick="logPickBtn(this)">
+                            ⚾ HRR Pick
+                        </button>
+                    </div>
+                    <div class="pick-submitted" id="ps-687859-t"></div>
+                </div>
+                <div class="fc-math-breakdown">
+                    <div class="fc-math-title">📐 Math Projection (v4)</div>
+                    <div class="fc-math-grid">
+                        <div class="fc-math-item">
+                            <span class="fc-math-lbl">Proj PA</span>
+                            <span class="fc-math-val">4.1</span>
+                        </div>
+                        <div class="fc-math-item">
+                            <span class="fc-math-lbl">Adj AVG</span>
+                            <span class="fc-math-val">.327</span>
+                        </div>
+                        <div class="fc-math-item">
+                            <span class="fc-math-lbl">Proj H</span>
+                            <span class="fc-math-val">1.07</span>
+                        </div>
+                        <div class="fc-math-item">
+                            <span class="fc-math-lbl">Proj R</span>
+                            <span class="fc-math-val">0.51</span>
+                        </div>
+                        <div class="fc-math-item">
+                            <span class="fc-math-lbl">Proj RBI</span>
+                            <span class="fc-math-val">0.39</span>
+                        </div>
+                        <div class="fc-math-item">
+                            <span class="fc-math-lbl">Total</span>
+                            <span class="fc-math-val" style="color:#00ff88;font-weight:700">1.96</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fc-card" data-rank="8" data-time="10:05 PM ET" data-streak="Neutral" data-grade="C">
+            <div style="height:4px;background:#185FA5"></div>
+            <div class="fc-header">
+                <div style="display:flex;align-items:flex-start;gap:10px">
+                    <div class="fc-headshot-wrap">
+                        <img class="fc-headshot"
+                             src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/694384/headshot/67/current"
+                             onerror="this.onerror=null;this.style.opacity='0.15'"
+                             alt="Nolan Schanuel">
+                        <div class="fc-rank-badge" style="color:#4488dd">#8</div>
+                    </div>
+                    <div>
+                        <div class="fc-name">Nolan Schanuel</div>
+                        <div class="fc-sub">Los Angeles Angels · 1B · LHH · Home · 10:05 PM ET</div>
+                        <div class="fc-badges">
+                            <span class="badge-labeled">
+                                <span class="badge" style="background:#ff6644;color:#220800">C</span>
+                                <span class="badge-lbl">CONF</span>
+                            </span>
+                            <span class="badge-labeled">
+                                <span class="badge" style="background:#88889922;color:#888899">C</span>
+                                <span class="badge-lbl">MATCHUP</span>
+                            </span>
+                            <span class="badge" style="background:#111828;color:#66aaff">Pending</span>
+                            <span class="badge" style="background:#111828;color:#778899">→ Neutral</span>
+                            <span class="badge" style="background:#0a1020;color:#778899">→ Steady</span>
+                            
+                        </div>
+                        <div class="fc-remark">limited upside tonight — Low confidence — skip or avoid.</div>
+                    </div>
+                </div>
+                <div class="fc-score-block">
+                    <div class="fc-score-num" style="color:#4488dd">146.7</div>
+                    <div class="fc-score-lbl">Guru Score</div>
+                    
+        <div class="score-bar-wrap">
+            <div class="score-bar" style="width:36%;background:#ffaa33;"></div>
+        </div>
+                </div>
+            </div>
+            <div class="fc-body">
+                <div class="fc-stat-row">
+                    <div class="fc-stat"><div class="fc-sv">.255</div><div class="fc-sl">AVG</div></div>
+                    <div class="fc-stat"><div class="fc-sv">4</div><div class="fc-sl">HR</div></div>
+                    <div class="fc-stat"><div class="fc-sv">23</div><div class="fc-sl">RBI</div></div>
+                    <div class="fc-stat"><div class="fc-sv">8.3%</div><div class="fc-sl">HR/G</div></div>
+                </div>
+
+                <div class="fc-section-lbl">Recent 10 Games — DK pts per game</div>
+                <svg width="220" height="68" style="display:block;margin:4px 0"><rect x="0" y="26" width="18" height="22" rx="3" fill="#66aaff"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="22" y="26" width="18" height="22" rx="3" fill="#66aaff"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="44" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="66" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="88" y="15" width="18" height="33" rx="3" fill="#66aaff"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="110" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="119" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="132" y="26" width="18" height="22" rx="3" fill="#66aaff"/><text x="141" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="154" y="37" width="18" height="11" rx="3" fill="#555566"/><text x="163" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="176" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="185" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text><rect x="198" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="207" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text></svg>
+
+                <div class="fc-section-lbl">Score Factors</div>
+                
+        <div class="factor-row">
+            <span class="factor-label">Season Volume</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:35%;background:#66aaff"></div>
+            </div>
+            <span class="factor-val">89</span>
+            <span class="factor-note">89 H+R+RBI</span>
+        </div>
+        <div class="factor-row">
+            <span class="factor-label">Recent Momentum</span>
+            <div class="factor-bar-wrap">
+                <div class="factor-bar" style="width:18%;background:#00ff88"></div>
+            </div>
+            <span class="factor-val">54</span>
             <span class="factor-note">last 10 × 3</span>
         </div>
         <div class="factor-row">
@@ -2612,56 +2312,56 @@ If Total > DK line → lean Over.</div>
                 <div class="fc-info-grid">
                     <div class="fc-info-box">
                         <div class="fc-ib-label">Facing</div>
-                        <div class="fc-ib-val">Walbert Ureña</div>
-                        <div class="fc-ib-sub">ERA 2.70 · WHIP 1.35</div>
-                        <div class="fc-ib-sub" style="color:#445566;margin-top:4px">Last start: 0ER / 6.0IP vs ? (2026-05-18)</div>
-                        <div class="fc-ib-sub" style="color:#445566;margin-top:3px">Consistent — 2.86 ERA last 5 starts</div>
+                        <div class="fc-ib-val">Nathan Eovaldi</div>
+                        <div class="fc-ib-sub">ERA 3.62 · WHIP 1.15</div>
+                        <div class="fc-ib-sub" style="color:#445566;margin-top:4px">Last start: 0ER / 7.0IP vs ? (2026-05-17)</div>
+                        <div class="fc-ib-sub" style="color:#445566;margin-top:3px">Consistent — 2.45 ERA last 5 starts</div>
                     </div>
                     <div class="fc-info-box">
                         <div class="fc-ib-label">Head-to-Head</div>
-                        <div class="h2h-empty">No H2H data vs Walbert Ureña</div>
+                        <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">3-for-6 .500</span><span class="h2h-stat">0HR 1RBI</span><span class="h2h-trend" style="color:#00cc66">Owns (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#00cc66">3-for-6 .500</span><span class="h2h-stat">0HR 1RBI</span><span class="h2h-trend" style="color:#00cc66">Hot</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ffaa33">K% 24.2%</span><span class="h2h-stat" style="color:#00cc66">BB% 5.3%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.66</span></div>
                     </div>
                 </div>
                 <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
-                    2 mph SW · Partly cloudy ⛅ · 62°F
+                    3 mph S · Partly cloudy ⛅ · 62°F
                 </div>
 
                 <div class="fc-dk-rec">
                     <div>
                         <div class="fc-dk-label">Recommended Bet</div>
-                        <div class="fc-dk-val">Over 1.5 ★</div>
+                        <div class="fc-dk-val">Over 0.5</div>
                     </div>
                     <div style="text-align:right">
                         <div class="fc-dk-label">Projected DK pts</div>
-                        <div class="fc-dk-range">2–7 DK pts</div>
+                        <div class="fc-dk-range">1–4 DK pts</div>
                     </div>
                 </div>
                 <div style="font-size:10px;color:#334455;padding:5px 0 2px;line-height:1.7">
                     📱 <b style="color:#445566">How to bet:</b>
                     DraftKings app → More → Props → Player Props →
-                    search <b style="color:#667788">Foscue</b> →
-                    Hits+Runs+RBIs → tap <b style="color:#667788">Over 1.5</b>
+                    search <b style="color:#667788">Schanuel</b> →
+                    Hits+Runs+RBIs → tap <b style="color:#667788">Over 0.5</b>
                 </div>
                 <div class="pick-box">
                     <div class="pick-box-title">✅ Log your pick</div>
                     <div class="pick-box-row">
                         <input class="pick-name-input" type="text" placeholder="Your name"
-                               id="pn-679822-t" list="names-datalist" autocomplete="off">
-                        <select class="pick-line-select" id="pl-679822-t">
+                               id="pn-694384-t" list="names-datalist" autocomplete="off">
+                        <select class="pick-line-select" id="pl-694384-t">
                             <option>Over 0.5</option>
                             <option selected>Over 1.5</option>
                             <option>Over 2.5</option>
                             <option>Over 3.5</option>
                         </select>
                         <button class="pick-submit-btn"
-                                data-pid="679822" data-pname="Justin Foscue"
+                                data-pid="694384" data-pname="Nolan Schanuel"
                                 data-conf="C" data-match="C"
-                                data-score="178.4" data-suffix="t"
+                                data-score="146.7" data-suffix="t"
                                 onclick="logPickBtn(this)">
                             ⚾ HRR Pick
                         </button>
                     </div>
-                    <div class="pick-submitted" id="ps-679822-t"></div>
+                    <div class="pick-submitted" id="ps-694384-t"></div>
                 </div>
                 <div class="fc-math-breakdown">
                     <div class="fc-math-title">📐 Math Projection (v4)</div>
@@ -2672,23 +2372,23 @@ If Total > DK line → lean Over.</div>
                         </div>
                         <div class="fc-math-item">
                             <span class="fc-math-lbl">Adj AVG</span>
-                            <span class="fc-math-val">.354</span>
+                            <span class="fc-math-val">.269</span>
                         </div>
                         <div class="fc-math-item">
                             <span class="fc-math-lbl">Proj H</span>
-                            <span class="fc-math-val">1.24</span>
+                            <span class="fc-math-val">0.94</span>
                         </div>
                         <div class="fc-math-item">
                             <span class="fc-math-lbl">Proj R</span>
-                            <span class="fc-math-val">0.56</span>
+                            <span class="fc-math-val">0.45</span>
                         </div>
                         <div class="fc-math-item">
                             <span class="fc-math-lbl">Proj RBI</span>
-                            <span class="fc-math-val">0.46</span>
+                            <span class="fc-math-val">0.39</span>
                         </div>
                         <div class="fc-math-item">
                             <span class="fc-math-lbl">Total</span>
-                            <span class="fc-math-val" style="color:#00ff88;font-weight:700">2.26</span>
+                            <span class="fc-math-val" style="color:#00ff88;font-weight:700">1.79</span>
                         </div>
                     </div>
                 </div>
@@ -2704,534 +2404,10 @@ If Total > DK line → lean Over.</div>
             <div class="modal-box">
                 <div class="modal-header">
                     <div>
-                        <div class="modal-title">⚾ Athletics @ <span>San Diego Padres</span></div>
-                        <div class="modal-meta">🕒 09:40 PM ET · Petco Park · Park 99 · ⚠ Lineup Pending</div>
-                    </div>
-                    <button class="modal-close" onclick="closeModal('modal-game-0')" aria-label="Close">✕</button>
-                </div>
-                <div class="modal-body">
-                    <div class="modal-grid">
-            <div class="fc-card">
-                <div style="height:3px;background:#1D9E75"></div>
-                <div class="fc-header">
-                    <div style="display:flex;align-items:flex-start;gap:10px">
-                        <div class="fc-headshot-wrap">
-                            <img class="fc-headshot"
-                                 src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/701762/headshot/67/current"
-                                 onerror="this.onerror=null;this.style.opacity='0.15'"
-                                 alt="Nick Kurtz">
-                            <div class="fc-rank-badge" style="color:#00ff88">#1</div>
-                        </div>
-                        <div>
-                            <div class="fc-name">Nick Kurtz</div>
-                            <div class="fc-sub">Athletics · 1B · LHH · Away</div>
-                            <div class="fc-badges">
-                                <span class="badge-labeled">
-                                    <span class="badge" style="background:#ff6644;color:#220800">C</span>
-                                    <span class="badge-lbl">CONF</span>
-                                </span>
-                                <span class="badge-labeled">
-                                    <span class="badge" style="background:#ff444422;color:#ff4444">D</span>
-                                    <span class="badge-lbl">MATCHUP</span>
-                                </span>
-                                <span class="badge" style="background:#111828;color:#66aaff">Pending</span>
-                                <span class="badge" style="background:#1a2e00;color:#7fff00">🔥 On Fire</span>
-                                <span class="badge" style="background:#0a1020;color:#778899">→ Steady</span>
-                                
-                            </div>
-                            <div class="fc-remark">✅ Consistently producing — 3.9 DK pts/game recently. ⚠ lucas giolito dominates lhh — tough matchup.</div>
-                        </div>
-                    </div>
-                    <div class="fc-score-block">
-                        <div class="fc-score-num" style="color:#00ff88">204.4</div>
-                        <div class="fc-score-lbl">Guru Score</div>
-                        
-        <div class="score-bar-wrap">
-            <div class="score-bar" style="width:51%;background:#ffaa33;"></div>
-        </div>
-                    </div>
-                </div>
-                <div class="fc-body">
-                    <div class="fc-stat-row">
-                        <div class="fc-stat"><div class="fc-sv">.281</div><div class="fc-sl">AVG</div></div>
-                        <div class="fc-stat"><div class="fc-sv">8</div><div class="fc-sl">HR</div></div>
-                        <div class="fc-stat"><div class="fc-sv">37</div><div class="fc-sl">RBI</div></div>
-                        <div class="fc-stat"><div class="fc-sv">16.0%</div><div class="fc-sl">HR/G</div></div>
-                    </div>
-                    <div class="fc-section-lbl">Recent 10 Games — DK pts per game</div>
-                    <svg width="220" height="68" style="display:block;margin:4px 0"><rect x="0" y="13" width="18" height="35" rx="3" fill="#00ff88"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">8</text><rect x="22" y="31" width="18" height="17" rx="3" fill="#00ff88"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text><rect x="44" y="26" width="18" height="22" rx="3" fill="#00ff88"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">5</text><rect x="66" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="88" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="110" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="119" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="132" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="141" y="62" text-anchor="middle" fill="#aaa" font-size="9">10</text><rect x="154" y="31" width="18" height="17" rx="3" fill="#00ff88"/><text x="163" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text><rect x="176" y="35" width="18" height="13" rx="3" fill="#66aaff"/><text x="185" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="198" y="35" width="18" height="13" rx="3" fill="#66aaff"/><text x="207" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text></svg>
-                    <div class="fc-info-grid">
-                        <div class="fc-info-box">
-                            <div class="fc-ib-label">Facing</div>
-                            <div class="fc-ib-val">Lucas Giolito</div>
-                            <div class="fc-ib-sub">ERA 5.40 · WHIP 0.80</div>
-                            <div class="fc-ib-sub" style="color:#445566;margin-top:4px">Last start: 3ER / 5.0IP vs ? (2026-05-17)</div>
-                            <div class="fc-ib-sub" style="color:#445566;margin-top:3px">Consistent — 5.40 ERA last 5 starts</div>
-                        </div>
-                        <div class="fc-info-box">
-                            <div class="fc-ib-label">Head-to-Head</div>
-                            <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">1-for-3 .333</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#66aaff">Neutral (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#66aaff">1-for-3 .333</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#66aaff">Avg</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.0%</span><span class="h2h-stat" style="color:#ff6644">BB% 15.0%</span><span class="h2h-trend" style="color:#00cc66">HR/9 0.0</span></div>
-                        </div>
-                    </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">4 mph NW · Partly cloudy ⛅ · 63°F</div>
-                    <div class="fc-dk-rec">
-                        <div>
-                            <div class="fc-dk-label">Recommended Bet</div>
-                            <div class="fc-dk-val">Over 1.5 ★</div>
-                        </div>
-                        <div style="text-align:right">
-                            <div class="fc-dk-label">Projected Range</div>
-                            <div class="fc-dk-range">2–10 DK pts</div>
-                        </div>
-                    </div>
-                    <div style="font-size:10px;color:#334455;padding:5px 0 2px;line-height:1.7">
-                        📱 <b style="color:#445566">How to bet:</b>
-                        DraftKings app → More → Props → Player Props →
-                        search <b style="color:#667788">Kurtz</b> →
-                        Hits+Runs+RBIs → tap <b style="color:#667788">Over 1.5</b>
-                    </div>
-                    <div class="pick-box">
-                        <div class="pick-box-title">✅ Log your pick</div>
-                        <div class="pick-box-row">
-                            <input class="pick-name-input" type="text" placeholder="Your name"
-                                   id="pn-701762-m" list="names-datalist" autocomplete="off">
-                            <select class="pick-line-select" id="pl-701762-m">
-                                <option>Over 0.5</option>
-                                <option selected>Over 1.5</option>
-                                <option>Over 2.5</option>
-                                <option>Over 3.5</option>
-                            </select>
-                            <button class="pick-submit-btn"
-                                    data-pid="701762" data-pname="Nick Kurtz"
-                                    data-conf="C" data-match="D"
-                                    data-score="204.4" data-suffix="m"
-                                    onclick="logPickBtn(this)">
-                                ⚾ HRR Pick
-                            </button>
-                        </div>
-                        <div class="pick-submitted" id="ps-701762-m"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="fc-card">
-                <div style="height:3px;background:#185FA5"></div>
-                <div class="fc-header">
-                    <div style="display:flex;align-items:flex-start;gap:10px">
-                        <div class="fc-headshot-wrap">
-                            <img class="fc-headshot"
-                                 src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/657757/headshot/67/current"
-                                 onerror="this.onerror=null;this.style.opacity='0.15'"
-                                 alt="Gavin Sheets">
-                            <div class="fc-rank-badge" style="color:#66aaff">#2</div>
-                        </div>
-                        <div>
-                            <div class="fc-name">Gavin Sheets</div>
-                            <div class="fc-sub">San Diego Padres · 1B · LHH · Home</div>
-                            <div class="fc-badges">
-                                <span class="badge-labeled">
-                                    <span class="badge" style="background:#ff6644;color:#220800">C</span>
-                                    <span class="badge-lbl">CONF</span>
-                                </span>
-                                <span class="badge-labeled">
-                                    <span class="badge" style="background:#88889922;color:#888899">C</span>
-                                    <span class="badge-lbl">MATCHUP</span>
-                                </span>
-                                <span class="badge" style="background:#111828;color:#66aaff">Pending</span>
-                                <span class="badge" style="background:#001a22;color:#66aaff">✅ Warm</span>
-                                <span class="badge" style="background:#0a1020;color:#778899">→ Steady</span>
-                                
-                            </div>
-                            <div class="fc-remark">✅ Consistently producing — 2.9 DK pts/game recently.</div>
-                        </div>
-                    </div>
-                    <div class="fc-score-block">
-                        <div class="fc-score-num" style="color:#66aaff">170.1</div>
-                        <div class="fc-score-lbl">Guru Score</div>
-                        
-        <div class="score-bar-wrap">
-            <div class="score-bar" style="width:42%;background:#ffaa33;"></div>
-        </div>
-                    </div>
-                </div>
-                <div class="fc-body">
-                    <div class="fc-stat-row">
-                        <div class="fc-stat"><div class="fc-sv">.254</div><div class="fc-sl">AVG</div></div>
-                        <div class="fc-stat"><div class="fc-sv">9</div><div class="fc-sl">HR</div></div>
-                        <div class="fc-stat"><div class="fc-sv">23</div><div class="fc-sl">RBI</div></div>
-                        <div class="fc-stat"><div class="fc-sv">19.6%</div><div class="fc-sl">HR/G</div></div>
-                    </div>
-                    <div class="fc-section-lbl">Recent 10 Games — DK pts per game</div>
-                    <svg width="220" height="68" style="display:block;margin:4px 0"><rect x="0" y="39" width="18" height="9" rx="3" fill="#66aaff"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="22" y="19" width="18" height="29" rx="3" fill="#00ff88"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">6</text><rect x="44" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="66" y="34" width="18" height="14" rx="3" fill="#66aaff"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="88" y="34" width="18" height="14" rx="3" fill="#66aaff"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="110" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="119" y="62" text-anchor="middle" fill="#aaa" font-size="9">9</text><rect x="132" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="141" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="154" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="163" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="176" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="185" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="198" y="34" width="18" height="14" rx="3" fill="#66aaff"/><text x="207" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text></svg>
-                    <div class="fc-info-grid">
-                        <div class="fc-info-box">
-                            <div class="fc-ib-label">Facing</div>
-                            <div class="fc-ib-val">J.T. Ginn</div>
-                            <div class="fc-ib-sub">ERA 2.98 · WHIP 1.07</div>
-                            <div class="fc-ib-sub" style="color:#445566;margin-top:4px">Last start: 2ER / 8.0IP vs ? (2026-05-18)</div>
-                            <div class="fc-ib-sub" style="color:#445566;margin-top:3px">Consistent — 2.47 ERA last 5 starts</div>
-                        </div>
-                        <div class="fc-info-box">
-                            <div class="fc-ib-label">Head-to-Head</div>
-                            <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">2-for-2 .1000</span><span class="h2h-stat">1HR 1RBI</span><span class="h2h-trend" style="color:#00cc66">Owns (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#00cc66">2-for-2 .1000</span><span class="h2h-stat">1HR 1RBI</span><span class="h2h-trend" style="color:#00cc66">Hot</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ffaa33">K% 21.7%</span><span class="h2h-stat" style="color:#ffaa33">BB% 8.4%</span><span class="h2h-trend" style="color:#ffaa33">HR/9 1.06</span></div>
-                        </div>
-                    </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">4 mph NW · Partly cloudy ⛅ · 63°F</div>
-                    <div class="fc-dk-rec">
-                        <div>
-                            <div class="fc-dk-label">Recommended Bet</div>
-                            <div class="fc-dk-val">Over 1.5 ★</div>
-                        </div>
-                        <div style="text-align:right">
-                            <div class="fc-dk-label">Projected Range</div>
-                            <div class="fc-dk-range">2–9 DK pts</div>
-                        </div>
-                    </div>
-                    <div style="font-size:10px;color:#334455;padding:5px 0 2px;line-height:1.7">
-                        📱 <b style="color:#445566">How to bet:</b>
-                        DraftKings app → More → Props → Player Props →
-                        search <b style="color:#667788">Sheets</b> →
-                        Hits+Runs+RBIs → tap <b style="color:#667788">Over 1.5</b>
-                    </div>
-                    <div class="pick-box">
-                        <div class="pick-box-title">✅ Log your pick</div>
-                        <div class="pick-box-row">
-                            <input class="pick-name-input" type="text" placeholder="Your name"
-                                   id="pn-657757-m" list="names-datalist" autocomplete="off">
-                            <select class="pick-line-select" id="pl-657757-m">
-                                <option>Over 0.5</option>
-                                <option selected>Over 1.5</option>
-                                <option>Over 2.5</option>
-                                <option>Over 3.5</option>
-                            </select>
-                            <button class="pick-submit-btn"
-                                    data-pid="657757" data-pname="Gavin Sheets"
-                                    data-conf="C" data-match="C"
-                                    data-score="170.1" data-suffix="m"
-                                    onclick="logPickBtn(this)">
-                                ⚾ HRR Pick
-                            </button>
-                        </div>
-                        <div class="pick-submitted" id="ps-657757-m"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="fc-card">
-                <div style="height:3px;background:#6644AA"></div>
-                <div class="fc-header">
-                    <div style="display:flex;align-items:flex-start;gap:10px">
-                        <div class="fc-headshot-wrap">
-                            <img class="fc-headshot"
-                                 src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/669127/headshot/67/current"
-                                 onerror="this.onerror=null;this.style.opacity='0.15'"
-                                 alt="Shea Langeliers">
-                            <div class="fc-rank-badge" style="color:#aa88ff">#3</div>
-                        </div>
-                        <div>
-                            <div class="fc-name">Shea Langeliers</div>
-                            <div class="fc-sub">Athletics · C · RHH · Away</div>
-                            <div class="fc-badges">
-                                <span class="badge-labeled">
-                                    <span class="badge" style="background:#ff6644;color:#220800">C</span>
-                                    <span class="badge-lbl">CONF</span>
-                                </span>
-                                <span class="badge-labeled">
-                                    <span class="badge" style="background:#ff444422;color:#ff4444">D</span>
-                                    <span class="badge-lbl">MATCHUP</span>
-                                </span>
-                                <span class="badge" style="background:#111828;color:#66aaff">Pending</span>
-                                <span class="badge" style="background:#001a22;color:#66aaff">✅ Warm</span>
-                                <span class="badge" style="background:#0a1020;color:#ff6644">↓ -2.2 pts/game</span>
-                                
-                            </div>
-                            <div class="fc-remark">⚠ Lucas Giolito dominates RHH — tough matchup. Elite hr pace (12 hr in 46 games) — big ceiling.</div>
-                        </div>
-                    </div>
-                    <div class="fc-score-block">
-                        <div class="fc-score-num" style="color:#aa88ff">166.4</div>
-                        <div class="fc-score-lbl">Guru Score</div>
-                        
-        <div class="score-bar-wrap">
-            <div class="score-bar" style="width:41%;background:#ffaa33;"></div>
-        </div>
-                    </div>
-                </div>
-                <div class="fc-body">
-                    <div class="fc-stat-row">
-                        <div class="fc-stat"><div class="fc-sv">.314</div><div class="fc-sl">AVG</div></div>
-                        <div class="fc-stat"><div class="fc-sv">12</div><div class="fc-sl">HR</div></div>
-                        <div class="fc-stat"><div class="fc-sv">27</div><div class="fc-sl">RBI</div></div>
-                        <div class="fc-stat"><div class="fc-sv">26.1%</div><div class="fc-sl">HR/G</div></div>
-                    </div>
-                    <div class="fc-section-lbl">Recent 10 Games — DK pts per game</div>
-                    <svg width="220" height="68" style="display:block;margin:4px 0"><rect x="0" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">6</text><rect x="22" y="41" width="18" height="7" rx="3" fill="#555566"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="44" y="12" width="18" height="36" rx="3" fill="#00ff88"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">5</text><rect x="66" y="34" width="18" height="14" rx="3" fill="#66aaff"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="88" y="34" width="18" height="14" rx="3" fill="#66aaff"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="110" y="41" width="18" height="7" rx="3" fill="#555566"/><text x="119" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="132" y="41" width="18" height="7" rx="3" fill="#555566"/><text x="141" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="154" y="41" width="18" height="7" rx="3" fill="#555566"/><text x="163" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="176" y="34" width="18" height="14" rx="3" fill="#66aaff"/><text x="185" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="198" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="207" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text></svg>
-                    <div class="fc-info-grid">
-                        <div class="fc-info-box">
-                            <div class="fc-ib-label">Facing</div>
-                            <div class="fc-ib-val">Lucas Giolito</div>
-                            <div class="fc-ib-sub">ERA 5.40 · WHIP 0.80</div>
-                            <div class="fc-ib-sub" style="color:#445566;margin-top:4px">Last start: 3ER / 5.0IP vs ? (2026-05-17)</div>
-                            <div class="fc-ib-sub" style="color:#445566;margin-top:3px">Consistent — 5.40 ERA last 5 starts</div>
-                        </div>
-                        <div class="fc-info-box">
-                            <div class="fc-ib-label">Head-to-Head</div>
-                            <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">2-for-5 .667</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#00cc66">Owns (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#00cc66">1-for-2 .1000</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#00cc66">Hot</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.0%</span><span class="h2h-stat" style="color:#ff6644">BB% 15.0%</span><span class="h2h-trend" style="color:#00cc66">HR/9 0.0</span></div>
-                        </div>
-                    </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">4 mph NW · Partly cloudy ⛅ · 63°F</div>
-                    <div class="fc-dk-rec">
-                        <div>
-                            <div class="fc-dk-label">Recommended Bet</div>
-                            <div class="fc-dk-val">Over 0.5</div>
-                        </div>
-                        <div style="text-align:right">
-                            <div class="fc-dk-label">Projected Range</div>
-                            <div class="fc-dk-range">1–6 DK pts</div>
-                        </div>
-                    </div>
-                    <div style="font-size:10px;color:#334455;padding:5px 0 2px;line-height:1.7">
-                        📱 <b style="color:#445566">How to bet:</b>
-                        DraftKings app → More → Props → Player Props →
-                        search <b style="color:#667788">Langeliers</b> →
-                        Hits+Runs+RBIs → tap <b style="color:#667788">Over 0.5</b>
-                    </div>
-                    <div class="pick-box">
-                        <div class="pick-box-title">✅ Log your pick</div>
-                        <div class="pick-box-row">
-                            <input class="pick-name-input" type="text" placeholder="Your name"
-                                   id="pn-669127-m" list="names-datalist" autocomplete="off">
-                            <select class="pick-line-select" id="pl-669127-m">
-                                <option>Over 0.5</option>
-                                <option selected>Over 1.5</option>
-                                <option>Over 2.5</option>
-                                <option>Over 3.5</option>
-                            </select>
-                            <button class="pick-submit-btn"
-                                    data-pid="669127" data-pname="Shea Langeliers"
-                                    data-conf="C" data-match="D"
-                                    data-score="166.4" data-suffix="m"
-                                    onclick="logPickBtn(this)">
-                                ⚾ HRR Pick
-                            </button>
-                        </div>
-                        <div class="pick-submitted" id="ps-669127-m"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="fc-card">
-                <div style="height:3px;background:#854F0B"></div>
-                <div class="fc-header">
-                    <div style="display:flex;align-items:flex-start;gap:10px">
-                        <div class="fc-headshot-wrap">
-                            <img class="fc-headshot"
-                                 src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/609280/headshot/67/current"
-                                 onerror="this.onerror=null;this.style.opacity='0.15'"
-                                 alt="Miguel Andujar">
-                            <div class="fc-rank-badge" style="color:#ffaa33">#4</div>
-                        </div>
-                        <div>
-                            <div class="fc-name">Miguel Andujar</div>
-                            <div class="fc-sub">San Diego Padres · DH · RHH · Home</div>
-                            <div class="fc-badges">
-                                <span class="badge-labeled">
-                                    <span class="badge" style="background:#ff6644;color:#220800">C</span>
-                                    <span class="badge-lbl">CONF</span>
-                                </span>
-                                <span class="badge-labeled">
-                                    <span class="badge" style="background:#ff444422;color:#ff4444">D</span>
-                                    <span class="badge-lbl">MATCHUP</span>
-                                </span>
-                                <span class="badge" style="background:#111828;color:#66aaff">Pending</span>
-                                <span class="badge" style="background:#001a22;color:#66aaff">✅ Warm</span>
-                                <span class="badge" style="background:#0a1020;color:#778899">→ Steady</span>
-                                
-                            </div>
-                            <div class="fc-remark">✅ Consistently producing — 2.6 DK pts/game recently. ⚠ j.t. ginn dominates rhh — tough matchup.</div>
-                        </div>
-                    </div>
-                    <div class="fc-score-block">
-                        <div class="fc-score-num" style="color:#ffaa33">136.9</div>
-                        <div class="fc-score-lbl">Guru Score</div>
-                        
-        <div class="score-bar-wrap">
-            <div class="score-bar" style="width:34%;background:#ff6644;"></div>
-        </div>
-                    </div>
-                </div>
-                <div class="fc-body">
-                    <div class="fc-stat-row">
-                        <div class="fc-stat"><div class="fc-sv">.289</div><div class="fc-sl">AVG</div></div>
-                        <div class="fc-stat"><div class="fc-sv">5</div><div class="fc-sl">HR</div></div>
-                        <div class="fc-stat"><div class="fc-sv">17</div><div class="fc-sl">RBI</div></div>
-                        <div class="fc-stat"><div class="fc-sv">12.8%</div><div class="fc-sl">HR/G</div></div>
-                    </div>
-                    <div class="fc-section-lbl">Recent 10 Games — DK pts per game</div>
-                    <svg width="220" height="68" style="display:block;margin:4px 0"><rect x="0" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">5</text><rect x="22" y="40" width="18" height="8" rx="3" fill="#555566"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="44" y="40" width="18" height="8" rx="3" fill="#555566"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="66" y="13" width="18" height="35" rx="3" fill="#00ff88"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text><rect x="88" y="22" width="18" height="26" rx="3" fill="#66aaff"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="110" y="31" width="18" height="17" rx="3" fill="#66aaff"/><text x="119" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="132" y="13" width="18" height="35" rx="3" fill="#00ff88"/><text x="141" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text><rect x="154" y="13" width="18" height="35" rx="3" fill="#00ff88"/><text x="163" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text><rect x="176" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="185" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="198" y="31" width="18" height="17" rx="3" fill="#66aaff"/><text x="207" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text></svg>
-                    <div class="fc-info-grid">
-                        <div class="fc-info-box">
-                            <div class="fc-ib-label">Facing</div>
-                            <div class="fc-ib-val">J.T. Ginn</div>
-                            <div class="fc-ib-sub">ERA 2.98 · WHIP 1.07</div>
-                            <div class="fc-ib-sub" style="color:#445566;margin-top:4px">Last start: 2ER / 8.0IP vs ? (2026-05-18)</div>
-                            <div class="fc-ib-sub" style="color:#445566;margin-top:3px">Consistent — 2.47 ERA last 5 starts</div>
-                        </div>
-                        <div class="fc-info-box">
-                            <div class="fc-ib-label">Head-to-Head</div>
-                            <div class="h2h-empty">No H2H data vs J.T. Ginn</div>
-                        </div>
-                    </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">4 mph NW · Partly cloudy ⛅ · 63°F</div>
-                    <div class="fc-dk-rec">
-                        <div>
-                            <div class="fc-dk-label">Recommended Bet</div>
-                            <div class="fc-dk-val">Over 1.5 ★</div>
-                        </div>
-                        <div style="text-align:right">
-                            <div class="fc-dk-label">Projected Range</div>
-                            <div class="fc-dk-range">1–5 DK pts</div>
-                        </div>
-                    </div>
-                    <div style="font-size:10px;color:#334455;padding:5px 0 2px;line-height:1.7">
-                        📱 <b style="color:#445566">How to bet:</b>
-                        DraftKings app → More → Props → Player Props →
-                        search <b style="color:#667788">Andujar</b> →
-                        Hits+Runs+RBIs → tap <b style="color:#667788">Over 1.5</b>
-                    </div>
-                    <div class="pick-box">
-                        <div class="pick-box-title">✅ Log your pick</div>
-                        <div class="pick-box-row">
-                            <input class="pick-name-input" type="text" placeholder="Your name"
-                                   id="pn-609280-m" list="names-datalist" autocomplete="off">
-                            <select class="pick-line-select" id="pl-609280-m">
-                                <option>Over 0.5</option>
-                                <option selected>Over 1.5</option>
-                                <option>Over 2.5</option>
-                                <option>Over 3.5</option>
-                            </select>
-                            <button class="pick-submit-btn"
-                                    data-pid="609280" data-pname="Miguel Andujar"
-                                    data-conf="C" data-match="D"
-                                    data-score="136.9" data-suffix="m"
-                                    onclick="logPickBtn(this)">
-                                ⚾ HRR Pick
-                            </button>
-                        </div>
-                        <div class="pick-submitted" id="ps-609280-m"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="fc-card">
-                <div style="height:3px;background:#5F5E5A"></div>
-                <div class="fc-header">
-                    <div style="display:flex;align-items:flex-start;gap:10px">
-                        <div class="fc-headshot-wrap">
-                            <img class="fc-headshot"
-                                 src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/680869/headshot/67/current"
-                                 onerror="this.onerror=null;this.style.opacity='0.15'"
-                                 alt="Zack Gelof">
-                            <div class="fc-rank-badge" style="color:#888780">#5</div>
-                        </div>
-                        <div>
-                            <div class="fc-name">Zack Gelof</div>
-                            <div class="fc-sub">Athletics · 3B · RHH · Away</div>
-                            <div class="fc-badges">
-                                <span class="badge-labeled">
-                                    <span class="badge" style="background:#ff6644;color:#220800">C</span>
-                                    <span class="badge-lbl">CONF</span>
-                                </span>
-                                <span class="badge-labeled">
-                                    <span class="badge" style="background:#ff444422;color:#ff4444">D</span>
-                                    <span class="badge-lbl">MATCHUP</span>
-                                </span>
-                                <span class="badge" style="background:#111828;color:#66aaff">Pending</span>
-                                <span class="badge" style="background:#001a22;color:#66aaff">✅ Warm</span>
-                                <span class="badge" style="background:#0a1020;color:#778899">→ Steady</span>
-                                
-                            </div>
-                            <div class="fc-remark">⚠ Lucas Giolito dominates RHH — tough matchup.</div>
-                        </div>
-                    </div>
-                    <div class="fc-score-block">
-                        <div class="fc-score-num" style="color:#888780">125.9</div>
-                        <div class="fc-score-lbl">Guru Score</div>
-                        
-        <div class="score-bar-wrap">
-            <div class="score-bar" style="width:31%;background:#ff6644;"></div>
-        </div>
-                    </div>
-                </div>
-                <div class="fc-body">
-                    <div class="fc-stat-row">
-                        <div class="fc-stat"><div class="fc-sv">.243</div><div class="fc-sl">AVG</div></div>
-                        <div class="fc-stat"><div class="fc-sv">6</div><div class="fc-sl">HR</div></div>
-                        <div class="fc-stat"><div class="fc-sv">17</div><div class="fc-sl">RBI</div></div>
-                        <div class="fc-stat"><div class="fc-sv">17.1%</div><div class="fc-sl">HR/G</div></div>
-                    </div>
-                    <div class="fc-section-lbl">Recent 10 Games — DK pts per game</div>
-                    <svg width="220" height="68" style="display:block;margin:4px 0"><rect x="0" y="32" width="18" height="16" rx="3" fill="#66aaff"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="22" y="26" width="18" height="22" rx="3" fill="#00ff88"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text><rect x="44" y="43" width="18" height="5" rx="3" fill="#555566"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="66" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="88" y="43" width="18" height="5" rx="3" fill="#555566"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="110" y="37" width="18" height="11" rx="3" fill="#66aaff"/><text x="119" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="132" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="141" y="62" text-anchor="middle" fill="#aaa" font-size="9">8</text><rect x="154" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="163" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="176" y="37" width="18" height="11" rx="3" fill="#66aaff"/><text x="185" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="198" y="37" width="18" height="11" rx="3" fill="#66aaff"/><text x="207" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text></svg>
-                    <div class="fc-info-grid">
-                        <div class="fc-info-box">
-                            <div class="fc-ib-label">Facing</div>
-                            <div class="fc-ib-val">Lucas Giolito</div>
-                            <div class="fc-ib-sub">ERA 5.40 · WHIP 0.80</div>
-                            <div class="fc-ib-sub" style="color:#445566;margin-top:4px">Last start: 3ER / 5.0IP vs ? (2026-05-17)</div>
-                            <div class="fc-ib-sub" style="color:#445566;margin-top:3px">Consistent — 5.40 ERA last 5 starts</div>
-                        </div>
-                        <div class="fc-info-box">
-                            <div class="fc-ib-label">Head-to-Head</div>
-                            <div class="h2h-empty">No H2H data vs Lucas Giolito</div>
-                        </div>
-                    </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">4 mph NW · Partly cloudy ⛅ · 63°F</div>
-                    <div class="fc-dk-rec">
-                        <div>
-                            <div class="fc-dk-label">Recommended Bet</div>
-                            <div class="fc-dk-val">Over 0.5</div>
-                        </div>
-                        <div style="text-align:right">
-                            <div class="fc-dk-label">Projected Range</div>
-                            <div class="fc-dk-range">1–8 DK pts</div>
-                        </div>
-                    </div>
-                    <div style="font-size:10px;color:#334455;padding:5px 0 2px;line-height:1.7">
-                        📱 <b style="color:#445566">How to bet:</b>
-                        DraftKings app → More → Props → Player Props →
-                        search <b style="color:#667788">Gelof</b> →
-                        Hits+Runs+RBIs → tap <b style="color:#667788">Over 0.5</b>
-                    </div>
-                    <div class="pick-box">
-                        <div class="pick-box-title">✅ Log your pick</div>
-                        <div class="pick-box-row">
-                            <input class="pick-name-input" type="text" placeholder="Your name"
-                                   id="pn-680869-m" list="names-datalist" autocomplete="off">
-                            <select class="pick-line-select" id="pl-680869-m">
-                                <option>Over 0.5</option>
-                                <option selected>Over 1.5</option>
-                                <option>Over 2.5</option>
-                                <option>Over 3.5</option>
-                            </select>
-                            <button class="pick-submit-btn"
-                                    data-pid="680869" data-pname="Zack Gelof"
-                                    data-conf="C" data-match="D"
-                                    data-score="125.9" data-suffix="m"
-                                    onclick="logPickBtn(this)">
-                                ⚾ HRR Pick
-                            </button>
-                        </div>
-                        <div class="pick-submitted" id="ps-680869-m"></div>
-                    </div>
-                </div>
-            </div></div>
-                </div>
-            </div>
-        </div>
-        <div class="modal-backdrop" id="modal-game-1">
-            <div class="modal-box">
-                <div class="modal-header">
-                    <div>
                         <div class="modal-title">⚾ Texas Rangers @ <span>Los Angeles Angels</span></div>
                         <div class="modal-meta">🕒 10:05 PM ET · Angel Stadium · Park 100 · ⚠ Lineup Pending</div>
                     </div>
-                    <button class="modal-close" onclick="closeModal('modal-game-1')" aria-label="Close">✕</button>
+                    <button class="modal-close" onclick="closeModal('modal-game-0')" aria-label="Close">✕</button>
                 </div>
                 <div class="modal-body">
                     <div class="modal-grid">
@@ -3297,7 +2473,7 @@ If Total > DK line → lean Over.</div>
                             <div class="h2h-empty">No H2H data vs Nathan Eovaldi</div>
                         </div>
                     </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">2 mph SW · Partly cloudy ⛅ · 62°F</div>
+                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">3 mph S · Partly cloudy ⛅ · 62°F</div>
                     <div class="fc-dk-rec">
                         <div>
                             <div class="fc-dk-label">Recommended Bet</div>
@@ -3399,7 +2575,7 @@ If Total > DK line → lean Over.</div>
                             <div class="h2h-empty">No H2H data vs Walbert Ureña</div>
                         </div>
                     </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">2 mph SW · Partly cloudy ⛅ · 62°F</div>
+                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">3 mph S · Partly cloudy ⛅ · 62°F</div>
                     <div class="fc-dk-rec">
                         <div>
                             <div class="fc-dk-label">Recommended Bet</div>
@@ -3501,7 +2677,7 @@ If Total > DK line → lean Over.</div>
                             <div class="h2h-empty">No H2H data vs Walbert Ureña</div>
                         </div>
                     </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">2 mph SW · Partly cloudy ⛅ · 62°F</div>
+                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">3 mph S · Partly cloudy ⛅ · 62°F</div>
                     <div class="fc-dk-rec">
                         <div>
                             <div class="fc-dk-label">Recommended Bet</div>
@@ -3547,116 +2723,14 @@ If Total > DK line → lean Over.</div>
                     <div style="display:flex;align-items:flex-start;gap:10px">
                         <div class="fc-headshot-wrap">
                             <img class="fc-headshot"
-                                 src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/679822/headshot/67/current"
+                                 src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/694384/headshot/67/current"
                                  onerror="this.onerror=null;this.style.opacity='0.15'"
-                                 alt="Justin Foscue">
+                                 alt="Nolan Schanuel">
                             <div class="fc-rank-badge" style="color:#ffaa33">#4</div>
                         </div>
                         <div>
-                            <div class="fc-name">Justin Foscue</div>
-                            <div class="fc-sub">Texas Rangers · 2B · RHH · Away</div>
-                            <div class="fc-badges">
-                                <span class="badge-labeled">
-                                    <span class="badge" style="background:#ff6644;color:#220800">C</span>
-                                    <span class="badge-lbl">CONF</span>
-                                </span>
-                                <span class="badge-labeled">
-                                    <span class="badge" style="background:#88889922;color:#888899">C</span>
-                                    <span class="badge-lbl">MATCHUP</span>
-                                </span>
-                                <span class="badge" style="background:#111828;color:#66aaff">Pending</span>
-                                <span class="badge" style="background:#001a22;color:#66aaff">✅ Warm</span>
-                                <span class="badge" style="background:#0a1020;color:#00cc66">↑ +2.6 pts/game</span>
-                                
-                            </div>
-                            <div class="fc-remark">limited upside tonight — Low confidence — skip or avoid.</div>
-                        </div>
-                    </div>
-                    <div class="fc-score-block">
-                        <div class="fc-score-num" style="color:#ffaa33">178.4</div>
-                        <div class="fc-score-lbl">Guru Score</div>
-                        
-        <div class="score-bar-wrap">
-            <div class="score-bar" style="width:44%;background:#ffaa33;"></div>
-        </div>
-                    </div>
-                </div>
-                <div class="fc-body">
-                    <div class="fc-stat-row">
-                        <div class="fc-stat"><div class="fc-sv">.351</div><div class="fc-sl">AVG</div></div>
-                        <div class="fc-stat"><div class="fc-sv">2</div><div class="fc-sl">HR</div></div>
-                        <div class="fc-stat"><div class="fc-sv">7</div><div class="fc-sl">RBI</div></div>
-                        <div class="fc-stat"><div class="fc-sv">15.4%</div><div class="fc-sl">HR/G</div></div>
-                    </div>
-                    <div class="fc-section-lbl">Recent 10 Games — DK pts per game</div>
-                    <svg width="220" height="68" style="display:block;margin:4px 0"><rect x="0" y="30" width="18" height="18" rx="3" fill="#66aaff"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="22" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="44" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="66" y="42" width="18" height="6" rx="3" fill="#555566"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="88" y="42" width="18" height="6" rx="3" fill="#555566"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="110" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="119" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="132" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="141" y="62" text-anchor="middle" fill="#aaa" font-size="9">7</text><rect x="154" y="30" width="18" height="18" rx="3" fill="#66aaff"/><text x="163" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="176" y="23" width="18" height="25" rx="3" fill="#00ff88"/><text x="185" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text><rect x="198" y="23" width="18" height="25" rx="3" fill="#00ff88"/><text x="207" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text></svg>
-                    <div class="fc-info-grid">
-                        <div class="fc-info-box">
-                            <div class="fc-ib-label">Facing</div>
-                            <div class="fc-ib-val">Walbert Ureña</div>
-                            <div class="fc-ib-sub">ERA 2.70 · WHIP 1.35</div>
-                            <div class="fc-ib-sub" style="color:#445566;margin-top:4px">Last start: 0ER / 6.0IP vs ? (2026-05-18)</div>
-                            <div class="fc-ib-sub" style="color:#445566;margin-top:3px">Consistent — 2.86 ERA last 5 starts</div>
-                        </div>
-                        <div class="fc-info-box">
-                            <div class="fc-ib-label">Head-to-Head</div>
-                            <div class="h2h-empty">No H2H data vs Walbert Ureña</div>
-                        </div>
-                    </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">2 mph SW · Partly cloudy ⛅ · 62°F</div>
-                    <div class="fc-dk-rec">
-                        <div>
-                            <div class="fc-dk-label">Recommended Bet</div>
-                            <div class="fc-dk-val">Over 1.5 ★</div>
-                        </div>
-                        <div style="text-align:right">
-                            <div class="fc-dk-label">Projected Range</div>
-                            <div class="fc-dk-range">2–7 DK pts</div>
-                        </div>
-                    </div>
-                    <div style="font-size:10px;color:#334455;padding:5px 0 2px;line-height:1.7">
-                        📱 <b style="color:#445566">How to bet:</b>
-                        DraftKings app → More → Props → Player Props →
-                        search <b style="color:#667788">Foscue</b> →
-                        Hits+Runs+RBIs → tap <b style="color:#667788">Over 1.5</b>
-                    </div>
-                    <div class="pick-box">
-                        <div class="pick-box-title">✅ Log your pick</div>
-                        <div class="pick-box-row">
-                            <input class="pick-name-input" type="text" placeholder="Your name"
-                                   id="pn-679822-m" list="names-datalist" autocomplete="off">
-                            <select class="pick-line-select" id="pl-679822-m">
-                                <option>Over 0.5</option>
-                                <option selected>Over 1.5</option>
-                                <option>Over 2.5</option>
-                                <option>Over 3.5</option>
-                            </select>
-                            <button class="pick-submit-btn"
-                                    data-pid="679822" data-pname="Justin Foscue"
-                                    data-conf="C" data-match="C"
-                                    data-score="178.4" data-suffix="m"
-                                    onclick="logPickBtn(this)">
-                                ⚾ HRR Pick
-                            </button>
-                        </div>
-                        <div class="pick-submitted" id="ps-679822-m"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="fc-card">
-                <div style="height:3px;background:#5F5E5A"></div>
-                <div class="fc-header">
-                    <div style="display:flex;align-items:flex-start;gap:10px">
-                        <div class="fc-headshot-wrap">
-                            <img class="fc-headshot"
-                                 src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/673962/headshot/67/current"
-                                 onerror="this.onerror=null;this.style.opacity='0.15'"
-                                 alt="Josh Jung">
-                            <div class="fc-rank-badge" style="color:#888780">#5</div>
-                        </div>
-                        <div>
-                            <div class="fc-name">Josh Jung</div>
-                            <div class="fc-sub">Texas Rangers · 3B · RHH · Away</div>
+                            <div class="fc-name">Nolan Schanuel</div>
+                            <div class="fc-sub">Los Angeles Angels · 1B · LHH · Home</div>
                             <div class="fc-badges">
                                 <span class="badge-labeled">
                                     <span class="badge" style="background:#ff6644;color:#220800">C</span>
@@ -3668,44 +2742,44 @@ If Total > DK line → lean Over.</div>
                                 </span>
                                 <span class="badge" style="background:#111828;color:#66aaff">Pending</span>
                                 <span class="badge" style="background:#111828;color:#778899">→ Neutral</span>
-                                <span class="badge" style="background:#0a1020;color:#00cc66">↑ +1.0 pts/game</span>
+                                <span class="badge" style="background:#0a1020;color:#778899">→ Steady</span>
                                 
                             </div>
                             <div class="fc-remark">limited upside tonight — Low confidence — skip or avoid.</div>
                         </div>
                     </div>
                     <div class="fc-score-block">
-                        <div class="fc-score-num" style="color:#888780">149.3</div>
+                        <div class="fc-score-num" style="color:#ffaa33">146.7</div>
                         <div class="fc-score-lbl">Guru Score</div>
                         
         <div class="score-bar-wrap">
-            <div class="score-bar" style="width:37%;background:#ffaa33;"></div>
+            <div class="score-bar" style="width:36%;background:#ffaa33;"></div>
         </div>
                     </div>
                 </div>
                 <div class="fc-body">
                     <div class="fc-stat-row">
-                        <div class="fc-stat"><div class="fc-sv">.306</div><div class="fc-sl">AVG</div></div>
-                        <div class="fc-stat"><div class="fc-sv">5</div><div class="fc-sl">HR</div></div>
-                        <div class="fc-stat"><div class="fc-sv">21</div><div class="fc-sl">RBI</div></div>
-                        <div class="fc-stat"><div class="fc-sv">10.6%</div><div class="fc-sl">HR/G</div></div>
+                        <div class="fc-stat"><div class="fc-sv">.255</div><div class="fc-sl">AVG</div></div>
+                        <div class="fc-stat"><div class="fc-sv">4</div><div class="fc-sl">HR</div></div>
+                        <div class="fc-stat"><div class="fc-sv">23</div><div class="fc-sl">RBI</div></div>
+                        <div class="fc-stat"><div class="fc-sv">8.3%</div><div class="fc-sl">HR/G</div></div>
                     </div>
                     <div class="fc-section-lbl">Recent 10 Games — DK pts per game</div>
-                    <svg width="220" height="68" style="display:block;margin:4px 0"><rect x="0" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="22" y="31" width="18" height="17" rx="3" fill="#66aaff"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="44" y="22" width="18" height="26" rx="3" fill="#66aaff"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="66" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="88" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="110" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="119" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="132" y="31" width="18" height="17" rx="3" fill="#66aaff"/><text x="141" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="154" y="31" width="18" height="17" rx="3" fill="#66aaff"/><text x="163" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="176" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="185" y="62" text-anchor="middle" fill="#aaa" font-size="9">5</text><rect x="198" y="40" width="18" height="8" rx="3" fill="#555566"/><text x="207" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text></svg>
+                    <svg width="220" height="68" style="display:block;margin:4px 0"><rect x="0" y="26" width="18" height="22" rx="3" fill="#66aaff"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="22" y="26" width="18" height="22" rx="3" fill="#66aaff"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="44" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="66" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="88" y="15" width="18" height="33" rx="3" fill="#66aaff"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="110" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="119" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="132" y="26" width="18" height="22" rx="3" fill="#66aaff"/><text x="141" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="154" y="37" width="18" height="11" rx="3" fill="#555566"/><text x="163" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="176" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="185" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text><rect x="198" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="207" y="62" text-anchor="middle" fill="#aaa" font-size="9">4</text></svg>
                     <div class="fc-info-grid">
                         <div class="fc-info-box">
                             <div class="fc-ib-label">Facing</div>
-                            <div class="fc-ib-val">Walbert Ureña</div>
-                            <div class="fc-ib-sub">ERA 2.70 · WHIP 1.35</div>
-                            <div class="fc-ib-sub" style="color:#445566;margin-top:4px">Last start: 0ER / 6.0IP vs ? (2026-05-18)</div>
-                            <div class="fc-ib-sub" style="color:#445566;margin-top:3px">Consistent — 2.86 ERA last 5 starts</div>
+                            <div class="fc-ib-val">Nathan Eovaldi</div>
+                            <div class="fc-ib-sub">ERA 3.62 · WHIP 1.15</div>
+                            <div class="fc-ib-sub" style="color:#445566;margin-top:4px">Last start: 0ER / 7.0IP vs ? (2026-05-17)</div>
+                            <div class="fc-ib-sub" style="color:#445566;margin-top:3px">Consistent — 2.45 ERA last 5 starts</div>
                         </div>
                         <div class="fc-info-box">
                             <div class="fc-ib-label">Head-to-Head</div>
-                            <div class="h2h-empty">No H2H data vs Walbert Ureña</div>
+                            <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">3-for-6 .500</span><span class="h2h-stat">0HR 1RBI</span><span class="h2h-trend" style="color:#00cc66">Owns (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#00cc66">3-for-6 .500</span><span class="h2h-stat">0HR 1RBI</span><span class="h2h-trend" style="color:#00cc66">Hot</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ffaa33">K% 24.2%</span><span class="h2h-stat" style="color:#00cc66">BB% 5.3%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.66</span></div>
                         </div>
                     </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">2 mph SW · Partly cloudy ⛅ · 62°F</div>
+                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">3 mph S · Partly cloudy ⛅ · 62°F</div>
                     <div class="fc-dk-rec">
                         <div>
                             <div class="fc-dk-label">Recommended Bet</div>
@@ -3713,49 +2787,49 @@ If Total > DK line → lean Over.</div>
                         </div>
                         <div style="text-align:right">
                             <div class="fc-dk-label">Projected Range</div>
-                            <div class="fc-dk-range">1–5 DK pts</div>
+                            <div class="fc-dk-range">1–4 DK pts</div>
                         </div>
                     </div>
                     <div style="font-size:10px;color:#334455;padding:5px 0 2px;line-height:1.7">
                         📱 <b style="color:#445566">How to bet:</b>
                         DraftKings app → More → Props → Player Props →
-                        search <b style="color:#667788">Jung</b> →
+                        search <b style="color:#667788">Schanuel</b> →
                         Hits+Runs+RBIs → tap <b style="color:#667788">Over 0.5</b>
                     </div>
                     <div class="pick-box">
                         <div class="pick-box-title">✅ Log your pick</div>
                         <div class="pick-box-row">
                             <input class="pick-name-input" type="text" placeholder="Your name"
-                                   id="pn-673962-m" list="names-datalist" autocomplete="off">
-                            <select class="pick-line-select" id="pl-673962-m">
+                                   id="pn-694384-m" list="names-datalist" autocomplete="off">
+                            <select class="pick-line-select" id="pl-694384-m">
                                 <option>Over 0.5</option>
                                 <option selected>Over 1.5</option>
                                 <option>Over 2.5</option>
                                 <option>Over 3.5</option>
                             </select>
                             <button class="pick-submit-btn"
-                                    data-pid="673962" data-pname="Josh Jung"
+                                    data-pid="694384" data-pname="Nolan Schanuel"
                                     data-conf="C" data-match="C"
-                                    data-score="149.3" data-suffix="m"
+                                    data-score="146.7" data-suffix="m"
                                     onclick="logPickBtn(this)">
                                 ⚾ HRR Pick
                             </button>
                         </div>
-                        <div class="pick-submitted" id="ps-673962-m"></div>
+                        <div class="pick-submitted" id="ps-694384-m"></div>
                     </div>
                 </div>
             </div></div>
                 </div>
             </div>
         </div>
-        <div class="modal-backdrop" id="modal-game-2">
+        <div class="modal-backdrop" id="modal-game-1">
             <div class="modal-box">
                 <div class="modal-header">
                     <div>
                         <div class="modal-title">⚾ Colorado Rockies @ <span>Arizona Diamondbacks</span></div>
                         <div class="modal-meta">🕒 10:10 PM ET · Chase Field · Park 103 · ⚠ Lineup Pending</div>
                     </div>
-                    <button class="modal-close" onclick="closeModal('modal-game-2')" aria-label="Close">✕</button>
+                    <button class="modal-close" onclick="closeModal('modal-game-1')" aria-label="Close">✕</button>
                 </div>
                 <div class="modal-body">
                     <div class="modal-grid">
@@ -3818,7 +2892,7 @@ If Total > DK line → lean Over.</div>
                         </div>
                         <div class="fc-info-box">
                             <div class="fc-ib-label">Head-to-Head</div>
-                            <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">2-for-9 .250</span><span class="h2h-stat">2HR 3RBI</span><span class="h2h-trend" style="color:#66aaff">Neutral (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#66aaff">2-for-9 .250</span><span class="h2h-stat">2HR 3RBI</span><span class="h2h-trend" style="color:#66aaff">Avg</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
+                            <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">2-for-9 .250</span><span class="h2h-stat">2HR 3RBI</span><span class="h2h-trend" style="color:#66aaff">Neutral (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#66aaff">1-for-3 .333</span><span class="h2h-stat">1HR 1RBI</span><span class="h2h-trend" style="color:#66aaff">Avg</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
                         </div>
                     </div>
                     <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">🏟 Dome — weather irrelevant</div>
@@ -3920,7 +2994,7 @@ If Total > DK line → lean Over.</div>
                         </div>
                         <div class="fc-info-box">
                             <div class="fc-ib-label">Head-to-Head</div>
-                            <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">0-for-5 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Struggles (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#ff4444">1-for-9 .125</span><span class="h2h-stat">0HR 1RBI</span><span class="h2h-trend" style="color:#ff4444">Cold</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
+                            <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">0-for-5 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Struggles (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#ff4444">0-for-5 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Cold</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
                         </div>
                     </div>
                     <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">🏟 Dome — weather irrelevant</div>
@@ -3969,214 +3043,10 @@ If Total > DK line → lean Over.</div>
                     <div style="display:flex;align-items:flex-start;gap:10px">
                         <div class="fc-headshot-wrap">
                             <img class="fc-headshot"
-                                 src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/606466/headshot/67/current"
-                                 onerror="this.onerror=null;this.style.opacity='0.15'"
-                                 alt="Ketel Marte">
-                            <div class="fc-rank-badge" style="color:#aa88ff">#3</div>
-                        </div>
-                        <div>
-                            <div class="fc-name">Ketel Marte</div>
-                            <div class="fc-sub">Arizona Diamondbacks · 2B · SHH · Home</div>
-                            <div class="fc-badges">
-                                <span class="badge-labeled">
-                                    <span class="badge" style="background:#ff6644;color:#220800">C</span>
-                                    <span class="badge-lbl">CONF</span>
-                                </span>
-                                <span class="badge-labeled">
-                                    <span class="badge" style="background:#66aaff22;color:#66aaff">B</span>
-                                    <span class="badge-lbl">MATCHUP</span>
-                                </span>
-                                <span class="badge" style="background:#111828;color:#66aaff">Pending</span>
-                                <span class="badge" style="background:#001a22;color:#66aaff">✅ Warm</span>
-                                <span class="badge" style="background:#0a1020;color:#00cc66">↑ +3.0 pts/game</span>
-                                
-                            </div>
-                            <div class="fc-remark">✅ Consistently producing — 2.9 DK pts/game recently. Michael lorenzen gave up 6 er last outing — may be vulnerable tonight.</div>
-                        </div>
-                    </div>
-                    <div class="fc-score-block">
-                        <div class="fc-score-num" style="color:#aa88ff">192.6</div>
-                        <div class="fc-score-lbl">Guru Score</div>
-                        
-        <div class="score-bar-wrap">
-            <div class="score-bar" style="width:48%;background:#ffaa33;"></div>
-        </div>
-                    </div>
-                </div>
-                <div class="fc-body">
-                    <div class="fc-stat-row">
-                        <div class="fc-stat"><div class="fc-sv">.241</div><div class="fc-sl">AVG</div></div>
-                        <div class="fc-stat"><div class="fc-sv">7</div><div class="fc-sl">HR</div></div>
-                        <div class="fc-stat"><div class="fc-sv">22</div><div class="fc-sl">RBI</div></div>
-                        <div class="fc-stat"><div class="fc-sv">14.9%</div><div class="fc-sl">HR/G</div></div>
-                    </div>
-                    <div class="fc-section-lbl">Recent 10 Games — DK pts per game</div>
-                    <svg width="220" height="68" style="display:block;margin:4px 0"><rect x="0" y="43" width="18" height="5" rx="3" fill="#555566"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="22" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="44" y="32" width="18" height="16" rx="3" fill="#66aaff"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="66" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="88" y="32" width="18" height="16" rx="3" fill="#66aaff"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="110" y="15" width="18" height="33" rx="3" fill="#00ff88"/><text x="119" y="62" text-anchor="middle" fill="#aaa" font-size="9">6</text><rect x="132" y="21" width="18" height="27" rx="3" fill="#00ff88"/><text x="141" y="62" text-anchor="middle" fill="#aaa" font-size="9">5</text><rect x="154" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="163" y="62" text-anchor="middle" fill="#aaa" font-size="9">8</text><rect x="176" y="37" width="18" height="11" rx="3" fill="#66aaff"/><text x="185" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="198" y="43" width="18" height="5" rx="3" fill="#555566"/><text x="207" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text></svg>
-                    <div class="fc-info-grid">
-                        <div class="fc-info-box">
-                            <div class="fc-ib-label">Facing</div>
-                            <div class="fc-ib-val">Michael Lorenzen</div>
-                            <div class="fc-ib-sub">ERA 7.03 · WHIP 1.91</div>
-                            <div class="fc-ib-sub" style="color:#ff6644;margin-top:4px">⚠ Last start rough: 6ER / 4.2IP — target tonight</div>
-                            <div class="fc-ib-sub" style="color:#445566;margin-top:3px">Consistent — 6.84 ERA last 5 starts</div>
-                        </div>
-                        <div class="fc-info-box">
-                            <div class="fc-ib-label">Head-to-Head</div>
-                            <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">0-for-9 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Struggles (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#ff4444">0-for-9 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Cold</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
-                        </div>
-                    </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">🏟 Dome — weather irrelevant</div>
-                    <div class="fc-dk-rec">
-                        <div>
-                            <div class="fc-dk-label">Recommended Bet</div>
-                            <div class="fc-dk-val">Over 1.5 ★</div>
-                        </div>
-                        <div style="text-align:right">
-                            <div class="fc-dk-label">Projected Range</div>
-                            <div class="fc-dk-range">2–8 DK pts</div>
-                        </div>
-                    </div>
-                    <div style="font-size:10px;color:#334455;padding:5px 0 2px;line-height:1.7">
-                        📱 <b style="color:#445566">How to bet:</b>
-                        DraftKings app → More → Props → Player Props →
-                        search <b style="color:#667788">Marte</b> →
-                        Hits+Runs+RBIs → tap <b style="color:#667788">Over 1.5</b>
-                    </div>
-                    <div class="pick-box">
-                        <div class="pick-box-title">✅ Log your pick</div>
-                        <div class="pick-box-row">
-                            <input class="pick-name-input" type="text" placeholder="Your name"
-                                   id="pn-606466-m" list="names-datalist" autocomplete="off">
-                            <select class="pick-line-select" id="pl-606466-m">
-                                <option>Over 0.5</option>
-                                <option selected>Over 1.5</option>
-                                <option>Over 2.5</option>
-                                <option>Over 3.5</option>
-                            </select>
-                            <button class="pick-submit-btn"
-                                    data-pid="606466" data-pname="Ketel Marte"
-                                    data-conf="C" data-match="B"
-                                    data-score="192.6" data-suffix="m"
-                                    onclick="logPickBtn(this)">
-                                ⚾ HRR Pick
-                            </button>
-                        </div>
-                        <div class="pick-submitted" id="ps-606466-m"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="fc-card">
-                <div style="height:3px;background:#854F0B"></div>
-                <div class="fc-header">
-                    <div style="display:flex;align-items:flex-start;gap:10px">
-                        <div class="fc-headshot-wrap">
-                            <img class="fc-headshot"
-                                 src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/571448/headshot/67/current"
-                                 onerror="this.onerror=null;this.style.opacity='0.15'"
-                                 alt="Nolan Arenado">
-                            <div class="fc-rank-badge" style="color:#ffaa33">#4</div>
-                        </div>
-                        <div>
-                            <div class="fc-name">Nolan Arenado</div>
-                            <div class="fc-sub">Arizona Diamondbacks · 3B · RHH · Home</div>
-                            <div class="fc-badges">
-                                <span class="badge-labeled">
-                                    <span class="badge" style="background:#ff6644;color:#220800">C</span>
-                                    <span class="badge-lbl">CONF</span>
-                                </span>
-                                <span class="badge-labeled">
-                                    <span class="badge" style="background:#88889922;color:#888899">C</span>
-                                    <span class="badge-lbl">MATCHUP</span>
-                                </span>
-                                <span class="badge" style="background:#111828;color:#66aaff">Pending</span>
-                                <span class="badge" style="background:#001a22;color:#66aaff">✅ Warm</span>
-                                <span class="badge" style="background:#0a1020;color:#778899">→ Steady</span>
-                                
-                            </div>
-                            <div class="fc-remark">Michael Lorenzen gave up 6 ER last outing — may be vulnerable tonight.</div>
-                        </div>
-                    </div>
-                    <div class="fc-score-block">
-                        <div class="fc-score-num" style="color:#ffaa33">191.3</div>
-                        <div class="fc-score-lbl">Guru Score</div>
-                        
-        <div class="score-bar-wrap">
-            <div class="score-bar" style="width:47%;background:#ffaa33;"></div>
-        </div>
-                    </div>
-                </div>
-                <div class="fc-body">
-                    <div class="fc-stat-row">
-                        <div class="fc-stat"><div class="fc-sv">.274</div><div class="fc-sl">AVG</div></div>
-                        <div class="fc-stat"><div class="fc-sv">7</div><div class="fc-sl">HR</div></div>
-                        <div class="fc-stat"><div class="fc-sv">25</div><div class="fc-sl">RBI</div></div>
-                        <div class="fc-stat"><div class="fc-sv">14.9%</div><div class="fc-sl">HR/G</div></div>
-                    </div>
-                    <div class="fc-section-lbl">Recent 10 Games — DK pts per game</div>
-                    <svg width="220" height="68" style="display:block;margin:4px 0"><rect x="0" y="34" width="18" height="14" rx="3" fill="#66aaff"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="22" y="41" width="18" height="7" rx="3" fill="#555566"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="44" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">6</text><rect x="66" y="26" width="18" height="22" rx="3" fill="#66aaff"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="88" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="110" y="34" width="18" height="14" rx="3" fill="#66aaff"/><text x="119" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="132" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="141" y="62" text-anchor="middle" fill="#aaa" font-size="9">6</text><rect x="154" y="34" width="18" height="14" rx="3" fill="#66aaff"/><text x="163" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="176" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="185" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="198" y="34" width="18" height="14" rx="3" fill="#66aaff"/><text x="207" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text></svg>
-                    <div class="fc-info-grid">
-                        <div class="fc-info-box">
-                            <div class="fc-ib-label">Facing</div>
-                            <div class="fc-ib-val">Michael Lorenzen</div>
-                            <div class="fc-ib-sub">ERA 7.03 · WHIP 1.91</div>
-                            <div class="fc-ib-sub" style="color:#ff6644;margin-top:4px">⚠ Last start rough: 6ER / 4.2IP — target tonight</div>
-                            <div class="fc-ib-sub" style="color:#445566;margin-top:3px">Consistent — 6.84 ERA last 5 starts</div>
-                        </div>
-                        <div class="fc-info-box">
-                            <div class="fc-ib-label">Head-to-Head</div>
-                            <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">1-for-5 .250</span><span class="h2h-stat">1HR 2RBI</span><span class="h2h-trend" style="color:#66aaff">Neutral (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#66aaff">3-for-18 .176</span><span class="h2h-stat">1HR 4RBI</span><span class="h2h-trend" style="color:#66aaff">Avg</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
-                        </div>
-                    </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">🏟 Dome — weather irrelevant</div>
-                    <div class="fc-dk-rec">
-                        <div>
-                            <div class="fc-dk-label">Recommended Bet</div>
-                            <div class="fc-dk-val">Over 1.5 ★</div>
-                        </div>
-                        <div style="text-align:right">
-                            <div class="fc-dk-label">Projected Range</div>
-                            <div class="fc-dk-range">2–6 DK pts</div>
-                        </div>
-                    </div>
-                    <div style="font-size:10px;color:#334455;padding:5px 0 2px;line-height:1.7">
-                        📱 <b style="color:#445566">How to bet:</b>
-                        DraftKings app → More → Props → Player Props →
-                        search <b style="color:#667788">Arenado</b> →
-                        Hits+Runs+RBIs → tap <b style="color:#667788">Over 1.5</b>
-                    </div>
-                    <div class="pick-box">
-                        <div class="pick-box-title">✅ Log your pick</div>
-                        <div class="pick-box-row">
-                            <input class="pick-name-input" type="text" placeholder="Your name"
-                                   id="pn-571448-m" list="names-datalist" autocomplete="off">
-                            <select class="pick-line-select" id="pl-571448-m">
-                                <option>Over 0.5</option>
-                                <option selected>Over 1.5</option>
-                                <option>Over 2.5</option>
-                                <option>Over 3.5</option>
-                            </select>
-                            <button class="pick-submit-btn"
-                                    data-pid="571448" data-pname="Nolan Arenado"
-                                    data-conf="C" data-match="C"
-                                    data-score="191.3" data-suffix="m"
-                                    onclick="logPickBtn(this)">
-                                ⚾ HRR Pick
-                            </button>
-                        </div>
-                        <div class="pick-submitted" id="ps-571448-m"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="fc-card">
-                <div style="height:3px;background:#5F5E5A"></div>
-                <div class="fc-header">
-                    <div style="display:flex;align-items:flex-start;gap:10px">
-                        <div class="fc-headshot-wrap">
-                            <img class="fc-headshot"
                                  src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/681198/headshot/67/current"
                                  onerror="this.onerror=null;this.style.opacity='0.15'"
                                  alt="TJ Rumfield">
-                            <div class="fc-rank-badge" style="color:#888780">#5</div>
+                            <div class="fc-rank-badge" style="color:#aa88ff">#3</div>
                         </div>
                         <div>
                             <div class="fc-name">TJ Rumfield</div>
@@ -4199,7 +3069,7 @@ If Total > DK line → lean Over.</div>
                         </div>
                     </div>
                     <div class="fc-score-block">
-                        <div class="fc-score-num" style="color:#888780">187.3</div>
+                        <div class="fc-score-num" style="color:#aa88ff">187.3</div>
                         <div class="fc-score-lbl">Guru Score</div>
                         
         <div class="score-bar-wrap">
@@ -4268,6 +3138,108 @@ If Total > DK line → lean Over.</div>
                         <div class="pick-submitted" id="ps-681198-m"></div>
                     </div>
                 </div>
+            </div>
+            <div class="fc-card">
+                <div style="height:3px;background:#854F0B"></div>
+                <div class="fc-header">
+                    <div style="display:flex;align-items:flex-start;gap:10px">
+                        <div class="fc-headshot-wrap">
+                            <img class="fc-headshot"
+                                 src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/687859/headshot/67/current"
+                                 onerror="this.onerror=null;this.style.opacity='0.15'"
+                                 alt="Troy Johnston">
+                            <div class="fc-rank-badge" style="color:#ffaa33">#4</div>
+                        </div>
+                        <div>
+                            <div class="fc-name">Troy Johnston</div>
+                            <div class="fc-sub">Colorado Rockies · RF · LHH · Away</div>
+                            <div class="fc-badges">
+                                <span class="badge-labeled">
+                                    <span class="badge" style="background:#ff6644;color:#220800">C</span>
+                                    <span class="badge-lbl">CONF</span>
+                                </span>
+                                <span class="badge-labeled">
+                                    <span class="badge" style="background:#88889922;color:#888899">C</span>
+                                    <span class="badge-lbl">MATCHUP</span>
+                                </span>
+                                <span class="badge" style="background:#111828;color:#66aaff">Pending</span>
+                                <span class="badge" style="background:#111828;color:#778899">→ Neutral</span>
+                                <span class="badge" style="background:#0a1020;color:#00cc66">↑ +1.2 pts/game</span>
+                                
+                            </div>
+                            <div class="fc-remark">🎯 Struggling recently — 6.43 ERA last 5 starts vs 4.78 season.</div>
+                        </div>
+                    </div>
+                    <div class="fc-score-block">
+                        <div class="fc-score-num" style="color:#ffaa33">174.9</div>
+                        <div class="fc-score-lbl">Guru Score</div>
+                        
+        <div class="score-bar-wrap">
+            <div class="score-bar" style="width:43%;background:#ffaa33;"></div>
+        </div>
+                    </div>
+                </div>
+                <div class="fc-body">
+                    <div class="fc-stat-row">
+                        <div class="fc-stat"><div class="fc-sv">.316</div><div class="fc-sl">AVG</div></div>
+                        <div class="fc-stat"><div class="fc-sv">2</div><div class="fc-sl">HR</div></div>
+                        <div class="fc-stat"><div class="fc-sv">22</div><div class="fc-sl">RBI</div></div>
+                        <div class="fc-stat"><div class="fc-sv">4.3%</div><div class="fc-sl">HR/G</div></div>
+                    </div>
+                    <div class="fc-section-lbl">Recent 10 Games — DK pts per game</div>
+                    <svg width="220" height="68" style="display:block;margin:4px 0"><rect x="0" y="40" width="18" height="8" rx="3" fill="#555566"/><text x="9" y="62" text-anchor="middle" fill="#aaa" font-size="9">1</text><rect x="22" y="31" width="18" height="17" rx="3" fill="#66aaff"/><text x="31" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="44" y="22" width="18" height="26" rx="3" fill="#66aaff"/><text x="53" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="66" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="75" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="88" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="97" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text><rect x="110" y="4" width="18" height="44" rx="3" fill="#00ff88"/><text x="119" y="62" text-anchor="middle" fill="#aaa" font-size="9">5</text><rect x="132" y="31" width="18" height="17" rx="3" fill="#66aaff"/><text x="141" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="154" y="22" width="18" height="26" rx="3" fill="#66aaff"/><text x="163" y="62" text-anchor="middle" fill="#aaa" font-size="9">3</text><rect x="176" y="31" width="18" height="17" rx="3" fill="#66aaff"/><text x="185" y="62" text-anchor="middle" fill="#aaa" font-size="9">2</text><rect x="198" y="44" width="18" height="4" rx="3" fill="#555566"/><text x="207" y="62" text-anchor="middle" fill="#aaa" font-size="9">0</text></svg>
+                    <div class="fc-info-grid">
+                        <div class="fc-info-box">
+                            <div class="fc-ib-label">Facing</div>
+                            <div class="fc-ib-val">Zac Gallen</div>
+                            <div class="fc-ib-sub">ERA 4.78 · WHIP 1.43</div>
+                            <div class="fc-ib-sub" style="color:#445566;margin-top:4px">Last start: 2ER / 6.0IP vs ? (2026-05-18)</div>
+                            <div class="fc-ib-sub" style="color:#00cc66;margin-top:3px">🎯 Struggling recently — 6.43 ERA last 5 starts vs 4.78 season</div>
+                        </div>
+                        <div class="fc-info-box">
+                            <div class="fc-ib-label">Head-to-Head</div>
+                            <div class="h2h-empty">No H2H data vs Zac Gallen</div>
+                        </div>
+                    </div>
+                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">🏟 Dome — weather irrelevant</div>
+                    <div class="fc-dk-rec">
+                        <div>
+                            <div class="fc-dk-label">Recommended Bet</div>
+                            <div class="fc-dk-val">Over 1.5 ★</div>
+                        </div>
+                        <div style="text-align:right">
+                            <div class="fc-dk-label">Projected Range</div>
+                            <div class="fc-dk-range">1–5 DK pts</div>
+                        </div>
+                    </div>
+                    <div style="font-size:10px;color:#334455;padding:5px 0 2px;line-height:1.7">
+                        📱 <b style="color:#445566">How to bet:</b>
+                        DraftKings app → More → Props → Player Props →
+                        search <b style="color:#667788">Johnston</b> →
+                        Hits+Runs+RBIs → tap <b style="color:#667788">Over 1.5</b>
+                    </div>
+                    <div class="pick-box">
+                        <div class="pick-box-title">✅ Log your pick</div>
+                        <div class="pick-box-row">
+                            <input class="pick-name-input" type="text" placeholder="Your name"
+                                   id="pn-687859-m" list="names-datalist" autocomplete="off">
+                            <select class="pick-line-select" id="pl-687859-m">
+                                <option>Over 0.5</option>
+                                <option selected>Over 1.5</option>
+                                <option>Over 2.5</option>
+                                <option>Over 3.5</option>
+                            </select>
+                            <button class="pick-submit-btn"
+                                    data-pid="687859" data-pname="Troy Johnston"
+                                    data-conf="C" data-match="C"
+                                    data-score="174.9" data-suffix="m"
+                                    onclick="logPickBtn(this)">
+                                ⚾ HRR Pick
+                            </button>
+                        </div>
+                        <div class="pick-submitted" id="ps-687859-m"></div>
+                    </div>
+                </div>
             </div></div>
                 </div>
             </div>
@@ -4275,7 +3247,8 @@ If Total > DK line → lean Over.</div>
 
 <script>
 
-    // ── Modal functions defined FIRST — must be available before any click ──
+    // ── All modal + popup functions defined first ─────────────
+
     function openModal(id) {
         const modal = document.getElementById(id);
         if (!modal) { console.warn('Modal not found:', id); return; }
@@ -4290,40 +3263,38 @@ If Total > DK line → lean Over.</div>
         modal.classList.remove('modal-open');
         document.body.style.overflow = '';
     }
-    // ── Info card popup ───────────────────────────────────────
     function showInfo(card) {
         const title = card.querySelector('.info-card-front').textContent.trim();
         const body  = card.querySelector('.info-card-data').textContent.trim();
         document.getElementById('info-popup-title').textContent = title;
-        document.getElementById('info-popup-body').innerHTML =
-            body.replace(/
+        document.getElementById('info-popup-body').innerHTML = body.replace(/
 /g, '<br>');
         document.getElementById('info-popup-backdrop').classList.add('open');
         document.body.style.overflow = 'hidden';
     }
     function closeInfo(e) {
         if (e.target === document.getElementById('info-popup-backdrop')) {
-            closeInfoBtn();
+            document.getElementById('info-popup-backdrop').classList.remove('open');
+            document.body.style.overflow = '';
         }
     }
     function closeInfoBtn() {
         document.getElementById('info-popup-backdrop').classList.remove('open');
         document.body.style.overflow = '';
     }
+
+    // ── Global event handlers ─────────────────────────────────
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeInfoBtn();
-            document.querySelectorAll('.modal-backdrop.modal-open').forEach(m => {
-                m.classList.remove('modal-open');
-            });
-            document.body.style.overflow = '';
-        }
+        if (e.key !== 'Escape') return;
+        closeInfoBtn();
+        document.querySelectorAll('.modal-backdrop.modal-open').forEach(m => {
+            m.classList.remove('modal-open');
+        });
+        document.body.style.overflow = '';
     });
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            document.querySelectorAll('.modal-backdrop.modal-open').forEach(m => {
-                m.classList.remove('modal-open');
-            });
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('modal-backdrop')) {
+            e.target.classList.remove('modal-open');
             document.body.style.overflow = '';
         }
     });
@@ -4448,8 +3419,8 @@ If Total > DK line → lean Over.</div>
                     'onchange="setActual(' + p.id + ', this.value)" ' +
                     'style="width:90px;background:#0d1525;border:1px solid #1a2a40;border-radius:5px;color:#ddeeff;font-size:12px;padding:3px 7px;font-family:inherit"></td>' +
                     '<td style="white-space:nowrap">' +
-                    '<button class="result-btn hit '  + rHit  + '" data-id="' + p.id + '" data-r="hit" onclick="setResult(this.dataset.id,this.dataset.r)">Hit</button>' +
-                    '<button class="result-btn miss ' + rMiss + '" data-id="' + p.id + '" data-r="miss" onclick="setResult(this.dataset.id,this.dataset.r)">Miss</button>' +
+                    '<button class="result-btn hit '  + rHit  + '" data-id="' + p.id + '" data-r="hit"  onclick="setResult(this.dataset.id, this.dataset.r)">Hit</button>' +
+                    '<button class="result-btn miss ' + rMiss + '" data-id="' + p.id + '" data-r="miss" onclick="setResult(this.dataset.id, this.dataset.r)">Miss</button>' +
                     '</td></tr>';
             }).join('');
         }
@@ -4485,15 +3456,7 @@ If Total > DK line → lean Over.</div>
         updateFabCount();
     }
 
-    // ── Modal backdrop click to close ────────────────────────
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('modal-backdrop')) {
-            e.target.classList.remove('modal-open');
-            document.body.style.overflow = '';
-        }
-    });
-
-    // Safe async init — Supabase errors never block modal clicks
+    // ── Init ──────────────────────────────────────────────────
     (async () => { try { await updateFabCount(); } catch(e) { console.warn('FAB init:', e); } })();
     
 </script>
