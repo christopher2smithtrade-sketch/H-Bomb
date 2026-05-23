@@ -1,4 +1,13 @@
 // ── All modal + popup functions defined first ─────────────
+    // Debug: confirm JS loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        const el = document.getElementById('js-status');
+        if (el) el.style.display = 'none';
+    });
+    window.addEventListener('error', function(e) {
+        const el = document.getElementById('js-status');
+        if (el) { el.textContent = '⚠ JS Error: ' + e.message + ' (line ' + e.lineno + ')'; el.style.color='#ff4444'; el.style.display='block'; }
+    });
 
     function openModal(id) {
         const modal = document.getElementById(id);
