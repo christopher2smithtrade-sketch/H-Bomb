@@ -851,6 +851,9 @@
 </head>
 <body>
 
+    <!-- JS load status — hidden if JS works, shows error if it fails -->
+    <div id="js-status" style="display:none;background:#220000;color:#ff4444;padding:10px 16px;font-size:12px;border-bottom:1px solid #440000;font-family:monospace"></div>
+
 <div class="header">
     <div class="header-left">
         <h1>⚾ Baseball <span>Guru</span></h1>
@@ -860,7 +863,7 @@
         </div>
     </div>
     <div class="header-right">
-        <div class="gen-time">Generated 10:47 AM ET</div>
+        <div class="gen-time">Generated 10:54 AM ET</div>
         <div style="margin-top:4px;color:#223344">
             Data: MLB Stats API · Free · No key required
         </div>
@@ -1341,7 +1344,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                     <div class="fc-info-box">
                         <div class="fc-ib-label">Head-to-Head</div>
-                        <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">2-for-9 .250</span><span class="h2h-stat">2HR 3RBI</span><span class="h2h-trend" style="color:#66aaff">Neutral (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#66aaff">1-for-3 .333</span><span class="h2h-stat">1HR 1RBI</span><span class="h2h-trend" style="color:#66aaff">Avg</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
+                        <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">1-for-3 .333</span><span class="h2h-stat">1HR 1RBI</span><span class="h2h-trend" style="color:#66aaff">Neutral (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#66aaff">1-for-3 .333</span><span class="h2h-stat">1HR 1RBI</span><span class="h2h-trend" style="color:#66aaff">Avg</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
                     </div>
                 </div>
                 <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
@@ -1504,7 +1507,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                     <div class="fc-info-box">
                         <div class="fc-ib-label">Head-to-Head</div>
-                        <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">0-for-5 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Struggles (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#ff4444">1-for-9 .125</span><span class="h2h-stat">0HR 1RBI</span><span class="h2h-trend" style="color:#ff4444">Cold</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
+                        <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">0-for-5 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Struggles (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#ff4444">0-for-5 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Cold</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
                     </div>
                 </div>
                 <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
@@ -2892,7 +2895,7 @@ If Total > DK line → lean Over.</div>
                         </div>
                         <div class="fc-info-box">
                             <div class="fc-ib-label">Head-to-Head</div>
-                            <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">2-for-9 .250</span><span class="h2h-stat">2HR 3RBI</span><span class="h2h-trend" style="color:#66aaff">Neutral (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#66aaff">1-for-3 .333</span><span class="h2h-stat">1HR 1RBI</span><span class="h2h-trend" style="color:#66aaff">Avg</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
+                            <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">1-for-3 .333</span><span class="h2h-stat">1HR 1RBI</span><span class="h2h-trend" style="color:#66aaff">Neutral (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#66aaff">1-for-3 .333</span><span class="h2h-stat">1HR 1RBI</span><span class="h2h-trend" style="color:#66aaff">Avg</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
                         </div>
                     </div>
                     <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">🏟 Dome — weather irrelevant</div>
@@ -2994,7 +2997,7 @@ If Total > DK line → lean Over.</div>
                         </div>
                         <div class="fc-info-box">
                             <div class="fc-ib-label">Head-to-Head</div>
-                            <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">0-for-5 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Struggles (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#ff4444">1-for-9 .125</span><span class="h2h-stat">0HR 1RBI</span><span class="h2h-trend" style="color:#ff4444">Cold</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
+                            <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">0-for-5 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Struggles (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#ff4444">0-for-5 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Cold</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ff6644">K% 15.2%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.2%</span><span class="h2h-trend" style="color:#ff6644">HR/9 1.68</span></div>
                         </div>
                     </div>
                     <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">🏟 Dome — weather irrelevant</div>
