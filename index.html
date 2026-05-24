@@ -692,34 +692,6 @@
     .lb-stats { text-align: right; font-size: 12px; color: #667788; }
     .lb-rate  { font-size: 18px; font-weight: 800; }
 
-    /* ── Picks tracker callout ── */
-    .picks-callout {
-        background: #060e1a;
-        border: 1px solid #00ff8822;
-        border-left: 3px solid #00ff88;
-        border-radius: 10px;
-        padding: 13px 16px;
-        margin-bottom: 10px;
-    }
-    .picks-callout-text {
-        font-size: 13px;
-        color: #8899bb;
-        line-height: 1.7;
-    }
-    .picks-callout-text b { color: #ddeeff; }
-    .picks-callout-btn {
-        display: inline-block;
-        background: #003322;
-        border: 1px solid #00ff8844;
-        border-radius: 6px;
-        color: #00ff88;
-        font-size: 12px;
-        font-weight: 700;
-        padding: 2px 10px;
-        vertical-align: middle;
-        white-space: nowrap;
-    }
-
     /* ── Footer ── */
     .footer {
         text-align: center;
@@ -848,237 +820,8 @@
     .top10-chip-label { font-size: 16px; font-weight: 800; color: #00ff88; }
     .top10-chip-sub   { font-size: 11px; color: #445566; margin-top: 2px; }
     </style>
-<script>
-
-    // ── All modal + popup functions defined first ─────────────
-    // Debug: confirm JS loaded
-    document.addEventListener('DOMContentLoaded', function() {
-        const el = document.getElementById('js-status');
-        if (el) el.style.display = 'none';
-    });
-    window.addEventListener('error', function(e) {
-        const el = document.getElementById('js-status');
-        if (el) { el.textContent = '⚠ JS Error: ' + e.message + ' (line ' + e.lineno + ')'; el.style.color='#ff4444'; el.style.display='block'; }
-    });
-
-    function openModal(id) {
-        const modal = document.getElementById(id);
-        if (!modal) { console.warn('Modal not found:', id); return; }
-        modal.classList.add('modal-open');
-        document.body.style.overflow = 'hidden';
-        modal.scrollTop = 0;
-        if (id === 'modal-tracker') { try { refreshTrackerModal(); } catch(e) { console.warn(e); } }
-    }
-    function closeModal(id) {
-        const modal = document.getElementById(id);
-        if (!modal) return;
-        modal.classList.remove('modal-open');
-        document.body.style.overflow = '';
-    }
-    function showInfo(card) {
-        const title = card.querySelector('.info-card-front').textContent.trim();
-        const body  = card.querySelector('.info-card-data').textContent.trim();
-        document.getElementById('info-popup-title').textContent = title;
-        document.getElementById('info-popup-body').innerHTML = body.replace(/
-/g, '<br>');
-        document.getElementById('info-popup-backdrop').classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-    function closeInfo(e) {
-        if (e.target === document.getElementById('info-popup-backdrop')) {
-            document.getElementById('info-popup-backdrop').classList.remove('open');
-            document.body.style.overflow = '';
-        }
-    }
-    function closeInfoBtn() {
-        document.getElementById('info-popup-backdrop').classList.remove('open');
-        document.body.style.overflow = '';
-    }
-
-    // ── Global event handlers ─────────────────────────────────
-    document.addEventListener('keydown', function(e) {
-        if (e.key !== 'Escape') return;
-        closeInfoBtn();
-        document.querySelectorAll('.modal-backdrop.modal-open').forEach(m => {
-            m.classList.remove('modal-open');
-        });
-        document.body.style.overflow = '';
-    });
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('modal-backdrop')) {
-            e.target.classList.remove('modal-open');
-            document.body.style.overflow = '';
-        }
-    });
-
-    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js'); }
-
-    // ── Supabase config ───────────────────────────────────────
-    const SB_URL = 'https://hpoxotxejiilxzhxiuan.supabase.co';
-    const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhwb3hvdHhlamlpbHh6aHhpdWFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0Nzg2MzgsImV4cCI6MjA5NTA1NDYzOH0.57oQLnh3Wv8n1F34OVsNvFdsklVktbKUeTlGDkq1X7s';
-    const TODAY  = new Date().toISOString().slice(0, 10);
-
-    async function sbFetch(path, opts = {}) {
-        try {
-            const res = await fetch(SB_URL + '/rest/v1/' + path, {
-                headers: {
-                    'apikey':        SB_KEY,
-                    'Authorization': 'Bearer ' + SB_KEY,
-                    'Content-Type':  'application/json',
-                    'Prefer':        opts.prefer || 'return=representation',
-                },
-                method: opts.method || 'GET',
-                body:   opts.body   || undefined,
-            });
-            if (!res.ok) { console.error('Supabase', res.status, await res.text()); return null; }
-            const text = await res.text();
-            return text ? JSON.parse(text) : [];
-        } catch(e) { console.error('Supabase fetch error', e); return null; }
-    }
-
-    async function logPickBtn(btn) {
-        const pid    = btn.dataset.pid;
-        const pname  = btn.dataset.pname;
-        const conf   = btn.dataset.conf;
-        const match  = btn.dataset.match;
-        const score  = parseFloat(btn.dataset.score);
-        const suffix = btn.dataset.suffix;
-        await logPick(pid, pname, conf, match, score, suffix);
-    }
-
-    async function logPick(playerId, playerName, conf, matchup, score, suffix) {
-        const nameEl = document.getElementById('pn-' + playerId + '-' + suffix);
-        const lineEl = document.getElementById('pl-' + playerId + '-' + suffix);
-        const msgEl  = document.getElementById('ps-' + playerId + '-' + suffix);
-        const who    = nameEl ? nameEl.value.trim() : '';
-        const line   = lineEl ? lineEl.value : 'Over 1.5';
-        if (!who) {
-            if (nameEl) { nameEl.style.borderColor = '#ff4444'; nameEl.focus(); }
-            return;
-        }
-        if (nameEl) nameEl.style.borderColor = '';
-        const existing = await sbFetch(
-            'picks?who=eq.' + encodeURIComponent(who) +
-            '&player_id=eq.' + encodeURIComponent(playerId) +
-            '&date=eq.' + TODAY
-        );
-        if (existing && existing.length > 0) {
-            if (msgEl) { msgEl.textContent = 'Already logged for ' + who + ' today!'; msgEl.classList.add('show'); }
-            return;
-        }
-        const row = {
-            date: TODAY, who, player_id: playerId, player_name: playerName,
-            line, conf, matchup, score, result: 'pending', actual: null
-        };
-        const res = await sbFetch('picks', { method: 'POST', body: JSON.stringify(row) });
-        if (!res) {
-            if (msgEl) { msgEl.style.color = '#ff4444'; msgEl.textContent = 'Save failed — check console.'; msgEl.classList.add('show'); }
-            return;
-        }
-        if (msgEl) { msgEl.style.color = '#00cc66'; msgEl.textContent = '✓ Logged: ' + who + ' on ' + playerName + ' ' + line; msgEl.classList.add('show'); }
-        updateFabCount();
-        refreshTrackerModal();
-    }
-
-    async function setResult(pickId, result) {
-        await sbFetch('picks?id=eq.' + pickId, { method: 'PATCH', body: JSON.stringify({ result }), prefer: 'return=minimal' });
-        refreshTrackerModal();
-    }
-
-    async function setActual(pickId, val) {
-        await sbFetch('picks?id=eq.' + pickId, {
-            method: 'PATCH',
-            body:   JSON.stringify({ actual: val === '' ? null : parseInt(val) }),
-            prefer: 'return=minimal'
-        });
-    }
-
-    async function updateFabCount() {
-        const picks = await sbFetch('picks?date=eq.' + TODAY + '&select=id');
-        const el = document.getElementById('fab-count');
-        if (el) el.textContent = picks ? picks.length : 0;
-    }
-
-    async function refreshTrackerModal() {
-        const todayPicks = await sbFetch('picks?date=eq.' + TODAY + '&order=id.asc') || [];
-        const allPicks   = await sbFetch('picks?order=id.asc') || [];
-        const settled    = allPicks.filter(p => p.result !== 'pending');
-        const hits       = settled.filter(p => p.result === 'hit');
-        const hitRate    = settled.length ? Math.round((hits.length / settled.length) * 100) : null;
-
-        document.getElementById('tr-total').textContent = allPicks.length;
-        document.getElementById('tr-today').textContent = todayPicks.length;
-        const rEl = document.getElementById('tr-rate');
-        rEl.textContent = hitRate !== null ? hitRate + '%' : '—';
-        rEl.style.color = hitRate >= 55 ? '#00ff88' : hitRate !== null && hitRate < 45 ? '#ff4444' : '#aabbcc';
-        document.getElementById('tr-hits').textContent = hits.length;
-        document.getElementById('tr-miss').textContent = settled.length - hits.length;
-
-        const tbody = document.getElementById('tr-picks-body');
-        if (!todayPicks.length) {
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#334455;padding:20px;font-style:italic">No picks logged today yet.</td></tr>';
-        } else {
-            tbody.innerHTML = todayPicks.map(p => {
-                const rHit  = p.result === 'hit'  ? 'active' : '';
-                const rMiss = p.result === 'miss' ? 'active' : '';
-                return '<tr>' +
-                    '<td style="font-weight:700;color:#ddeeff">' + p.who + '</td>' +
-                    '<td>' + p.player_name + '</td>' +
-                    '<td style="white-space:nowrap">' + p.line + '</td>' +
-                    '<td><span style="font-size:11px;padding:2px 7px;border-radius:20px;background:#0a1020;color:#aabbcc">' + p.conf + '</span></td>' +
-                    '<td><input type="number" min="0" max="10" placeholder="H+R+RBI" ' +
-                    'value="' + (p.actual !== null && p.actual !== undefined ? p.actual : '') + '" ' +
-                    'onchange="setActual(' + p.id + ', this.value)" ' +
-                    'style="width:90px;background:#0d1525;border:1px solid #1a2a40;border-radius:5px;color:#ddeeff;font-size:12px;padding:3px 7px;font-family:inherit"></td>' +
-                    '<td style="white-space:nowrap">' +
-                    '<button class="result-btn hit '  + rHit  + '" data-id="' + p.id + '" data-r="hit"  onclick="setResult(this.dataset.id, this.dataset.r)">Hit</button>' +
-                    '<button class="result-btn miss ' + rMiss + '" data-id="' + p.id + '" data-r="miss" onclick="setResult(this.dataset.id, this.dataset.r)">Miss</button>' +
-                    '</td></tr>';
-            }).join('');
-        }
-
-        const byWho = {};
-        allPicks.forEach(p => {
-            if (!byWho[p.who]) byWho[p.who] = { hits: 0, miss: 0, pend: 0 };
-            if (p.result === 'hit') byWho[p.who].hits++;
-            else if (p.result === 'miss') byWho[p.who].miss++;
-            else byWho[p.who].pend++;
-        });
-        const board = Object.entries(byWho)
-            .map(([name, s]) => {
-                const tot = s.hits + s.miss;
-                return { name, ...s, rate: tot ? Math.round((s.hits / tot) * 100) : null };
-            })
-            .sort((a, b) => (b.rate ?? -1) - (a.rate ?? -1));
-
-        const medals = ['1st','2nd','3rd'];
-        const lb = document.getElementById('tr-leaderboard');
-        lb.innerHTML = !board.length
-            ? '<div style="color:#334455;text-align:center;padding:16px;font-style:italic">No data yet.</div>'
-            : board.map((r, i) => {
-                const rc = r.rate >= 55 ? '#00ff88' : r.rate !== null && r.rate < 45 ? '#ff4444' : '#aabbcc';
-                return '<div class="leaderboard-row">' +
-                    '<div class="lb-medal">' + (i < 3 ? medals[i] : i + 1) + '</div>' +
-                    '<div class="lb-name">' + r.name + '</div>' +
-                    '<div class="lb-stats"><div class="lb-rate" style="color:' + rc + '">' +
-                    (r.rate !== null ? r.rate + '%' : '—') + '</div>' +
-                    r.hits + 'W · ' + r.miss + 'L · ' + r.pend + ' pending</div></div>';
-            }).join('');
-
-        updateFabCount();
-    }
-
-    // ── Init — deferred so it never blocks openModal/closeModal ─
-    window.addEventListener('load', function() {
-        try { updateFabCount(); } catch(e) { console.warn('FAB init:', e); }
-    });
-    
-</script>
 </head>
 <body>
-
-    <!-- JS load status — hidden if JS works, shows error if it fails -->
-    <div id="js-status" style="display:none;background:#220000;color:#ff4444;padding:10px 16px;font-size:12px;border-bottom:1px solid #440000;font-family:monospace"></div>
 
 <div class="header">
     <div class="header-left">
@@ -1089,7 +832,7 @@
         </div>
     </div>
     <div class="header-right">
-        <div class="gen-time">Generated 09:28 AM ET</div>
+        <div class="gen-time">Generated 09:33 AM ET</div>
         <div style="margin-top:4px;color:#223344">
             Data: MLB Stats API · Free · No key required
         </div>
@@ -1197,17 +940,6 @@ If Total > DK line → lean Over.</div>
         </div>
     </div>
 
-    <!-- Picks tracker callout -->
-    <div class="picks-callout">
-        <div class="picks-callout-text">
-            🏆 <b>H-Bomb now tracks your picks!</b> Open any game or the Top 10, find your player, and tap
-            <span class="picks-callout-btn">⚾ HRR Pick</span>
-            to log it. Check the
-            <span class="picks-callout-btn" style="background:#002211;border-color:#00ff8866">📊 My Picks</span>
-            button anytime to see today's picks, hit rate, and the leaderboard.
-        </div>
-    </div>
-
     <!-- Tonight's games + Top 10 button -->
     <div class="section-title">📅 Tonight's Games — tap any game for top picks</div>
     <div class="games-strip">
@@ -1226,7 +958,7 @@ If Total > DK line → lean Over.</div>
             <div class="game-meta">
                 🕒 06:05 PM ET &nbsp;|&nbsp; Oriole Park at Camden Yards<br>
                 ⚾ TBD vs Trevor Rogers<br>
-                <span style="color:#445566;font-weight:600">7 mph NE · Partly cloudy ⛅ · 55°F</span>
+                <span style="color:#445566;font-weight:600">6 mph NE · Partly cloudy ⛅ · 55°F</span>
             </div>
             <span class="park-pill" style="background:#ffaa3322;color:#ffaa33">
                 Park Factor 101
@@ -1239,7 +971,7 @@ If Total > DK line → lean Over.</div>
             <div class="game-meta">
                 🕒 07:20 PM ET &nbsp;|&nbsp; Angel Stadium<br>
                 ⚾ MacKenzie Gore vs Reid Detmers<br>
-                <span style="color:#445566;font-weight:600">No weather data</span>
+                <span style="color:#445566;font-weight:600">4 mph W · Partly cloudy ⛅ · 62°F</span>
             </div>
             <span class="park-pill" style="background:#ff664422;color:#ff6644">
                 Park Factor 100
@@ -1411,7 +1143,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                 </div>
                 <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
-                    No weather data
+                    4 mph W · Partly cloudy ⛅ · 62°F
                 </div>
 
                 <div class="fc-dk-rec">
@@ -1574,7 +1306,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                 </div>
                 <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
-                    7 mph NE · Partly cloudy ⛅ · 55°F
+                    6 mph NE · Partly cloudy ⛅ · 55°F
                 </div>
 
                 <div class="fc-dk-rec">
@@ -1737,7 +1469,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                 </div>
                 <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
-                    No weather data
+                    4 mph W · Partly cloudy ⛅ · 62°F
                 </div>
 
                 <div class="fc-dk-rec">
@@ -1900,7 +1632,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                 </div>
                 <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
-                    No weather data
+                    4 mph W · Partly cloudy ⛅ · 62°F
                 </div>
 
                 <div class="fc-dk-rec">
@@ -2063,7 +1795,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                 </div>
                 <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
-                    No weather data
+                    4 mph W · Partly cloudy ⛅ · 62°F
                 </div>
 
                 <div class="fc-dk-rec">
@@ -2226,7 +1958,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                 </div>
                 <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
-                    7 mph NE · Partly cloudy ⛅ · 55°F
+                    6 mph NE · Partly cloudy ⛅ · 55°F
                 </div>
 
                 <div class="fc-dk-rec">
@@ -2389,7 +2121,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                 </div>
                 <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
-                    7 mph NE · Partly cloudy ⛅ · 55°F
+                    6 mph NE · Partly cloudy ⛅ · 55°F
                 </div>
 
                 <div class="fc-dk-rec">
@@ -2552,7 +2284,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                 </div>
                 <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
-                    7 mph NE · Partly cloudy ⛅ · 55°F
+                    6 mph NE · Partly cloudy ⛅ · 55°F
                 </div>
 
                 <div class="fc-dk-rec">
@@ -2715,7 +2447,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                 </div>
                 <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
-                    7 mph NE · Partly cloudy ⛅ · 55°F
+                    6 mph NE · Partly cloudy ⛅ · 55°F
                 </div>
 
                 <div class="fc-dk-rec">
@@ -2878,7 +2610,7 @@ If Total > DK line → lean Over.</div>
                     </div>
                 </div>
                 <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">
-                    No weather data
+                    4 mph W · Partly cloudy ⛅ · 62°F
                 </div>
 
                 <div class="fc-dk-rec">
@@ -3028,7 +2760,7 @@ If Total > DK line → lean Over.</div>
                             <div class="h2h-empty">No H2H data vs Trevor Rogers</div>
                         </div>
                     </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">7 mph NE · Partly cloudy ⛅ · 55°F</div>
+                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">6 mph NE · Partly cloudy ⛅ · 55°F</div>
                     <div class="fc-dk-rec">
                         <div>
                             <div class="fc-dk-label">Recommended Bet</div>
@@ -3130,7 +2862,7 @@ If Total > DK line → lean Over.</div>
                             <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">5-for-13 .385</span><span class="h2h-stat">0HR 2RBI</span><span class="h2h-trend" style="color:#00cc66">Owns (Trusted)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#ff4444">0-for-2 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Cold</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#ffaa33">K% 18.8%</span><span class="h2h-stat" style="color:#ffaa33">BB% 8.5%</span><span class="h2h-trend" style="color:#ffaa33">HR/9 1.18</span></div>
                         </div>
                     </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">7 mph NE · Partly cloudy ⛅ · 55°F</div>
+                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">6 mph NE · Partly cloudy ⛅ · 55°F</div>
                     <div class="fc-dk-rec">
                         <div>
                             <div class="fc-dk-label">Recommended Bet</div>
@@ -3232,7 +2964,7 @@ If Total > DK line → lean Over.</div>
                             <div class="h2h-empty">No H2H data vs TBD</div>
                         </div>
                     </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">7 mph NE · Partly cloudy ⛅ · 55°F</div>
+                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">6 mph NE · Partly cloudy ⛅ · 55°F</div>
                     <div class="fc-dk-rec">
                         <div>
                             <div class="fc-dk-label">Recommended Bet</div>
@@ -3334,7 +3066,7 @@ If Total > DK line → lean Over.</div>
                             <div class="h2h-empty">No H2H data vs TBD</div>
                         </div>
                     </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">7 mph NE · Partly cloudy ⛅ · 55°F</div>
+                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">6 mph NE · Partly cloudy ⛅ · 55°F</div>
                     <div class="fc-dk-rec">
                         <div>
                             <div class="fc-dk-label">Recommended Bet</div>
@@ -3436,7 +3168,7 @@ If Total > DK line → lean Over.</div>
                             <div class="h2h-empty">No H2H data vs TBD</div>
                         </div>
                     </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">7 mph NE · Partly cloudy ⛅ · 55°F</div>
+                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">6 mph NE · Partly cloudy ⛅ · 55°F</div>
                     <div class="fc-dk-rec">
                         <div>
                             <div class="fc-dk-label">Recommended Bet</div>
@@ -3552,7 +3284,7 @@ If Total > DK line → lean Over.</div>
                             <div class="h2h-empty">No H2H data vs MacKenzie Gore</div>
                         </div>
                     </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">No weather data</div>
+                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">4 mph W · Partly cloudy ⛅ · 62°F</div>
                     <div class="fc-dk-rec">
                         <div>
                             <div class="fc-dk-label">Recommended Bet</div>
@@ -3654,7 +3386,7 @@ If Total > DK line → lean Over.</div>
                             <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">0-for-3 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Struggles (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#ff4444">0-for-3 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Cold</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#00cc66">K% 25.4%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.9%</span><span class="h2h-trend" style="color:#00cc66">HR/9 0.65</span></div>
                         </div>
                     </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">No weather data</div>
+                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">4 mph W · Partly cloudy ⛅ · 62°F</div>
                     <div class="fc-dk-rec">
                         <div>
                             <div class="fc-dk-label">Recommended Bet</div>
@@ -3756,7 +3488,7 @@ If Total > DK line → lean Over.</div>
                             <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">0-for-3 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Struggles (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#ff4444">0-for-3 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Cold</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#00cc66">K% 25.4%</span><span class="h2h-stat" style="color:#ffaa33">BB% 7.9%</span><span class="h2h-trend" style="color:#00cc66">HR/9 0.65</span></div>
                         </div>
                     </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">No weather data</div>
+                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">4 mph W · Partly cloudy ⛅ · 62°F</div>
                     <div class="fc-dk-rec">
                         <div>
                             <div class="fc-dk-label">Recommended Bet</div>
@@ -3858,7 +3590,7 @@ If Total > DK line → lean Over.</div>
                             <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">0-for-3 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Struggles (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#ff4444">0-for-3 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Cold</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#00cc66">K% 25.9%</span><span class="h2h-stat" style="color:#ff6644">BB% 11.3%</span><span class="h2h-trend" style="color:#ffaa33">HR/9 1.1</span></div>
                         </div>
                     </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">No weather data</div>
+                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">4 mph W · Partly cloudy ⛅ · 62°F</div>
                     <div class="fc-dk-rec">
                         <div>
                             <div class="fc-dk-label">Recommended Bet</div>
@@ -3960,7 +3692,7 @@ If Total > DK line → lean Over.</div>
                             <div class="h2h-row"><span class="h2h-label">Career</span><span class="h2h-stat">0-for-2 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Struggles (Small sample)</span></div><div class="h2h-row"><span class="h2h-label">2026</span><span class="h2h-stat" style="color:#ff4444">0-for-2 .---</span><span class="h2h-stat">0HR 0RBI</span><span class="h2h-trend" style="color:#ff4444">Cold</span></div><div class="h2h-row"><span class="h2h-label">Pitcher</span><span class="h2h-stat" style="color:#00cc66">K% 25.9%</span><span class="h2h-stat" style="color:#ff6644">BB% 11.3%</span><span class="h2h-trend" style="color:#ffaa33">HR/9 1.1</span></div>
                         </div>
                     </div>
-                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">No weather data</div>
+                    <div style="font-size:11px;padding:6px 0 2px;color:#445566;font-weight:600">4 mph W · Partly cloudy ⛅ · 62°F</div>
                     <div class="fc-dk-rec">
                         <div>
                             <div class="fc-dk-label">Recommended Bet</div>
@@ -4004,5 +3736,229 @@ If Total > DK line → lean Over.</div>
             </div>
         </div>
 
+<script>
+
+    // ── Modal functions defined FIRST — must be available before any click ──
+    function openModal(id) {
+        const modal = document.getElementById(id);
+        if (!modal) { console.warn('Modal not found:', id); return; }
+        modal.classList.add('modal-open');
+        document.body.style.overflow = 'hidden';
+        modal.scrollTop = 0;
+        if (id === 'modal-tracker') { try { refreshTrackerModal(); } catch(e) { console.warn(e); } }
+    }
+    function closeModal(id) {
+        const modal = document.getElementById(id);
+        if (!modal) return;
+        modal.classList.remove('modal-open');
+        document.body.style.overflow = '';
+    }
+    // ── Info card popup ───────────────────────────────────────
+    function showInfo(card) {
+        const title = card.querySelector('.info-card-front').textContent.trim();
+        const body  = card.querySelector('.info-card-data').textContent.trim();
+        document.getElementById('info-popup-title').textContent = title;
+        document.getElementById('info-popup-body').innerHTML =
+            body.replace(/
+/g, '<br>');
+        document.getElementById('info-popup-backdrop').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeInfo(e) {
+        if (e.target === document.getElementById('info-popup-backdrop')) {
+            closeInfoBtn();
+        }
+    }
+    function closeInfoBtn() {
+        document.getElementById('info-popup-backdrop').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeInfoBtn();
+            document.querySelectorAll('.modal-backdrop.modal-open').forEach(m => {
+                m.classList.remove('modal-open');
+            });
+            document.body.style.overflow = '';
+        }
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal-backdrop.modal-open').forEach(m => {
+                m.classList.remove('modal-open');
+            });
+            document.body.style.overflow = '';
+        }
+    });
+
+    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js'); }
+
+    // ── Supabase config ───────────────────────────────────────
+    const SB_URL = 'https://hpoxotxejiilxzhxiuan.supabase.co';
+    const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhwb3hvdHhlamlpbHh6aHhpdWFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0Nzg2MzgsImV4cCI6MjA5NTA1NDYzOH0.57oQLnh3Wv8n1F34OVsNvFdsklVktbKUeTlGDkq1X7s';
+    const TODAY  = new Date().toISOString().slice(0, 10);
+
+    async function sbFetch(path, opts = {}) {
+        try {
+            const res = await fetch(SB_URL + '/rest/v1/' + path, {
+                headers: {
+                    'apikey':        SB_KEY,
+                    'Authorization': 'Bearer ' + SB_KEY,
+                    'Content-Type':  'application/json',
+                    'Prefer':        opts.prefer || 'return=representation',
+                },
+                method: opts.method || 'GET',
+                body:   opts.body   || undefined,
+            });
+            if (!res.ok) { console.error('Supabase', res.status, await res.text()); return null; }
+            const text = await res.text();
+            return text ? JSON.parse(text) : [];
+        } catch(e) { console.error('Supabase fetch error', e); return null; }
+    }
+
+    async function logPickBtn(btn) {
+        const pid    = btn.dataset.pid;
+        const pname  = btn.dataset.pname;
+        const conf   = btn.dataset.conf;
+        const match  = btn.dataset.match;
+        const score  = parseFloat(btn.dataset.score);
+        const suffix = btn.dataset.suffix;
+        await logPick(pid, pname, conf, match, score, suffix);
+    }
+
+    async function logPick(playerId, playerName, conf, matchup, score, suffix) {
+        const nameEl = document.getElementById('pn-' + playerId + '-' + suffix);
+        const lineEl = document.getElementById('pl-' + playerId + '-' + suffix);
+        const msgEl  = document.getElementById('ps-' + playerId + '-' + suffix);
+        const who    = nameEl ? nameEl.value.trim() : '';
+        const line   = lineEl ? lineEl.value : 'Over 1.5';
+        if (!who) {
+            if (nameEl) { nameEl.style.borderColor = '#ff4444'; nameEl.focus(); }
+            return;
+        }
+        if (nameEl) nameEl.style.borderColor = '';
+        const existing = await sbFetch(
+            'picks?who=eq.' + encodeURIComponent(who) +
+            '&player_id=eq.' + encodeURIComponent(playerId) +
+            '&date=eq.' + TODAY
+        );
+        if (existing && existing.length > 0) {
+            if (msgEl) { msgEl.textContent = 'Already logged for ' + who + ' today!'; msgEl.classList.add('show'); }
+            return;
+        }
+        const row = {
+            date: TODAY, who, player_id: playerId, player_name: playerName,
+            line, conf, matchup, score, result: 'pending', actual: null
+        };
+        const res = await sbFetch('picks', { method: 'POST', body: JSON.stringify(row) });
+        if (!res) {
+            if (msgEl) { msgEl.style.color = '#ff4444'; msgEl.textContent = 'Save failed — check console.'; msgEl.classList.add('show'); }
+            return;
+        }
+        if (msgEl) { msgEl.style.color = '#00cc66'; msgEl.textContent = '✓ Logged: ' + who + ' on ' + playerName + ' ' + line; msgEl.classList.add('show'); }
+        updateFabCount();
+        refreshTrackerModal();
+    }
+
+    async function setResult(pickId, result) {
+        await sbFetch('picks?id=eq.' + pickId, { method: 'PATCH', body: JSON.stringify({ result }), prefer: 'return=minimal' });
+        refreshTrackerModal();
+    }
+
+    async function setActual(pickId, val) {
+        await sbFetch('picks?id=eq.' + pickId, {
+            method: 'PATCH',
+            body:   JSON.stringify({ actual: val === '' ? null : parseInt(val) }),
+            prefer: 'return=minimal'
+        });
+    }
+
+    async function updateFabCount() {
+        const picks = await sbFetch('picks?date=eq.' + TODAY + '&select=id');
+        const el = document.getElementById('fab-count');
+        if (el) el.textContent = picks ? picks.length : 0;
+    }
+
+    async function refreshTrackerModal() {
+        const todayPicks = await sbFetch('picks?date=eq.' + TODAY + '&order=id.asc') || [];
+        const allPicks   = await sbFetch('picks?order=id.asc') || [];
+        const settled    = allPicks.filter(p => p.result !== 'pending');
+        const hits       = settled.filter(p => p.result === 'hit');
+        const hitRate    = settled.length ? Math.round((hits.length / settled.length) * 100) : null;
+
+        document.getElementById('tr-total').textContent = allPicks.length;
+        document.getElementById('tr-today').textContent = todayPicks.length;
+        const rEl = document.getElementById('tr-rate');
+        rEl.textContent = hitRate !== null ? hitRate + '%' : '—';
+        rEl.style.color = hitRate >= 55 ? '#00ff88' : hitRate !== null && hitRate < 45 ? '#ff4444' : '#aabbcc';
+        document.getElementById('tr-hits').textContent = hits.length;
+        document.getElementById('tr-miss').textContent = settled.length - hits.length;
+
+        const tbody = document.getElementById('tr-picks-body');
+        if (!todayPicks.length) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#334455;padding:20px;font-style:italic">No picks logged today yet.</td></tr>';
+        } else {
+            tbody.innerHTML = todayPicks.map(p => {
+                const rHit  = p.result === 'hit'  ? 'active' : '';
+                const rMiss = p.result === 'miss' ? 'active' : '';
+                return '<tr>' +
+                    '<td style="font-weight:700;color:#ddeeff">' + p.who + '</td>' +
+                    '<td>' + p.player_name + '</td>' +
+                    '<td style="white-space:nowrap">' + p.line + '</td>' +
+                    '<td><span style="font-size:11px;padding:2px 7px;border-radius:20px;background:#0a1020;color:#aabbcc">' + p.conf + '</span></td>' +
+                    '<td><input type="number" min="0" max="10" placeholder="H+R+RBI" ' +
+                    'value="' + (p.actual !== null && p.actual !== undefined ? p.actual : '') + '" ' +
+                    'onchange="setActual(' + p.id + ', this.value)" ' +
+                    'style="width:90px;background:#0d1525;border:1px solid #1a2a40;border-radius:5px;color:#ddeeff;font-size:12px;padding:3px 7px;font-family:inherit"></td>' +
+                    '<td style="white-space:nowrap">' +
+                    '<button class="result-btn hit '  + rHit  + '" data-id="' + p.id + '" data-r="hit" onclick="setResult(this.dataset.id,this.dataset.r)">Hit</button>' +
+                    '<button class="result-btn miss ' + rMiss + '" data-id="' + p.id + '" data-r="miss" onclick="setResult(this.dataset.id,this.dataset.r)">Miss</button>' +
+                    '</td></tr>';
+            }).join('');
+        }
+
+        const byWho = {};
+        allPicks.forEach(p => {
+            if (!byWho[p.who]) byWho[p.who] = { hits: 0, miss: 0, pend: 0 };
+            if (p.result === 'hit') byWho[p.who].hits++;
+            else if (p.result === 'miss') byWho[p.who].miss++;
+            else byWho[p.who].pend++;
+        });
+        const board = Object.entries(byWho)
+            .map(([name, s]) => {
+                const tot = s.hits + s.miss;
+                return { name, ...s, rate: tot ? Math.round((s.hits / tot) * 100) : null };
+            })
+            .sort((a, b) => (b.rate ?? -1) - (a.rate ?? -1));
+
+        const medals = ['1st','2nd','3rd'];
+        const lb = document.getElementById('tr-leaderboard');
+        lb.innerHTML = !board.length
+            ? '<div style="color:#334455;text-align:center;padding:16px;font-style:italic">No data yet.</div>'
+            : board.map((r, i) => {
+                const rc = r.rate >= 55 ? '#00ff88' : r.rate !== null && r.rate < 45 ? '#ff4444' : '#aabbcc';
+                return '<div class="leaderboard-row">' +
+                    '<div class="lb-medal">' + (i < 3 ? medals[i] : i + 1) + '</div>' +
+                    '<div class="lb-name">' + r.name + '</div>' +
+                    '<div class="lb-stats"><div class="lb-rate" style="color:' + rc + '">' +
+                    (r.rate !== null ? r.rate + '%' : '—') + '</div>' +
+                    r.hits + 'W · ' + r.miss + 'L · ' + r.pend + ' pending</div></div>';
+            }).join('');
+
+        updateFabCount();
+    }
+
+    // ── Modal backdrop click to close ────────────────────────
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('modal-backdrop')) {
+            e.target.classList.remove('modal-open');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Safe async init — Supabase errors never block modal clicks
+    (async () => { try { await updateFabCount(); } catch(e) { console.warn('FAB init:', e); } })();
+    
+</script>
 </body>
 </html>
