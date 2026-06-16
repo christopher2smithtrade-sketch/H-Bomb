@@ -926,7 +926,6 @@ async function submitRating() {
   if (res) {
     msg.className = 'status-msg ok';
     msg.textContent = '✅ Rating saved! Nice wings.';
-    playChickenSound();
     resetForm();
     loadLeaderboard();
   } else {
@@ -1091,76 +1090,6 @@ function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── Chicken sound ───────────────────────────────────
-function playChickenSound() {
-  const ctx = new (window.AudioContext || window.webkitAudioContext)();
-
-  function bawk(t, freq, dur) {
-    // noise burst (the "k" crack at the start of a bawk)
-    const bufSize = ctx.sampleRate * 0.06;
-    const buf  = ctx.createBuffer(1, bufSize, ctx.sampleRate);
-    const data = buf.getChannelData(0);
-    for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1);
-    const noise     = ctx.createBufferSource();
-    const noiseGain = ctx.createGain();
-    const noiseFilter = ctx.createBiquadFilter();
-    noise.buffer = buf;
-    noiseFilter.type = 'bandpass';
-    noiseFilter.frequency.value = freq * 1.4;
-    noiseFilter.Q.value = 1.2;
-    noise.connect(noiseFilter);
-    noiseFilter.connect(noiseGain);
-    noiseGain.connect(ctx.destination);
-    noiseGain.gain.setValueAtTime(0.35, t);
-    noiseGain.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
-    noise.start(t);
-    noise.stop(t + 0.07);
-
-    // tonal body — the "baw" vowel part
-    const osc1 = ctx.createOscillator();
-    const osc2 = ctx.createOscillator();
-    const oGain = ctx.createGain();
-    const filter = ctx.createBiquadFilter();
-
-    osc1.type = 'sawtooth';
-    osc2.type = 'square';
-    osc2.detune.value = 18; // slight chorus roughness
-
-    // pitch contour: shoot up then fall — classic bawk shape
-    osc1.frequency.setValueAtTime(freq * 0.85, t);
-    osc1.frequency.linearRampToValueAtTime(freq * 1.55, t + 0.045);
-    osc1.frequency.exponentialRampToValueAtTime(freq * 0.55, t + dur * 0.75);
-    osc1.frequency.exponentialRampToValueAtTime(freq * 0.40, t + dur);
-    osc2.frequency.setValueAtTime(freq * 0.85, t);
-    osc2.frequency.linearRampToValueAtTime(freq * 1.55, t + 0.045);
-    osc2.frequency.exponentialRampToValueAtTime(freq * 0.55, t + dur * 0.75);
-    osc2.frequency.exponentialRampToValueAtTime(freq * 0.40, t + dur);
-
-    // formant filter gives it that beak/throat shape
-    filter.type = 'peaking';
-    filter.frequency.value = freq * 1.1;
-    filter.Q.value = 3;
-    filter.gain.value = 10;
-
-    osc1.connect(filter);
-    osc2.connect(filter);
-    filter.connect(oGain);
-    oGain.connect(ctx.destination);
-
-    oGain.gain.setValueAtTime(0, t);
-    oGain.gain.linearRampToValueAtTime(0.28, t + 0.03);
-    oGain.gain.setValueAtTime(0.28, t + 0.05);
-    oGain.gain.exponentialRampToValueAtTime(0.001, t + dur);
-
-    osc1.start(t); osc1.stop(t + dur + 0.02);
-    osc2.start(t); osc2.stop(t + dur + 0.02);
-  }
-
-  const now = ctx.currentTime;
-  bawk(now,        620, 0.28);   // bawk
-  bawk(now + 0.34, 580, 0.24);   // bawk
-  bawk(now + 0.64, 720, 0.38);   // BAWK (louder finish)
-}
 
 // ── Boot ────────────────────────────────────────────
 loadLeaderboard();
