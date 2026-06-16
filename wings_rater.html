@@ -926,6 +926,7 @@ async function submitRating() {
   if (res) {
     msg.className = 'status-msg ok';
     msg.textContent = '✅ Rating saved! Nice wings.';
+    playChickenSound();
     resetForm();
     loadLeaderboard();
   } else {
@@ -1079,6 +1080,43 @@ function toggleDetail(detailId, chevId) {
 
 function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Chicken sound ───────────────────────────────────
+function playChickenSound() {
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+  function bawk(t, pitch) {
+    const osc  = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const dist = ctx.createWaveShaper();
+
+    // slight distortion for that clucky texture
+    const curve = new Float32Array(256);
+    for (let i = 0; i < 256; i++) curve[i] = (i < 128 ? i / 128 : (i - 256) / 128) * 1.8;
+    dist.curve = curve;
+
+    osc.connect(dist);
+    dist.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(pitch,          t);
+    osc.frequency.exponentialRampToValueAtTime(pitch * 1.7, t + 0.04);
+    osc.frequency.exponentialRampToValueAtTime(pitch * 0.7, t + 0.13);
+
+    gain.gain.setValueAtTime(0,    t);
+    gain.gain.linearRampToValueAtTime(0.22, t + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+
+    osc.start(t);
+    osc.stop(t + 0.2);
+  }
+
+  const now = ctx.currentTime;
+  bawk(now,        900);
+  bawk(now + 0.22, 820);
+  bawk(now + 0.42, 1050);
 }
 
 // ── Boot ────────────────────────────────────────────
