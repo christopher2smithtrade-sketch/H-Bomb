@@ -966,14 +966,23 @@ async function loadLeaderboard() {
   if (!data) { document.getElementById('leaderboard').innerHTML = '<div class="lb-empty">Could not load ratings.</div>'; return; }
   allRatings = data;
 
-  // add any DB places not already in the leaderboard dropdown
-  const sel = document.getElementById('lb-search');
-  const existing = new Set([...sel.options].map(o => o.value).filter(v => v));
+  // add any DB places not already in the form or leaderboard dropdowns
+  const formSel = document.getElementById('f-place');
+  const lbSel   = document.getElementById('lb-search');
+  const formExisting = new Set([...formSel.options].map(o => o.value).filter(v => v && v !== '__new__'));
+  const lbExisting   = new Set([...lbSel.options].map(o => o.value).filter(v => v));
+
   [...new Set(data.map(r => r.place))].sort().forEach(p => {
-    if (!existing.has(p)) {
+    if (!formExisting.has(p)) {
       const opt = document.createElement('option');
       opt.value = p; opt.textContent = p;
-      sel.appendChild(opt);
+      // insert before the "Add new place…" option
+      formSel.insertBefore(opt, formSel.querySelector('option[value="__new__"]'));
+    }
+    if (!lbExisting.has(p)) {
+      const opt = document.createElement('option');
+      opt.value = p; opt.textContent = p;
+      lbSel.appendChild(opt);
     }
   });
 
