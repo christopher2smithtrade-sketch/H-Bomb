@@ -791,7 +791,15 @@
     </h2>
 
     <div class="lb-controls">
-      <input type="text" id="lb-search" placeholder="Search places…" oninput="renderLeaderboard()">
+      <select id="lb-search" onchange="renderLeaderboard()">
+        <option value="">All Places</option>
+        <option>THE JUGHANDLE</option>
+        <option>WHISTLERS INN</option>
+        <option>BOBBY RAYS</option>
+        <option>45TH ST PUB</option>
+        <option>BRYSON'S PUB</option>
+        <option>MARCO'S</option>
+      </select>
       <button class="sort-btn active" data-sort="calc"    onclick="setSort('calc')">Weighted ↓</button>
       <button class="sort-btn"        data-sort="user"    onclick="setSort('user')">Your Score ↓</button>
       <button class="sort-btn"        data-sort="name"    onclick="setSort('name')">A–Z</button>
@@ -957,10 +965,16 @@ async function loadLeaderboard() {
   if (!data) { document.getElementById('leaderboard').innerHTML = '<div class="lb-empty">Could not load ratings.</div>'; return; }
   allRatings = data;
 
-  // populate datalist with known places
-  const places = [...new Set(data.map(r => r.place))].sort();
-  const dl = document.getElementById('place-suggestions');
-  dl.innerHTML = places.map(p => `<option value="${escHtml(p)}">`).join('');
+  // add any DB places not already in the leaderboard dropdown
+  const sel = document.getElementById('lb-search');
+  const existing = new Set([...sel.options].map(o => o.value).filter(v => v));
+  [...new Set(data.map(r => r.place))].sort().forEach(p => {
+    if (!existing.has(p)) {
+      const opt = document.createElement('option');
+      opt.value = p; opt.textContent = p;
+      sel.appendChild(opt);
+    }
+  });
 
   renderLeaderboard();
 }
@@ -989,10 +1003,10 @@ function groupByPlace(ratings) {
 }
 
 function renderLeaderboard() {
-  const search = document.getElementById('lb-search').value.trim().toLowerCase();
+  const selected = document.getElementById('lb-search').value;
   let groups = groupByPlace(allRatings);
 
-  if (search) groups = groups.filter(g => g.place.toLowerCase().includes(search));
+  if (selected) groups = groups.filter(g => g.place === selected);
 
   groups.sort((a, b) => {
     if (currentSort === 'calc')    return b.avg_calc - a.avg_calc;
