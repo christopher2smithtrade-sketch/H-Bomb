@@ -935,6 +935,7 @@ async function submitRating() {
   if (res) {
     msg.className = 'status-msg ok';
     msg.textContent = '✅ Rating saved! Nice wings.';
+    playChickenSound();
     resetForm();
     loadLeaderboard();
   } else {
@@ -1104,9 +1105,21 @@ function escHtml(s) {
 }
 
 
+// ── Chicken sound ───────────────────────────────────
+function playChickenSound() {
+  const snd = document.getElementById('chickenSound');
+  snd.currentTime = 0;
+  snd.play().catch(err => console.error('Playback failed:', err));
+}
+
 // ── Boot ────────────────────────────────────────────
 loadLeaderboard();
 
 </script>
+
+<audio id="chickenSound" preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7f1f7a2f3b.mp3?filename=chicken-cluck-7152.mp3" type="audio/mpeg">
+</audio>
+
 </body>
 </html>
