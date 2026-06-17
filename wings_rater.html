@@ -732,7 +732,7 @@
     <label>Sauce</label>
     <div class="score-group">
       <div class="score-label-row">
-        <span style="font-size:.75rem;color:var(--muted)">How's the sauce? Flavor, heat, coverage.</span>
+        <span style="font-size:.75rem;color:var(--muted)">Flavor, heat, coverage.</span>
         <span class="score-display" id="d-sauce">—</span>
       </div>
       <div class="btn-row" id="br-sauce"></div>
@@ -747,49 +747,13 @@
       <div class="btn-row" id="br-size"></div>
     </div>
 
-    <label>Crispiness</label>
-    <div class="score-group">
-      <div class="score-label-row">
-        <span style="font-size:.75rem;color:var(--muted)">Skin texture — soggy to shatteringly crisp.</span>
-        <span class="score-display" id="d-crisp">—</span>
-      </div>
-      <div class="btn-row" id="br-crisp"></div>
-    </div>
-
-    <label>Overall Flavor</label>
-    <div class="score-group">
-      <div class="score-label-row">
-        <span style="font-size:.75rem;color:var(--muted)">Total taste experience — does it all come together?</span>
-        <span class="score-display" id="d-flavor">—</span>
-      </div>
-      <div class="btn-row" id="br-flavor"></div>
-    </div>
-
     <label>Chicken Quality</label>
     <div class="score-group">
       <div class="score-label-row">
-        <span style="font-size:.75rem;color:var(--muted)">Quality of the actual bird — fresh, clean, no gristle.</span>
-        <span class="score-display" id="d-quality">—</span>
+        <span style="font-size:.75rem;color:var(--muted)">Look, cook, meatiness &amp; crispiness — the whole bird.</span>
+        <span class="score-display" id="d-chicken">—</span>
       </div>
-      <div class="btn-row" id="br-quality"></div>
-    </div>
-
-    <label>Cook Quality</label>
-    <div class="score-group">
-      <div class="score-label-row">
-        <span style="font-size:.75rem;color:var(--muted)">Perfectly cooked? Or dry / over / under done?</span>
-        <span class="score-display" id="d-cook">—</span>
-      </div>
-      <div class="btn-row" id="br-cook"></div>
-    </div>
-
-    <label>Meat on Bone</label>
-    <div class="score-group">
-      <div class="score-label-row">
-        <span style="font-size:.75rem;color:var(--muted)">How much meat is actually on the wing?</span>
-        <span class="score-display" id="d-meat">—</span>
-      </div>
-      <div class="btn-row" id="br-meat"></div>
+      <div class="btn-row" id="br-chicken"></div>
     </div>
 
     <label>Price / Value</label>
@@ -814,7 +778,7 @@
     <div class="calc-preview">
       <div>
         <span>Weighted Score</span>
-        <div class="calc-breakdown" id="calc-breakdown">flavor 25% · quality 20% · crisp 15% · sauce 15% · cook 12% · meat 8% · size 5%</div>
+        <div class="calc-breakdown" id="calc-breakdown">chicken quality 40% · sauce 30% · price 20% · size 10%</div>
       </div>
       <div style="text-align:right">
         <div class="calc-value" id="calc-display">—</div>
@@ -878,7 +842,7 @@ async function sbFetch(path, opts = {}) {
 }
 
 // ── Score button builder ─────────────────────────────
-const scores = { sauce: null, size: null, crispiness: null, flavor: null, quality: null, cook: null, meat: null, price_val: null, user_score: null };
+const scores = { sauce: null, size: null, chicken_quality: null, price: null, user_score: null };
 
 function buildScoreButtons(containerId, key, displayId) {
   const row = document.getElementById(containerId);
@@ -903,15 +867,15 @@ function selectScore(containerId, key, displayId, val) {
 }
 
 function updateCalc() {
-  const { sauce, size, crispiness, flavor, quality, cook, meat, price_val, user_score } = scores;
+  const { sauce, size, chicken_quality, price, user_score } = scores;
   const el = document.getElementById('calc-display');
   const mini = document.getElementById('your-score-mini');
   mini.textContent = user_score !== null ? user_score : '—';
-  if ([sauce, size, crispiness, flavor, quality, cook, meat, price_val].some(v => v === null)) {
+  if ([sauce, size, chicken_quality, price].some(v => v === null)) {
     el.textContent = '—';
     return;
   }
-  const calc = (flavor * 0.25 + quality * 0.20 + crispiness * 0.15 + sauce * 0.15 + cook * 0.12 + meat * 0.08 + size * 0.05).toFixed(2);
+  const calc = (chicken_quality * 0.40 + sauce * 0.30 + price * 0.20 + size * 0.10).toFixed(2);
   el.textContent = calc;
 }
 
@@ -934,15 +898,11 @@ function getPlace() {
 }
 
 // ── Form init ───────────────────────────────────────
-buildScoreButtons('br-sauce',   'sauce',      'd-sauce');
-buildScoreButtons('br-size',    'size',       'd-size');
-buildScoreButtons('br-crisp',   'crispiness', 'd-crisp');
-buildScoreButtons('br-flavor',  'flavor',     'd-flavor');
-buildScoreButtons('br-quality', 'quality',    'd-quality');
-buildScoreButtons('br-cook',    'cook',       'd-cook');
-buildScoreButtons('br-meat',    'meat',       'd-meat');
-buildScoreButtons('br-price',   'price_val',  'd-price');
-buildScoreButtons('br-overall', 'user_score', 'd-overall');
+buildScoreButtons('br-sauce',   'sauce',           'd-sauce');
+buildScoreButtons('br-size',    'size',            'd-size');
+buildScoreButtons('br-chicken', 'chicken_quality', 'd-chicken');
+buildScoreButtons('br-price',   'price',           'd-price');
+buildScoreButtons('br-overall', 'user_score',      'd-overall');
 
 // set today's date
 document.getElementById('f-date').value = new Date().toISOString().slice(0, 10);
@@ -953,23 +913,23 @@ async function submitRating() {
   const place      = getPlace();
   const visited_on = document.getElementById('f-date').value;
   const notes      = document.getElementById('f-notes').value.trim();
-  const { sauce, size, crispiness, flavor, quality, cook, meat, price_val, user_score } = scores;
+  const { sauce, size, chicken_quality, price, user_score } = scores;
   const msg = document.getElementById('status-msg');
 
   msg.className = 'status-msg';
   if (!rater) { msg.className += ' err'; msg.textContent = 'Enter your name.'; return; }
   if (!place) { msg.className += ' err'; msg.textContent = 'Enter a place name.'; return; }
-  if ([sauce, size, crispiness, flavor, quality, cook, meat, price_val, user_score].some(v => !v)) {
-    msg.className += ' err'; msg.textContent = 'Please score all categories.'; return;
+  if ([sauce, size, chicken_quality, price, user_score].some(v => !v)) {
+    msg.className += ' err'; msg.textContent = 'Please score all 5 categories.'; return;
   }
 
-  const calc_score = +(flavor * 0.25 + quality * 0.20 + crispiness * 0.15 + sauce * 0.15 + cook * 0.12 + meat * 0.08 + size * 0.05).toFixed(2);
+  const calc_score = +(chicken_quality * 0.40 + sauce * 0.30 + price * 0.20 + size * 0.10).toFixed(2);
 
   const btn = document.getElementById('btn-submit');
   btn.disabled = true;
   msg.textContent = 'Submitting…';
 
-  const row = { place, rater, sauce, size, crispiness, flavor, quality, cook, meat, price_val, user_score, calc_score, notes: notes || null, visited_on };
+  const row = { place, rater, sauce, size, chicken_quality, price, user_score, calc_score, notes: notes || null, visited_on };
   const res = await sbFetch('wings_ratings', { method: 'POST', body: JSON.stringify(row) });
 
   if (res) {
@@ -989,11 +949,11 @@ function resetForm() {
   document.getElementById('f-place').value = '';
   document.getElementById('f-place-new').style.display = 'none';
   document.getElementById('f-place-new').value = '';
-  ['br-sauce','br-size','br-crisp','br-flavor','br-quality','br-cook','br-meat','br-price','br-overall'].forEach(id => {
+  ['br-sauce','br-size','br-chicken','br-price','br-overall'].forEach(id => {
     document.getElementById(id).querySelectorAll('.score-btn').forEach(b => b.classList.remove('active'));
   });
-  ['d-sauce','d-size','d-crisp','d-flavor','d-quality','d-cook','d-meat','d-price','d-overall'].forEach(id => document.getElementById(id).textContent = '—');
-  scores.sauce = scores.size = scores.crispiness = scores.flavor = scores.quality = scores.cook = scores.meat = scores.price_val = scores.user_score = null;
+  ['d-sauce','d-size','d-chicken','d-price','d-overall'].forEach(id => document.getElementById(id).textContent = '—');
+  scores.sauce = scores.size = scores.chicken_quality = scores.price = scores.user_score = null;
   document.getElementById('calc-display').textContent = '—';
   document.getElementById('your-score-mini').textContent = '—';
 }
@@ -1052,14 +1012,10 @@ function groupByPlace(ratings) {
       count:        n,
       avg_calc:     avg('calc_score'),
       avg_user:     avg('user_score'),
-      avg_flavor:   avg('flavor'),
-      avg_quality:  avg('quality'),
       avg_sauce:    avg('sauce'),
-      avg_crisp:    avg('crispiness'),
-      avg_cook:     avg('cook'),
-      avg_meat:     avg('meat'),
-      avg_price:    avg('price_val'),
       avg_size:     avg('size'),
+      avg_chicken:  avg('chicken_quality'),
+      avg_price:    avg('price'),
       entries:      g.entries
     };
   });
@@ -1092,16 +1048,12 @@ function renderLeaderboard() {
     const detailRows = g.entries.map(e => `
       <div class="detail-entry">
         <div class="detail-rater">${escHtml(e.rater)}</div>
-        <div class="detail-row"><span>Overall Flavor</span>  <span>${e.flavor??'—'}/10</span></div>
-        <div class="detail-row"><span>Chicken Quality</span> <span>${e.quality??'—'}/10</span></div>
+        <div class="detail-row"><span>Chicken Quality</span> <span>${e.chicken_quality??'—'}/10</span></div>
         <div class="detail-row"><span>Sauce</span>           <span>${e.sauce}/10</span></div>
-        <div class="detail-row"><span>Crispiness</span>      <span>${e.crispiness}/10</span></div>
-        <div class="detail-row"><span>Cook Quality</span>    <span>${e.cook??'—'}/10</span></div>
-        <div class="detail-row"><span>Meat on Bone</span>    <span>${e.meat??'—'}/10</span></div>
+        <div class="detail-row"><span>Price / Value</span>   <span>${e.price??'—'}/10</span></div>
         <div class="detail-row"><span>Size</span>            <span>${e.size}/10</span></div>
-        <div class="detail-row"><span>Price / Value</span>   <span>${e.price_val??'—'}/10</span></div>
         <div class="detail-row" style="margin-top:4px;border-top:1px solid #2a3040;padding-top:4px">
-          <span>Their Score</span><span>${e.user_score}/10</span></div>
+          <span>Their Overall</span><span>${e.user_score}/10</span></div>
         <div class="detail-row"><span>Weighted</span>        <span>${e.calc_score}</span></div>
         ${e.notes ? `<div class="detail-notes">"${escHtml(e.notes)}"</div>` : ''}
         <div class="detail-row" style="margin-top:6px"><span style="color:var(--muted);font-size:.7rem">${e.visited_on}</span></div>
@@ -1118,14 +1070,10 @@ function renderLeaderboard() {
         <div class="place-scores">
           ${chip('Weighted', g.avg_calc)}
           ${chip('Yours',    g.avg_user)}
-          ${chip('Flavor',   g.avg_flavor)}
-          ${chip('Quality',  g.avg_quality)}
+          ${chip('Chicken',  g.avg_chicken)}
           ${chip('Sauce',    g.avg_sauce)}
-          ${chip('Crisp',    g.avg_crisp)}
-          ${chip('Cook',     g.avg_cook)}
-          ${chip('Meat',     g.avg_meat)}
-          ${chip('Size',     g.avg_size)}
           ${chip('Price',    g.avg_price)}
+          ${chip('Size',     g.avg_size)}
         </div>
         <div class="chevron" id="${chevId}">▼</div>
       </div>
