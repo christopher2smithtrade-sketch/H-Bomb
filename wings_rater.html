@@ -864,6 +864,9 @@ function selectScore(containerId, key, displayId, val) {
     b.classList.toggle('active', +b.dataset.v === val);
   });
   updateCalc();
+  const cluck = document.getElementById('cluckSound');
+  cluck.currentTime = 0;
+  cluck.play().catch(() => {});
 }
 
 function updateCalc() {
@@ -1117,9 +1120,8 @@ loadLeaderboard();
 
 </script>
 
-<audio id="chickenSound" preload="auto">
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7f1f7a2f3b.mp3?filename=chicken-cluck-7152.mp3" type="audio/mpeg">
-</audio>
+<audio id="chickenSound" preload="auto"><source src="chicken.mp3" type="audio/mpeg"></audio>
+<audio id="cluckSound"   preload="auto"><source src="cluck.mp3"   type="audio/mpeg"></audio>
 
 </body>
 </html>
