@@ -1030,25 +1030,36 @@ async function loadLeaderboard() {
   if (!data) { document.getElementById('leaderboard').innerHTML = '<div class="lb-empty">Could not load ratings.</div>'; return; }
   allRatings = data;
 
-  // add any DB places not already in the form or leaderboard dropdowns
+  // rebuild both dropdowns: hardcoded places + any extras from DB, all sorted
+  const HARDCODED = ['THE JUGHANDLE','WHISTLERS INN','BOBBY RAYS','45TH ST PUB',"BRYSON'S PUB","MARCO'S"];
+  const dbPlaces  = [...new Set(data.map(r => r.place))];
+  const allPlaces = [...new Set([...HARDCODED, ...dbPlaces])].sort();
+
   const formSel = document.getElementById('f-place');
   const lbSel   = document.getElementById('lb-search');
-  const formExisting = new Set([...formSel.options].map(o => o.value).filter(v => v && v !== '__new__'));
-  const lbExisting   = new Set([...lbSel.options].map(o => o.value).filter(v => v));
 
-  [...new Set(data.map(r => r.place))].sort().forEach(p => {
-    if (!formExisting.has(p)) {
-      const opt = document.createElement('option');
-      opt.value = p; opt.textContent = p;
-      // insert before the "Add new place…" option
-      formSel.insertBefore(opt, formSel.querySelector('option[value="__new__"]'));
-    }
-    if (!lbExisting.has(p)) {
-      const opt = document.createElement('option');
-      opt.value = p; opt.textContent = p;
-      lbSel.appendChild(opt);
-    }
+  // remember current selections so we can restore them
+  const formVal = formSel.value;
+  const lbVal   = lbSel.value;
+
+  // rebuild form dropdown
+  formSel.innerHTML = '<option value="">— Select a place —</option>';
+  allPlaces.forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p; opt.textContent = p;
+    formSel.appendChild(opt);
   });
+  formSel.innerHTML += '<option value="__new__">➕ Add new place…</option>';
+  formSel.value = formVal;
+
+  // rebuild leaderboard dropdown
+  lbSel.innerHTML = '<option value="">All Places</option>';
+  allPlaces.forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p; opt.textContent = p;
+    lbSel.appendChild(opt);
+  });
+  lbSel.value = lbVal;
 
   renderLeaderboard();
 }
