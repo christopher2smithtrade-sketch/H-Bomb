@@ -1109,7 +1109,7 @@ function renderLeaderboard() {
         <div class="detail-row"><span>Price / Value</span>   <span>${e.price??'—'}/10</span></div>
         <div class="detail-row"><span>Size</span>            <span>${e.size}/10</span></div>
         <div class="detail-row" style="margin-top:4px;border-top:1px solid #2a3040;padding-top:4px">
-          <span>Their Overall</span><span>${e.user_score}/10</span></div>
+          <span>${escHtml(e.rater)}'s Overall</span><span>${e.user_score}/10</span></div>
         <div class="detail-row"><span>Weighted</span>        <span>${e.calc_score}</span></div>
         ${e.notes ? `<div class="detail-notes">"${escHtml(e.notes)}"</div>` : ''}
         <div class="detail-row" style="margin-top:6px"><span style="color:var(--muted);font-size:.7rem">${e.visited_on}</span></div>
