@@ -1211,6 +1211,11 @@ if (localStorage.getItem('wings-theme') === 'light') {
   });
 }
 
+// ── Service worker (PWA install) ────────────────────
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./wings_sw.js').catch(() => {});
+}
+
 // ── Boot ────────────────────────────────────────────
 loadSound('chicken', 'chicken.mp3');
 loadSound('cluck',   'cluck.mp3');
