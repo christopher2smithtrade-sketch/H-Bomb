@@ -1,0 +1,14 @@
+{
+  "name": "Wing Rater",
+  "short_name": "Wing Rater",
+  "description": "Rate buffalo wings. Find the best spot.",
+  "start_url": "./wings_rater.html",
+  "display": "standalone",
+  "background_color": "#0d0f14",
+  "theme_color": "#e8891a",
+  "orientation": "portrait",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}
