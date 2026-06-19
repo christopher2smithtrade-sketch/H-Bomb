@@ -381,6 +381,58 @@
 
   .loading { text-align: center; color: var(--muted); padding: 30px; font-size: .9rem; }
 
+  /* ── Theme toggle ── */
+  .theme-toggle {
+    position: fixed;
+    top: 14px;
+    right: 16px;
+    z-index: 999;
+    background: #1e2535;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--muted);
+    font-size: .8rem;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: border-color .2s, color .2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── Light mode ── */
+  body.light { background: #f4f6fa; color: #2a3a50; }
+  body.light .theme-toggle { background: #fff; border-color: #c8d4e0; color: #556677; }
+  body.light .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  body.light .card { background: #fff; border-color: #dde4ee; }
+  body.light .card h2 { color: #b07010; }
+  body.light label { color: #556677; }
+  body.light input[type=text],
+  body.light input[type=date],
+  body.light select,
+  body.light textarea { background: #f0f4f8; border-color: #c8d4e0; color: #2a3a50; }
+  body.light .score-btn { background: #f0f4f8; border-color: #c8d4e0; color: #778899; }
+  body.light .score-btn:hover { background: #e2eaf4; color: #2a3a50; }
+  body.light .calc-preview { background: #f0f4f8; border-color: #c8d4e0; }
+  body.light .btn-submit { background: var(--accent); color: #000; }
+  body.light .lb-controls select { background: #f0f4f8; border-color: #c8d4e0; color: #2a3a50; }
+  body.light .sort-btn { background: #f0f4f8; border-color: #c8d4e0; color: #556677; }
+  body.light .sort-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+  body.light .place-card { background: #f8fafd; border-color: #dde4ee; }
+  body.light .place-card:hover { border-color: #b0c0d8; }
+  body.light .place-name { color: #1a2a40; }
+  body.light .place-meta { color: #778899; }
+  body.light .place-header { background: #f8fafd; }
+  body.light .score-chip { background: #edf2f8; border-color: #c8d4e0; }
+  body.light .chip-label { color: #889aac; }
+  body.light .place-detail { border-color: #dde4ee; }
+  body.light .detail-entry { background: #f0f4f8; border-color: #dde4ee; }
+  body.light .detail-row { color: #556677; }
+  body.light .detail-row span:last-child { color: #1a2a40; }
+  body.light .subtitle { color: #667788; }
+  body.light .btn-refresh { background: #f0f4f8; border-color: #c8d4e0; color: #556677; }
+  body.light .btn-refresh:hover { background: #e2eaf4; color: #2a3a50; }
+  body.light .place-rank { color: #889aac; }
+  body.light .wing-preview-wrap { background: #edf2f8; border-color: #c8d4e0; }
+
   /* ── Decorative chickens ── */
   .deco-chicken {
     position: fixed;
@@ -409,6 +461,8 @@
 </style>
 </head>
 <body>
+
+<button class="theme-toggle" id="theme-btn" onclick="toggleTheme()">☀️ Light</button>
 
 <!-- background corner chickens -->
 <svg class="deco-chicken bl" viewBox="0 0 160 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1129,6 +1183,19 @@ function playSound(name) {
 }
 
 function playChickenSound() { playSound('chicken'); }
+
+// ── Theme toggle ────────────────────────────────────
+function toggleTheme() {
+  const light = document.body.classList.toggle('light');
+  document.getElementById('theme-btn').textContent = light ? '🌙 Dark' : '☀️ Light';
+  localStorage.setItem('wings-theme', light ? 'light' : 'dark');
+}
+if (localStorage.getItem('wings-theme') === 'light') {
+  document.body.classList.add('light');
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('theme-btn').textContent = '🌙 Dark';
+  });
+}
 
 // ── Boot ────────────────────────────────────────────
 loadSound('chicken', 'chicken.mp3');
