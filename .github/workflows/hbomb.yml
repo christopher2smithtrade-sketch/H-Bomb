@@ -1,16 +1,13 @@
 name: H-Bomb Daily Report
 
-# Runs the daily DraftKings HRR report on GitHub's servers - no laptop needed.
-# Times are UTC. Baseball season runs on Eastern Daylight Time (UTC-4), so:
-#   15:00 UTC = 11:00 AM ET
-#   19:00 UTC =  3:00 PM ET
-#   22:00 UTC =  6:00 PM ET
-# NOTE: when DST ends (early Nov) these shift an hour; update the cron then.
 on:
   schedule:
-    - cron: '17 15 * * *'
-    - cron: '17 19 * * *'
-    - cron: '17 22 * * *'
+    - cron: '17 15 * * *'   # 11 AM ET  (primary)
+    - cron: '47 15 * * *'   # 11 AM ET  (backup)
+    - cron: '17 19 * * *'   #  3 PM ET  (primary)
+    - cron: '47 19 * * *'   #  3 PM ET  (backup)
+    - cron: '17 22 * * *'   #  6 PM ET  (primary)
+    - cron: '47 22 * * *'   #  6 PM ET  (backup)
   workflow_dispatch:
 
 permissions:
@@ -25,12 +22,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Check out repo
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install -r requirements.txt
-      - env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-        run: python HBomb40.py --once
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run H-Bomb report (once) and deploy
+        env:
+          GITHUB_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
+          ODDS_API_KEY:  ${{ secrets.ODDS_API_KEY }}
+        run: python HBomb40.py --once ${{ github.event_name == 'schedule' && '--skip-if-recent' || '' }}
