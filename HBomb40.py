@@ -4764,6 +4764,28 @@ if __name__ == "__main__":
     if "--once" in sys.argv:
         AUTO_OPEN_BROWSER = False  # background task — don't pop a browser window
 
+        # Backup scheduled runs pass --skip-if-recent. If the primary run for
+        # this slot already deployed within the last ~40 min, the backup exits
+        # immediately (no double work / double ping). It only does real work
+        # when the primary was actually skipped by GitHub's cron throttling.
+        if "--skip-if-recent" in sys.argv and GITHUB_TOKEN:
+            try:
+                from datetime import timezone
+                _h = {"Authorization": f"token {GITHUB_TOKEN}",
+                      "Accept": "application/vnd.github.v3+json"}
+                _c = requests.get(
+                    f"https://api.github.com/repos/{GITHUB_USER}/{GITHUB_REPO}/commits",
+                    params={"path": "index.html", "per_page": 1}, headers=_h, timeout=15).json()
+                _last = datetime.strptime(_c[0]["commit"]["committer"]["date"],
+                                          "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+                _age = (datetime.now(timezone.utc) - _last).total_seconds() / 60
+                if _age < 40:
+                    print(f"Backup run: primary already deployed {_age:.0f} min ago — skipping.")
+                    sys.exit(0)
+                print(f"Backup run: last deploy was {_age:.0f} min ago — primary was skipped, running.")
+            except Exception as e:
+                print(f"skip-if-recent check failed ({e}) — running anyway to be safe.")
+
         # Watchdog: if a run ever stalls (e.g. laptop slept mid-run and a
         # socket got stuck), force-exit so it can't linger as a zombie and
         # block the next scheduled run. The next trigger recovers cleanly.
