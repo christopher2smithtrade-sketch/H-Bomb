@@ -4652,13 +4652,24 @@ def settle_picks():
     print(f"{'='*62}")
 
 
+def now_et():
+    """Current time in US Eastern. On GitHub Actions the runner clock is UTC,
+    so datetime.now() there is 4-5 hrs off — always convert for anything we
+    label 'ET'. Falls back to a fixed EDT offset if the tz database is absent."""
+    try:
+        from zoneinfo import ZoneInfo
+        return datetime.now(ZoneInfo("America/New_York"))
+    except Exception:
+        return datetime.utcnow() - timedelta(hours=4)  # EDT (baseball season)
+
+
 def run_report():
     print("\n" + "=" * 62)
     print("⚾  H-BOMB — Generating Daily HRR Report")
-    print(f"    {datetime.now().strftime('%A, %B %d, %Y  %I:%M %p')}")
+    print(f"    {now_et().strftime('%A, %B %d, %Y  %I:%M %p')} ET")
     print("=" * 62)
 
-    generated_at = datetime.now().strftime("%I:%M %p ET")
+    generated_at = now_et().strftime("%I:%M %p ET")
 
     # Verify the schedule independently so we can tell "genuinely no games"
     # apart from "the API/network failed" — and never exit silently on failure.
