@@ -1,0 +1,36 @@
+name: H-Bomb Daily Report
+
+# Runs the daily DraftKings HRR report on GitHub's servers - no laptop needed.
+# Times are UTC. Baseball season runs on Eastern Daylight Time (UTC-4), so:
+#   15:00 UTC = 11:00 AM ET
+#   19:00 UTC =  3:00 PM ET
+#   22:00 UTC =  6:00 PM ET
+# NOTE: when DST ends (early Nov) these shift an hour; update the cron then.
+on:
+  schedule:
+    - cron: '0 15 * * *'
+    - cron: '0 19 * * *'
+    - cron: '0 22 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hbomb-report
+  cancel-in-progress: false
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: python HBomb40.py --once
