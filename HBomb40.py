@@ -4780,6 +4780,16 @@ if __name__ == "__main__":
         threading.Thread(target=_watchdog, daemon=True).start()
 
         print(f"\n=== HBomb --once run: {datetime.now():%Y-%m-%d %H:%M:%S} ===")
+
+        # DST reminder: US clocks fall back Sun Nov 1, 2026. After that the
+        # GitHub Actions cron (set for EDT) fires an hour early until updated.
+        # Ping the phone for a few days so the fix doesn't get forgotten.
+        if "2026-11-01" <= date.today().strftime("%Y-%m-%d") <= "2026-11-04":
+            notify("🕐 Fix H-Bomb cron (DST ended)",
+                   "Daylight saving ended — the Actions runs now fire an hour early "
+                   "(10am/2pm/5pm ET). Tell Claude to bump the cron by +1 hour.",
+                   tags="alarm_clock", priority="high")
+
         # Report + deploy FIRST. Settling yesterday's results is bookkeeping and
         # can be slow (hundreds of API calls); it must never starve the deploy.
         # If the watchdog fires during settling, the dashboard is already live
