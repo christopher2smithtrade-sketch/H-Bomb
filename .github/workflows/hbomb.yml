@@ -2,12 +2,12 @@ name: H-Bomb Daily Report
 
 on:
   schedule:
-    - cron: '17 15 * * *'   # 11 AM ET  (primary)
-    - cron: '47 15 * * *'   # 11 AM ET  (backup)
-    - cron: '17 19 * * *'   #  3 PM ET  (primary)
-    - cron: '47 19 * * *'   #  3 PM ET  (backup)
-    - cron: '17 22 * * *'   #  6 PM ET  (primary)
-    - cron: '47 22 * * *'   #  6 PM ET  (backup)
+    - cron: '30 14 * * *'   # 10:30 AM ET  (primary)
+    - cron: '55 14 * * *'   # 10:55 AM ET  (backup)
+    - cron: '30 18 * * *'   #  2:30 PM ET  (primary)
+    - cron: '55 18 * * *'   #  2:55 PM ET  (backup)
+    - cron: '30 21 * * *'   #  5:30 PM ET  (primary)
+    - cron: '55 21 * * *'   #  5:55 PM ET  (backup)
   workflow_dispatch:
 
 permissions:
